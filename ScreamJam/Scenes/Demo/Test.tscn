@@ -20,6 +20,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 volumetric_fog_enabled = true
+volumetric_fog_density = 0.3005
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_psfs2"]
 frequency = 0.011
@@ -46,11 +47,14 @@ environment = SubResource("Environment_w1wca")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 3.0
 
 [node name="Map" type="StaticBody3D" parent="."]
 script = ExtResource("1_eh1nr")
 gridSpace = 5.0
-thickness = 0.2
+thickness = 0.5
+ceil = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map"]
 

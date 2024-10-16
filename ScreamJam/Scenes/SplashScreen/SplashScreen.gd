@@ -13,11 +13,12 @@ func _ready() -> void:
 
 func animationFinished(event):
 	get_tree().create_timer(splashDuration).timeout.connect(startOutAnimation)
-	
+
 func startOutAnimation():
 	animationPlayer.play("SplashGlitchOut")
 	animationPlayer.animation_finished.disconnect(animationFinished)
 	animationPlayer.animation_finished.connect(loadNextScene)
 	
 func loadNextScene(event):
-	get_tree().change_scene_to_packed(transitionScene)
+	Transition.start(get_tree().change_scene_to_packed.bind(transitionScene), 0.75, -1, 1)
+	

@@ -4,6 +4,7 @@ class_name Map extends Node3D
 # Map parameters
 @export var gridSpace: float = 1.0
 @export var thickness: float = 1.0
+@export var ceil: bool = false
 
 # Map data 
 var mapData := PackedInt32Array()
@@ -73,6 +74,21 @@ func createCell(x: int, y: int):
 	newCollisionShape.shape = wallShape
 	newCollisionShape.position = elementPosition
 	add_child(newCollisionShape)
+	
+	
+	if ceil:
+		# Create ground Mesh
+		var ceilPosition: Vector3 = elementPosition + Vector3(0.0, gridSpace, 0.0)
+		var newCeilMesh := MeshInstance3D.new()
+		newCeilMesh.mesh = wallMesh
+		newCeilMesh.position = ceilPosition
+		add_child(newCeilMesh)
+		
+		# Create collision Shape
+		var newCeilShape := CollisionShape3D.new()
+		newCeilShape.shape = wallShape
+		newCeilShape.position = ceilPosition
+		add_child(newCeilShape)
 	
 	# Create Wall Mesh
 	if x == 0 or getMapData(x - 1, y) == 0:

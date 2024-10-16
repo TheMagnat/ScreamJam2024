@@ -354,13 +354,13 @@ func update_camera_fov():
 			wasFovTweenSprint = true
 			if fovTween: fovTween.kill()
 			fovTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-			fovTween.tween_property(CAMERA, "fov", 85.0, 0.15)
+			fovTween.tween_property(CAMERA, "fov", 80.0, 0.2)
 	else:
 		if wasFovTweenSprint:
 			wasFovTweenSprint = false
 			if fovTween: fovTween.kill()
 			fovTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-			fovTween.tween_property(CAMERA, "fov", 75.0, 0.15)
+			fovTween.tween_property(CAMERA, "fov", 70.0, 0.2)
 
 func headbob_animation(moving):
 	if moving and is_on_floor():
@@ -377,7 +377,7 @@ func headbob_animation(moving):
 		
 		HEADBOB_ANIMATION.play(use_headbob_animation, 0.25)
 		HEADBOB_ANIMATION.speed_scale = (current_speed / base_speed) * 1.5
-		print(HEADBOB_ANIMATION.speed_scale)
+		
 		if !was_playing:
 			HEADBOB_ANIMATION.seek(float(randi() % 2)) # Randomize the initial headbob direction
 			# Let me explain that piece of code because it looks like it does the opposite of what it actually does.

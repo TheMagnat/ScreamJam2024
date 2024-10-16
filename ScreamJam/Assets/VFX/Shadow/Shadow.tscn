@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtu6g2vl78kir"]
+
+[ext_resource type="Script" path="res://Assets/VFX/Shadow/Shadow.gd" id="1_d6vpn"]
+[ext_resource type="Shader" path="res://Assets/VFX/Shadow/Shadow.gdshader" id="1_gn3xc"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r5bt8"]
+height = 2048
+seamless = true
+seamless_blend_skirt = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gi0ne"]
+shader = ExtResource("1_gn3xc")
+shader_parameter/color = null
+shader_parameter/timeScale = 0.5
+shader_parameter/uvScaler = Vector2(4, 2)
+shader_parameter/direction = 1.0
+shader_parameter/timeDirection = -1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_r5bt8")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7n10j"]
+noise_type = 2
+frequency = 0.02
+fractal_octaves = 2
+fractal_lacunarity = 0.5
+fractal_gain = 1.0
+
+[node name="Shadow" type="ColorRect"]
+material = SubResource("ShaderMaterial_gi0ne")
+offset_right = 1920.0
+offset_bottom = 720.0
+script = ExtResource("1_d6vpn")
+timeScale = 0.25
+noiseHeight = 2048
+autoUvScaler = true
+uvScaler = Vector2(4, 1)
+SCALE_FACTOR = 4.5
+noise = SubResource("FastNoiseLite_7n10j")

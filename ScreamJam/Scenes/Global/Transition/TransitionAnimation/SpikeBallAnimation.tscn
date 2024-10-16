@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://b623xev475p6t"]
+
+[ext_resource type="Script" path="res://Scenes/Global/Transition/TransitionAnimation/SpikeBallAnimation.gd" id="1_uoeq5"]
+
+[sub_resource type="Shader" id="Shader_u75qv"]
+code = "shader_type canvas_item;
+
+uniform float offset;
+
+void fragment() {
+	vec2 pos = UV - vec2(0.5, 0.5);
+	vec2 pos_norm = normalize(pos);
+	if ((length(pos) + (mod(acos(pos_norm.x) + acos(pos_norm.y) + offset, PI/4.0) + offset) * 0.05) < offset) {
+		COLOR.a = 0.0;
+	}
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7pcv2"]
+shader = SubResource("Shader_u75qv")
+shader_parameter/offset = 0.734694
+
+[node name="SpikeBallAnimation" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_uoeq5")
+
+[node name="Renderer" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_7pcv2")
+layout_mode = 0
+offset_top = -280.0
+offset_right = 1280.0
+offset_bottom = 1000.0
+mouse_filter = 2

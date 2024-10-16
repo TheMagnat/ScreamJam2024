@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6kdri4ti8at"]
+
+[ext_resource type="Script" path="res://Scenes/Global/Transition/TransitionAnimation/ShadowAnimation.gd" id="1_1tqmx"]
+[ext_resource type="PackedScene" uid="uid://dtu6g2vl78kir" path="res://Assets/VFX/Shadow/Shadow.tscn" id="2_sayru"]
+
+[sub_resource type="Shader" id="Shader_x4tme"]
+code = "shader_type canvas_item;
+
+const float F = 25.0;
+
+float spike(vec2 uv) {
+	float x = uv.x * 3.5;
+	float y = uv.y * F;
+	
+	if (y - floor(y) >= 0.5) {
+		y = F - uv.y * F;
+	}
+	
+	if ((x + y - floor(y)) < 0.5) {
+		return 0.0;
+	} 
+	
+	return 1.0;
+}
+
+float xoffset(float t) {
+	return cos(t) * 0.04 - 0.04;
+}
+
+float fx(float t, vec2 uv) {
+	return min(1.0, spike(uv + vec2(xoffset(t * 40.156), t)) +
+		spike(uv + vec2(xoffset(t * 75.53156), -t * 0.62462)) +
+		spike(uv + vec2(xoffset(t * 51.43156), -t * 0.72462)) +
+		spike(uv + vec2(xoffset(t * 132.3156), t * 0.42462)));
+}
+
+void fragment() {
+	float t = TIME * 0.1;
+	if (UV.x < 0.5) {
+		COLOR.a = fx(t, UV);
+	} else {
+		COLOR.a = fx(t, vec2(1.0 - UV.x, UV.y));
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2k8gp"]
+shader = SubResource("Shader_x4tme")
+
+[node name="ShadowAnimation" type="Control"]
+modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_2k8gp")
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_1tqmx")
+
+[node name="Shadow" parent="." instance=ExtResource("2_sayru")]
+layout_mode = 0
+timeScale = 0.5
+SCALE_FACTOR = 2.5
