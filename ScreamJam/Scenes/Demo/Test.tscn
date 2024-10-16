@@ -1,0 +1,81 @@
+[gd_scene load_steps=13 format=3 uid="uid://cdn2oqit1gq4v"]
+
+[ext_resource type="Script" path="res://Scenes/Demo/map.gd" id="1_eh1nr"]
+[ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_wdy7h"]
+[ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="4_g5fn0"]
+[ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="5_olldc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_xp1a5"]
+sky_material = SubResource("ProceduralSkyMaterial_02umm")
+
+[sub_resource type="Environment" id="Environment_w1wca"]
+background_mode = 2
+sky = SubResource("Sky_xp1a5")
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+volumetric_fog_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_psfs2"]
+frequency = 0.011
+fractal_octaves = 1
+fractal_lacunarity = 2.545
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pawuw"]
+seamless = true
+seamless_blend_skirt = 0.5
+noise = SubResource("FastNoiseLite_psfs2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrr3h"]
+render_priority = 0
+shader = ExtResource("2_4hhr2")
+shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
+
+[sub_resource type="SphereMesh" id="SphereMesh_n5p6o"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_w1wca")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Map" type="StaticBody3D" parent="."]
+script = ExtResource("1_eh1nr")
+gridSpace = 5.0
+thickness = 0.2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.41283, 0)
+material_override = SubResource("ShaderMaterial_jrr3h")
+mesh = SubResource("SphereMesh_n5p6o")
+
+[node name="Character" parent="." instance=ExtResource("3_wdy7h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.09326)
+JUMP = "Jump"
+LEFT = "Left"
+RIGHT = "Right"
+FORWARD = "Up"
+BACKWARD = "Down"
+CROUCH = "Crouch"
+SPRINT = "Sprint"
+
+[node name="DebugPanel" parent="Character/UserInterface" index="0"]
+visible = true
+
+[node name="CameraRotationRestrictor" type="Node" parent="Character"]
+script = ExtResource("4_g5fn0")
+
+[node name="GridRestrictor" type="Node" parent="Character"]
+script = ExtResource("5_olldc")
+
+[editable path="Character"]
