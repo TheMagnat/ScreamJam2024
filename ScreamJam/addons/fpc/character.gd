@@ -85,6 +85,7 @@ class_name BetterCharacterController extends CharacterBody3D
 @export var lockedCamera: bool = false
 @export var handled: bool = false
 @export var handled_input := Vector2.ZERO
+@export var handled_sprint: bool = false
 
 # Member variables
 var speed : float = base_speed
@@ -279,7 +280,7 @@ func handle_head_rotation():
 func handle_state(moving):
 	if sprint_enabled:
 		if sprint_mode == 0:
-			if Input.is_action_pressed(SPRINT) and state != "crouching":
+			if (handled and handled_sprint) or (not handled and Input.is_action_pressed(SPRINT) and state != "crouching"):
 				if moving:
 					if state != "sprinting":
 						enter_sprint_state()
@@ -345,12 +346,21 @@ func enter_sprint_state():
 	speed = sprint_speed
 
 
+var wasFovTweenSprint: bool = false
+var fovTween: Tween
 func update_camera_fov():
 	if state == "sprinting":
-		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.3)
+		if not wasFovTweenSprint:
+			wasFovTweenSprint = true
+			if fovTween: fovTween.kill()
+			fovTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			fovTween.tween_property(CAMERA, "fov", 85.0, 0.15)
 	else:
-		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.3)
-
+		if wasFovTweenSprint:
+			wasFovTweenSprint = false
+			if fovTween: fovTween.kill()
+			fovTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			fovTween.tween_property(CAMERA, "fov", 75.0, 0.15)
 
 func headbob_animation(moving):
 	if moving and is_on_floor():
@@ -366,7 +376,8 @@ func headbob_animation(moving):
 			was_playing = true
 		
 		HEADBOB_ANIMATION.play(use_headbob_animation, 0.25)
-		HEADBOB_ANIMATION.speed_scale = (current_speed / base_speed) * 1.75
+		HEADBOB_ANIMATION.speed_scale = (current_speed / base_speed) * 1.5
+		print(HEADBOB_ANIMATION.speed_scale)
 		if !was_playing:
 			HEADBOB_ANIMATION.seek(float(randi() % 2)) # Randomize the initial headbob direction
 			# Let me explain that piece of code because it looks like it does the opposite of what it actually does.

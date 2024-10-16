@@ -109,12 +109,15 @@ func loadMap(path: String) -> void:
 	var content: String = file.get_as_text()
 	
 	mapData.clear()
+	var mapDataArray: Array[PackedInt32Array] = []
 	
 	var rows: PackedStringArray = content.split("\n")
 	var rowLength: int = 0
 	
 	var rowCount: int = 0
 	for row in rows:
+		var rowArray := PackedInt32Array()
+		
 		var columns: PackedStringArray = row.split(" ")
 		if columns.is_empty() or columns[0].is_empty():
 			continue
@@ -123,7 +126,17 @@ func loadMap(path: String) -> void:
 		
 		rowLength = max(rowLength, columns.size())
 		for column in columns:
-			mapData.append(int(column))
+			rowArray.append(int(column))
+		
+		mapDataArray.append(rowArray)
+	
+	# Now concat every array together
+	for row in mapDataArray:
+		for element in row:
+			mapData.append(element)
+		
+		for i in range(row.size(), rowLength):
+			mapData.append(0)
 	
 	print(rowCount)
 	mapSize.x = rowLength
