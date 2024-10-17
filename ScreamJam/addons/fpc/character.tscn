@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=36 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Shader" path="res://addons/fpc/character.gdshader" id="3_pevgd"]
@@ -15,6 +15,9 @@
 [ext_resource type="AudioStream" uid="uid://bnkiomk5thbrg" path="res://Assets/SFX/steps/step_metal8.ogg" id="12_xtn5i"]
 [ext_resource type="AudioStream" uid="uid://dim1vrsgtrfqm" path="res://Assets/SFX/steps/step_metal9.ogg" id="13_ktixa"]
 [ext_resource type="AudioStream" uid="uid://dcr0c1gfhke6w" path="res://Assets/SFX/steps/step_metal10.ogg" id="14_vrhjc"]
+[ext_resource type="AudioStream" uid="uid://8klkxr62rddd" path="res://Assets/SFX/noise/noise1.ogg" id="16_jncaw"]
+[ext_resource type="AudioStream" uid="uid://c28hepeugpk6c" path="res://Assets/SFX/noise/noise2.ogg" id="17_a5d4c"]
+[ext_resource type="AudioStream" uid="uid://cs1onigspbp87" path="res://Assets/SFX/noise/noise3.ogg" id="18_g00yu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
@@ -411,3 +414,19 @@ layout_mode = 2
 stream = SubResource("AudioStreamRandomizer_olyiy")
 volume_db = -12.0
 bus = &"RoomReverb"
+
+[node name="noise1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_jncaw")
+volume_db = -50.0
+autoplay = true
+
+[node name="noise2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_a5d4c")
+volume_db = -40.0
+pitch_scale = 0.8
+autoplay = true
+
+[node name="noise3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_g00yu")
+volume_db = -40.0
+autoplay = true
