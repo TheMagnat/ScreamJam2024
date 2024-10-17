@@ -30,9 +30,14 @@ var wallInstanceTransforms: Array[Transform3D]
 @onready var groundMultimesh := MultiMesh.new()
 var groundInstanceTransforms: Array[Transform3D]
 
+
+func isAvailable(goal2dPosition: Vector2i):
+	return getMapData(goal2dPosition.x, goal2dPosition.y) != 0
+
+## Map generation... ##
 func _ready() -> void:
 	generateMap()
-	
+
 func generateMap() -> void:
 	groundMesh.size = Vector2(gridSpace, gridSpace)
 	groundMesh.subdivide_depth = 16.0

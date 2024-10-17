@@ -19,20 +19,24 @@ func activate():
 	rotationTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	rotationTween.tween_property(head, "rotation", Vector3(0.0, goalRotation, 0.0), rotationTime)
 
-func updateHeadRotation(newOffset: float):
+func updateGoalRotation(newOffset: float):
 	goalRotation -= newOffset * PI / 2.0
+	updateHeadRotation()
 	
+func updateHeadRotation():
 	if rotationTween: rotationTween.kill()
 	rotationTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	rotationTween.tween_property(head, "rotation:y", goalRotation, rotationTime)
-
+	#rotationTween.tween_property(head, "rotation:y", goalRotation, rotationTime)
+	var originalRotation: float = head.rotation.y
+	rotationTween.tween_method(func(current: float): head.rotation.y = lerp_angle(originalRotation, goalRotation, current), 0.0, 1.0, rotationTime)
+		
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("RotateLeft"):
-		updateHeadRotation(-1)
+		updateGoalRotation(-1)
 		
 	if event.is_action_pressed("RotateRight"):
-		updateHeadRotation(1)
+		updateGoalRotation(1)
 	
 	if event.is_action_pressed("debug1"):
 		lockCamera = not lockCamera

@@ -117,6 +117,7 @@ script = ExtResource("4_g5fn0")
 
 [node name="GridRestrictor" type="Node" parent="Character"]
 script = ExtResource("5_olldc")
+rotateCameraOnMove = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100

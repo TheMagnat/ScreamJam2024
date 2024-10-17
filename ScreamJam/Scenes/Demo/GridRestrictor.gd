@@ -15,6 +15,8 @@ var goalPosition: Vector3i = Vector3i.ZERO
 var inMovement: bool = false
 var reachedGoal: bool = false
 
+@export var rotateCameraOnMove: bool = false
+
 
 func activate():
 	lockInGrid = true
@@ -39,15 +41,22 @@ func _physics_process(delta: float) -> void:
 				
 				#TODO: ça c'est peut être impossible de l'avoir à faux ici
 				if cameraRotationRestrictor.lockCamera:
-					directionVector = directionVector.rotated(2*PI -  cameraRotationRestrictor.goalRotation )
+					directionVector = directionVector.rotated(2 * PI - cameraRotationRestrictor.goalRotation )
 				
-				goalPosition.x += round(directionVector.x)
-				goalPosition.z += round(directionVector.y)
+				var goal2dPosition := Vector2i(goalPosition.x + round(directionVector.x), goalPosition.z + round(directionVector.y))
 				
-				inMovement = true
-				reachedGoal = false
+				if map.isAvailable(goal2dPosition):
+					if rotateCameraOnMove and cameraRotationRestrictor.lockCamera:
+						cameraRotationRestrictor.goalRotation = - PI / 2.0 - directionVector.angle()
+						cameraRotationRestrictor.updateHeadRotation()
+					
+					goalPosition.x = goal2dPosition.x
+					goalPosition.z = goal2dPosition.y
+					
+					inMovement = true
+					reachedGoal = false
 			
-			elif reachedGoal:
+			if reachedGoal:
 				reachedGoal = false
 				inMovement = false
 				character.handled_input = Vector2.ZERO

@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://pddp1pe3qhsk"]
+[gd_scene load_steps=8 format=3 uid="uid://pddp1pe3qhsk"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kjvu5"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_fpi3d"]
+[ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="3_b7dkc"]
+[ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="4_5tjqd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bvl1m"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -31,3 +33,10 @@ Player = NodePath("../Character")
 
 [node name="Character" parent="." instance=ExtResource("2_fpi3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.838799, 0)
+
+[node name="CameraRotationRestrictor" type="Node" parent="Character"]
+script = ExtResource("3_b7dkc")
+
+[node name="GridRestrictor" type="Node" parent="Character"]
+script = ExtResource("4_5tjqd")
+rotateCameraOnMove = true
