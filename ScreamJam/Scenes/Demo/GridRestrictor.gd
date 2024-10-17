@@ -1,17 +1,16 @@
 class_name GridRestrictor extends Node
 
 @onready var character: BetterCharacterController = $".."
-@onready var map: Map = $"../../Map"
-@onready var gridSpace: float = map.gridSpace 
+@onready var map: Map = $"../../NavigationRegion3D/Map"
+
+@onready var gridSpace: float = map.gridSpace
 
 @onready var cameraRotationRestrictor: CameraRotationRestrictor = $"../CameraRotationRestrictor"
 
 # DEBUG
 @onready var debugPanel: DebugPanel = $"../InterfaceLayer/UserInterface/DebugPanel"
 
-
-@export var lockInGrid: bool = false
-var goalPosition: Vector3i = Vector3i.ZERO
+@export var gridToken: GridToken
 var inMovement: bool = false
 var reachedGoal: bool = false
 
@@ -19,18 +18,18 @@ var reachedGoal: bool = false
 
 
 func activate():
-	lockInGrid = true
+	gridToken.isFree = false
 	
 	cameraRotationRestrictor.activate()
 	
 	character.immobile = true
 	character.handled = true
 	
-	goalPosition = (character.position / gridSpace).round()
+	gridToken.setInitialPosition()
 	inMovement = true
 
 func _physics_process(delta: float) -> void:
-	if lockInGrid:
+	if not gridToken.isFree:
 		if not inMovement or reachedGoal:
 			var directionVector: Vector2 = Input.get_vector("Left", "Right", "Up", "Down")
 			if directionVector != Vector2.ZERO:
@@ -43,18 +42,19 @@ func _physics_process(delta: float) -> void:
 				if cameraRotationRestrictor.lockCamera:
 					directionVector = directionVector.rotated(2 * PI - cameraRotationRestrictor.goalRotation )
 				
-				var goal2dPosition := Vector2i(goalPosition.x + round(directionVector.x), goalPosition.z + round(directionVector.y))
+				var goal2dPosition = gridToken.goalPosition + Vector2i(directionVector.round())
 				
 				if map.isAvailable(goal2dPosition):
 					if rotateCameraOnMove and cameraRotationRestrictor.lockCamera:
 						cameraRotationRestrictor.goalRotation = - PI / 2.0 - directionVector.angle()
 						cameraRotationRestrictor.updateHeadRotation()
 					
-					goalPosition.x = goal2dPosition.x
-					goalPosition.z = goal2dPosition.y
+					gridToken.goalPosition = goal2dPosition
 					
 					inMovement = true
 					reachedGoal = false
+					
+					EventBus.playerGridStep.emit()
 			
 			if reachedGoal:
 				reachedGoal = false
@@ -62,35 +62,42 @@ func _physics_process(delta: float) -> void:
 				character.handled_input = Vector2.ZERO
 				character.handled_sprint = false
 		
+		# Verify distance to goal
+		var positionNoY: Vector3 = character.position
+		positionNoY.y = 0
+		if gridToken.goalWorldPosition.distance_to(positionNoY) >= 0.5:
+			inMovement = true
+		else:
+			reachedGoal = true
+		
 		if inMovement:
-			var positionNoY: Vector3 = character.position
-			positionNoY.y = 0
-			
-			var trueGoalPosition: Vector3 = goalPosition * gridSpace
-			
-			var directionToGoal: Vector3 = positionNoY.direction_to(trueGoalPosition)
+			var directionToGoal: Vector3 = positionNoY.direction_to(gridToken.goalWorldPosition)
 			character.handled_input = Vector2(directionToGoal.x, directionToGoal.z)
 			character.handled_sprint = true
 			#character.handle_movement(delta, Vector2(directionToGoal.x, directionToGoal.z))
 			
 			if Debug.debug:
 				debugPanel.add_property("Direction", directionToGoal, 7)
-				debugPanel.add_property("Distance to Goal", trueGoalPosition.distance_to(positionNoY), 8)
+				debugPanel.add_property("Distance to Goal", gridToken.goalWorldPosition.distance_to(positionNoY), 8)
 				
-			if trueGoalPosition.distance_to(positionNoY) < 0.1:
-				reachedGoal = true
+			#if gridToken.goalWorldPosition.distance_to(positionNoY) < 0.1:
+				#reachedGoal = true
 				
 	if Debug.debug:
 		debugPanel.add_property("InMovement", inMovement, 4)
 		debugPanel.add_property("Current Position", character.position, 5)
-		debugPanel.add_property("Goal Position", goalPosition * gridSpace, 6)
+		debugPanel.add_property("Goal Position", gridToken.goalWorldPosition, 6)
 		
 		
 		
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("Action"):
+		if EventBus.gridStepDelay.is_stopped():
+			EventBus.playerGridStep.emit()
+	
 	if event.is_action_pressed("debug2"):
-		lockInGrid = not lockInGrid
-		if lockInGrid:
+		gridToken.isFree = not gridToken.isFree
+		if not gridToken.isFree:
 			activate()
 		else:
 			character.immobile = false

@@ -42,8 +42,7 @@ func _input(event: InputEvent) -> void:
 		lockCamera = not lockCamera
 		
 		# Can't unlock camera if grid is locked
-		if gridRestrictor.lockInGrid: lockCamera = true
-		
+		if not gridRestrictor.gridToken.isFree: lockCamera = true
 		
 		if lockCamera:
 			activate()

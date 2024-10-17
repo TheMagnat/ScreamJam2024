@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://pddp1pe3qhsk"]
+[gd_scene load_steps=15 format=3 uid="uid://pddp1pe3qhsk"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kjvu5"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_fpi3d"]
 [ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="3_b7dkc"]
+[ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="3_xdbcu"]
 [ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="4_5tjqd"]
+[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridMob.gd" id="5_qray7"]
+[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridEntityManager.gd" id="5_t43hs"]
+[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridHandler.gd" id="6_62vlr"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bvl1m"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -19,6 +23,14 @@ tonemap_mode = 2
 ssil_enabled = true
 glow_enabled = true
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_dqf6q"]
+vertices = PackedVector3Array(-2.5, 5.75, -2, -2.5, 5.75, 2, -2, 5.75, 2.25, -2, 5.75, -2.5, 2.75, 5.75, 17.5, -2.5, 5.75, 17, -2, 5.75, 17.5, 22.5, 5.75, 22.25, 7.5, 5.75, 22.25, 7.5, 5.75, 27, 8, 5.75, 27.5, 22, 5.75, 27.5, 22.5, 5.75, 27, 27.25, 5.75, 17.5, 22.5, 5.75, -2, 22.25, 5.75, -2.5, 32, 5.75, 17.5, 32.5, 5.75, 17, 32, 5.5, 3, 27.5, 5.75, 3, 27, 5.75, 2.5, 27, 5.5, -2, 3, 5.5, 22, 27, 5.5, 22, -1.75, 0.5, -1.75, -1.75, 0.5, 2, 3.25, 0.5, 2.25, 12.25, 0.5, 7, 13.75, 0.5, 7, 13.5, 0.5, -1.75, 3.25, 0.5, 7.25, 12, 0.5, 7.75, 18, 0.5, 7, 18.25, 0.5, 7.5, 22.5, 0.5, 3.25, 22, 0.5, 3, 22, 0.5, -1.75, 18.25, 0.5, 12.75, 17.5, 0.5, 13.25, 22, 0.5, 17.5, 22.25, 0.5, 17, 32, 0.5, 17, 32, 0.5, 8.25, 27.25, 0.5, 8.25, 27, 0.5, 3.25, 8.25, 0.5, 17.5, 12.5, 0.5, 13.25, 12, 0.5, 13, 8, 0.5, 17, 2.75, 0.5, 8.25, -1.75, 0.5, 17, -1.75, 0.5, 8.25, 8.25, 0.5, 27, 22, 0.5, 27)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 4), PackedInt32Array(6, 5, 4), PackedInt32Array(4, 5, 2), PackedInt32Array(12, 11, 7), PackedInt32Array(7, 11, 10), PackedInt32Array(7, 10, 9), PackedInt32Array(7, 9, 8), PackedInt32Array(14, 13, 15), PackedInt32Array(15, 13, 7), PackedInt32Array(15, 7, 4), PackedInt32Array(15, 4, 3), PackedInt32Array(16, 13, 17), PackedInt32Array(17, 13, 18), PackedInt32Array(18, 13, 19), PackedInt32Array(14, 21, 20), PackedInt32Array(22, 4, 8), PackedInt32Array(8, 4, 7), PackedInt32Array(13, 23, 7), PackedInt32Array(14, 20, 13), PackedInt32Array(20, 19, 13), PackedInt32Array(26, 25, 24), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 26), PackedInt32Array(29, 26, 24), PackedInt32Array(31, 30, 27), PackedInt32Array(27, 30, 26), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(32, 28, 35), PackedInt32Array(35, 28, 36), PackedInt32Array(36, 28, 29), PackedInt32Array(40, 39, 37), PackedInt32Array(37, 39, 38), PackedInt32Array(43, 42, 41), PackedInt32Array(34, 44, 43), PackedInt32Array(37, 33, 40), PackedInt32Array(40, 33, 34), PackedInt32Array(40, 34, 43), PackedInt32Array(40, 43, 41), PackedInt32Array(48, 47, 45), PackedInt32Array(45, 47, 46), PackedInt32Array(47, 48, 31), PackedInt32Array(31, 48, 49), PackedInt32Array(49, 48, 50), PackedInt32Array(49, 30, 31), PackedInt32Array(50, 51, 49), PackedInt32Array(46, 38, 45), PackedInt32Array(45, 38, 39), PackedInt32Array(45, 39, 53), PackedInt32Array(45, 53, 52)]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n3rnr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jynw6"]
+
 [node name="MobDemo" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -28,15 +40,70 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5624g")
 
-[node name="Map" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_kjvu5")]
-Player = NodePath("../Character")
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_dqf6q")
+
+[node name="Map" parent="NavigationRegion3D" node_paths=PackedStringArray("Player") instance=ExtResource("1_kjvu5")]
+Player = NodePath("../../Character")
+mapFilePath = "res://Scenes/Map/MapFile/MobMapTest.txt"
 
 [node name="Character" parent="." instance=ExtResource("2_fpi3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.838799, 0)
 
+[node name="GridToken" type="Node3D" parent="Character" node_paths=PackedStringArray("map")]
+script = ExtResource("3_xdbcu")
+map = NodePath("../../NavigationRegion3D/Map")
+
 [node name="CameraRotationRestrictor" type="Node" parent="Character"]
 script = ExtResource("3_b7dkc")
 
-[node name="GridRestrictor" type="Node" parent="Character"]
+[node name="GridRestrictor" type="Node" parent="Character" node_paths=PackedStringArray("gridToken")]
 script = ExtResource("4_5tjqd")
+gridToken = NodePath("../GridToken")
 rotateCameraOnMove = true
+
+[node name="GridEntityManager" type="Node" parent="."]
+script = ExtResource("5_t43hs")
+
+[node name="GridMob" type="CharacterBody3D" parent="." node_paths=PackedStringArray("map")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1781, 1.97939, 0.311485)
+script = ExtResource("5_qray7")
+map = NodePath("../NavigationRegion3D/Map")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="GridMob"]
+debug_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMob"]
+mesh = SubResource("CapsuleMesh_n3rnr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMob"]
+shape = SubResource("CapsuleShape3D_jynw6")
+
+[node name="GridHandler" type="Node" parent="GridMob"]
+script = ExtResource("6_62vlr")
+
+[node name="GridToken" type="Node3D" parent="GridMob" node_paths=PackedStringArray("map")]
+script = ExtResource("3_xdbcu")
+map = NodePath("../../NavigationRegion3D/Map")
+
+[node name="GridMob2" type="CharacterBody3D" parent="." node_paths=PackedStringArray("map")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6002, 1.97939, 0.311485)
+script = ExtResource("5_qray7")
+map = NodePath("../NavigationRegion3D/Map")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="GridMob2"]
+debug_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GridMob2"]
+mesh = SubResource("CapsuleMesh_n3rnr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMob2"]
+shape = SubResource("CapsuleShape3D_jynw6")
+
+[node name="GridHandler" type="Node" parent="GridMob2"]
+script = ExtResource("6_62vlr")
+stepToMove = 1
+
+[node name="GridToken" type="Node3D" parent="GridMob2" node_paths=PackedStringArray("map")]
+script = ExtResource("3_xdbcu")
+map = NodePath("../../NavigationRegion3D/Map")

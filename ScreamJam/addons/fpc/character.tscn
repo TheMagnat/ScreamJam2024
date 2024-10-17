@@ -441,4 +441,3 @@ layout_mode = 2
 [node name="StepsMetal" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_olyiy")
 volume_db = -12.0
-bus = &"RoomReverb"

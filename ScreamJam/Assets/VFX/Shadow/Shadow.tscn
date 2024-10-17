@@ -10,7 +10,7 @@ fractal_octaves = 2
 fractal_lacunarity = 0.5
 fractal_gain = 1.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wusyl"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s15jn"]
 height = 2048
 seamless = true
 seamless_blend_skirt = 0.2
@@ -23,7 +23,7 @@ shader_parameter/timeScale = 0.25
 shader_parameter/uvScaler = Vector2(4, 1.125)
 shader_parameter/direction = 1.0
 shader_parameter/timeDirection = -1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_wusyl")
+shader_parameter/noise = SubResource("NoiseTexture2D_s15jn")
 
 [node name="Shadow" type="ColorRect"]
 material = SubResource("ShaderMaterial_gi0ne")
