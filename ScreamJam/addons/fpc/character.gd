@@ -137,6 +137,8 @@ func _ready():
 	enter_normal_state()
 	
 	check_controls()
+	
+	$PostProcess/ColorRect.material.set_shader_parameter("blink", 0.0)
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -276,6 +278,11 @@ var footStepVolume : Tween
 var footstep : FootStep
 var lastFootstep := 0.0
 
+func setFootStepVolume(v: float):
+	if footStepVolume: footStepVolume.kill()
+	footStepVolume = get_tree().create_tween()
+	footStepVolume.tween_property($StepsMetal, "volume_db", v, 0.5)
+
 func handle_movement(delta: float, dir: Vector2):
 	var direction = Vector3(dir.x, 0, dir.y)
 	
@@ -327,7 +334,7 @@ func handle_state(moving):
 	if sprint_enabled:
 		if sprint_mode == 0:
 			if (handled and handled_sprint) or (not handled and Input.is_action_pressed(SPRINT) and state != "crouching"):
-				if moving:
+				if moving && !closed_eyes:
 					if state != "sprinting":
 						enter_sprint_state()
 				else:
@@ -462,7 +469,27 @@ func _process(delta):
 	RenderingServer.global_shader_parameter_set("player_pos", position)
 	RenderingServer.global_shader_parameter_set("wall_distort", sanity01 * 0.9)
 	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
+
+
+var closed_eyes := false
+var blink_tween: Tween
+func blink(closing : bool):
+	if blink_tween: blink_tween.kill()
+	blink_tween = create_tween()
+	blink_tween.set_ease(Tween.EASE_OUT)
+	blink_tween.set_trans(Tween.TRANS_QUART)
 	
+	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, 0.5)
+	if closing:
+		blink_tween.tween_callback(func(): closed_eyes = true)
+	else:
+		closed_eyes = false
+
+func _input(event: InputEvent):
+	if event.is_action_pressed("Blink"):
+		blink(true)
+	elif event.is_action_released("Blink"):
+		blink(false)
 
 
 func _unhandled_input(event : InputEvent):
