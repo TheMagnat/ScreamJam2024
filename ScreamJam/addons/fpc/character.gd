@@ -46,7 +46,7 @@ class_name BetterCharacterController extends CharacterBody3D
 @export var FORWARD : String = "ui_up"
 @export var BACKWARD : String = "ui_down"
 ## By default this does not pause the game, but that can be changed in _process.
-@export var PAUSE : String = "ui_cancel"
+@export var PAUSE : String = "pause"
 @export var CROUCH : String = "crouch"
 @export var SPRINT : String = "sprint"
 
