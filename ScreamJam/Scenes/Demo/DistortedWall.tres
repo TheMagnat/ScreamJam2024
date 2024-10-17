@@ -5,13 +5,20 @@ code = "shader_type spatial;
 
 uniform sampler2D noise;
 
+varying vec3 world_position;
+
 float f(sampler2D n, float t, vec2 uv, float offset, float jitter) {
 	return texture(n, (1.0 + cos(vec2(offset, 0.0) + vec2(0.0, t + float(int((t + offset) * jitter)) * 0.25) * 0.005 + vec2(abs(uv.x * 0.5 - 0.25), 0.0))) * 0.5).r < uv.y * 0.9 ? 0.25 : 0.0;
 }
 
+void vertex() {
+	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
 void fragment() {
+	vec2 uv = vec2(world_position.x + world_position.z, world_position.y) * 0.25;
 	float t = TIME;
-	float multiplier = 1.0 + (f(noise, t, UV, 0.0, 0.15135) + f(noise, t, UV, 10.0, 0.5426) + f(noise, t, UV, 20.0, 0.275363) + f(noise, t, UV, 30.0, 0.1341));
+	float multiplier = 1.0 + (f(noise, t, uv, 0.0, 0.15135) + f(noise, t, uv, 10.0, 0.5426) + f(noise, t, uv, 20.0, 0.275363) + f(noise, t, uv, 30.0, 0.1341));
 	ALBEDO *= multiplier;
 }"
 
