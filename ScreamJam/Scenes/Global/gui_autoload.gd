@@ -28,5 +28,6 @@ func _input(_event):
 	if Input.is_action_just_pressed("Pause"):
 		var pauseMenu = get_node("PauseMenu")
 		pauseMenu.visible = !pauseMenu.visible
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if pauseMenu.visible else Input.MOUSE_MODE_CAPTURED
 		if pauseMenu.visible:
 			pauseMenu.update_values()
