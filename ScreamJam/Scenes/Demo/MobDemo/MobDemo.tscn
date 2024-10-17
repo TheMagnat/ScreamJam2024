@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://pddp1pe3qhsk"]
+[gd_scene load_steps=14 format=3 uid="uid://pddp1pe3qhsk"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kjvu5"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_fpi3d"]
@@ -29,8 +29,6 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Arr
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_n3rnr"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jynw6"]
-
 [node name="MobDemo" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -60,13 +58,12 @@ script = ExtResource("3_b7dkc")
 [node name="GridRestrictor" type="Node" parent="Character" node_paths=PackedStringArray("gridToken")]
 script = ExtResource("4_5tjqd")
 gridToken = NodePath("../GridToken")
-rotateCameraOnMove = true
 
 [node name="GridEntityManager" type="Node" parent="."]
 script = ExtResource("5_t43hs")
 
-[node name="GridMob" type="CharacterBody3D" parent="." node_paths=PackedStringArray("map")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1781, 1.97939, 0.311485)
+[node name="GridMob" type="Node3D" parent="." node_paths=PackedStringArray("map")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.178, 0, 0.311)
 script = ExtResource("5_qray7")
 map = NodePath("../NavigationRegion3D/Map")
 
@@ -74,10 +71,8 @@ map = NodePath("../NavigationRegion3D/Map")
 debug_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMob"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_n3rnr")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMob"]
-shape = SubResource("CapsuleShape3D_jynw6")
 
 [node name="GridHandler" type="Node" parent="GridMob"]
 script = ExtResource("6_62vlr")
@@ -86,8 +81,8 @@ script = ExtResource("6_62vlr")
 script = ExtResource("3_xdbcu")
 map = NodePath("../../NavigationRegion3D/Map")
 
-[node name="GridMob2" type="CharacterBody3D" parent="." node_paths=PackedStringArray("map")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6002, 1.97939, 0.311485)
+[node name="GridMob2" type="Node3D" parent="." node_paths=PackedStringArray("map")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 0, 0.311)
 script = ExtResource("5_qray7")
 map = NodePath("../NavigationRegion3D/Map")
 
@@ -95,10 +90,8 @@ map = NodePath("../NavigationRegion3D/Map")
 debug_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GridMob2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_n3rnr")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMob2"]
-shape = SubResource("CapsuleShape3D_jynw6")
 
 [node name="GridHandler" type="Node" parent="GridMob2"]
 script = ExtResource("6_62vlr")

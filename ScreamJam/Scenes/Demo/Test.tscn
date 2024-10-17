@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=15 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kl7dy"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_wdy7h"]
 [ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="4_g5fn0"]
 [ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="5_olldc"]
+[ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="6_h0pw4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -48,44 +49,6 @@ shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_n5p6o"]
 
-[sub_resource type="Shader" id="Shader_ys522"]
-code = "shader_type canvas_item;
-
-uniform sampler2D viewport : hint_screen_texture, repeat_disable, filter_linear;
-uniform float distortion : hint_range(0.0, 0.6, 0.001);
-
-float crt(vec2 uv, float offset) {
-	return 0.95 + (cos(uv.x * 1200.0 + offset) * 0.25 + cos(uv.y * 1000.0 + offset)) * 0.05;
-}
-
-vec4 distort(vec2 CENTER, float zoom, float distort) {
-	vec2 c = CENTER * zoom * (1.0 - length(CENTER) * distort);
-	return texture(viewport, vec2(0.5, 0.5) + c);
-}
-
-void fragment() {
-	float LENS_DISTORT = distortion * 0.9;
-	float ZOOM = 1.0 - distortion;
-	
-	vec2 CENTER = (SCREEN_UV - vec2(0.5));
-	COLOR = distort(CENTER, ZOOM, LENS_DISTORT);
-	
-	float dist = length(CENTER * 1.0);
-	COLOR *= vec4(1.0 - dist) + distort(CENTER, ZOOM * 0.99, LENS_DISTORT) * dist;
-	COLOR.rgb *= sqrt(1.0 - length(CENTER * 1.25));
-	
-	
-	COLOR.r *= crt(UV, 0.0);
-	COLOR.g *= crt(UV + cos(TIME * 0.005), 1.0);
-	COLOR.b *= crt(UV, 2.0);
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ft5rr"]
-resource_local_to_scene = true
-shader = SubResource("Shader_ys522")
-shader_parameter/distortion = 0.0
-
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -114,14 +77,14 @@ base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
 
-[node name="ColorRect" parent="Character/PostProcess" index="0"]
-material = SubResource("ShaderMaterial_ft5rr")
-
 [node name="CameraRotationRestrictor" type="Node" parent="Character"]
 script = ExtResource("4_g5fn0")
 
-[node name="GridRestrictor" type="Node" parent="Character"]
+[node name="GridRestrictor" type="Node" parent="Character" node_paths=PackedStringArray("gridToken")]
 script = ExtResource("5_olldc")
+gridToken = NodePath("../GridToken")
 rotateCameraOnMove = true
 
-[editable path="Character"]
+[node name="GridToken" type="Node3D" parent="Character" node_paths=PackedStringArray("map")]
+script = ExtResource("6_h0pw4")
+map = NodePath("../../NavigationRegion3D/Map")

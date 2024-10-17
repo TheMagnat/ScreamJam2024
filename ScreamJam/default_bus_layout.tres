@@ -1,4 +1,7 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bx67sf4luhshy"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://bx67sf4luhshy"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_xolce"]
+resource_name = "LowPassFilter"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_iascx"]
 resource_name = "Reverb"
@@ -7,6 +10,8 @@ damping = 0.88
 wet = 0.18
 
 [resource]
+bus/0/effect/0/effect = SubResource("AudioEffectLowPassFilter_xolce")
+bus/0/effect/0/enabled = true
 bus/1/name = &"SplashScreen"
 bus/1/solo = false
 bus/1/mute = false

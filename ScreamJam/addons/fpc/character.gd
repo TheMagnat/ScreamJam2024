@@ -104,7 +104,6 @@ const SANITY_MAX := 100.0
 const SANITY_RECOVER := 5.0
 var sanity := SANITY_MAX
 var sanity_display := sanity
-var sanity_tween : Tween
 
 const HEALTH_MAX := 100.0
 const HEALTH_RECOVER := 0.5
@@ -112,11 +111,6 @@ var health := HEALTH_MAX
 
 func damageSanity(dmg: float):
 	sanity -= dmg
-	if sanity_tween: sanity_tween.kill()
-	sanity_tween = get_tree().create_tween()
-	sanity_tween.set_ease(Tween.EASE_IN_OUT)
-	sanity_tween.set_trans(Tween.TRANS_SINE)
-	sanity_tween.tween_property(self, "sanity_display", sanity, 1.0)
 
 func damageHealth(dmg: float):
 	health -= dmg
@@ -143,6 +137,9 @@ func _ready():
 	enter_normal_state()
 	
 	check_controls()
+	
+	$PostProcess/ColorRect.material.set_shader_parameter("blink", 0.0)
+	blink(0.0)
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -232,6 +229,7 @@ func _physics_process(delta):
 				1:
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
+	sanity = minf(SANITY_MAX, sanity + SANITY_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
 
@@ -270,13 +268,13 @@ class FootStep:
 	func stop(): if _tween: _tween.kill()
 	func update():
 		_tween = stream.get_tree().create_tween()
-		_tween.tween_property(stream, "volume_db", volume, 0.5)
-		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.5)
+		_tween.tween_property(stream, "volume_db", volume, 0.25)
+		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.25)
 
 var footStepVolume : Tween
-@onready var FOOTSTEP_WALK := FootStep.new(0.5, -20, 1.0, $StepsMetal)
-@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -26, 0.96, $StepsMetal)
-@onready var FOOTSTEP_RUN := FootStep.new(0.3, -14, 1.02, $StepsMetal)
+@onready var FOOTSTEP_WALK := FootStep.new(0.5, -28, 1.0, $StepsMetal)
+@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -32, 0.96, $StepsMetal)
+@onready var FOOTSTEP_RUN := FootStep.new(0.3, -23, 1.02, $StepsMetal)
 
 var footstep : FootStep
 var lastFootstep := 0.0
@@ -337,7 +335,7 @@ func handle_state(moving):
 	if sprint_enabled:
 		if sprint_mode == 0:
 			if (handled and handled_sprint) or (not handled and Input.is_action_pressed(SPRINT) and state != "crouching"):
-				if moving:
+				if moving && !closed_eyes:
 					if state != "sprinting":
 						enter_sprint_state()
 				else:
@@ -467,9 +465,44 @@ func _process(delta):
 	# Set the global shader parameters
 	var pos = global_position
 	
+	sanity_display += (sanity - sanity_display) * delta * 0.5
+	sanity_display = maxf(0.0, sanity_display)
+	var sanity01 := (1.0 - (sanity_display/SANITY_MAX))
 	RenderingServer.global_shader_parameter_set("player_pos", position)
-	$PostProcess/ColorRect.material.set_shader_parameter("distortion", (1.0 - (sanity_display/SANITY_MAX)) * 0.6)
+	RenderingServer.global_shader_parameter_set("wall_distort", sanity01 * 1.05)
+	RenderingServer.global_shader_parameter_set("sanity", sanity01)
 	
+	if Debug.debug:
+		$InterfaceLayer/UserInterface/DebugPanel.add_property("Sanity", sanity, 4)
+	
+	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
+
+
+var closed_eyes := false
+var blink_tween: Tween
+func blink(closing : bool):
+	if blink_tween: blink_tween.kill()
+	blink_tween = create_tween()
+	blink_tween.set_ease(Tween.EASE_OUT)
+	blink_tween.set_trans(Tween.TRANS_QUART)
+	
+	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, 0.5)
+	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 22050.0, 0.5)
+	
+	if closing:
+		blink_tween.tween_callback(func(): closed_eyes = true)
+	else:
+		closed_eyes = false
+
+func _input(event: InputEvent):
+	if event.is_action_pressed("Blink"):
+		blink(true)
+	elif event.is_action_released("Blink"):
+		blink(false)
+	
+	if event.is_action_pressed("ui_end"): #debug
+		sanity -= 10.0
+		print(sanity)
 
 
 func _unhandled_input(event : InputEvent):

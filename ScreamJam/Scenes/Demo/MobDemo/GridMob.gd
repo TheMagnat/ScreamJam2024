@@ -1,7 +1,7 @@
-class_name GridEntity extends CharacterBody3D
+class_name GridEntity extends Node3D
 
 
-const SPEED = 500.0
+const SPEED = 6.0
 
 @export var map: Map
 

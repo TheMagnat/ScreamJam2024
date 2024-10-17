@@ -21,4 +21,3 @@ var goalWorldPosition: Vector3 = Vector3.ZERO
 func setInitialPosition():
 	var temporary3iPosition: Vector3i = (global_position / map.gridSpace).round()
 	goalPosition = Vector2i(temporary3iPosition.x, temporary3iPosition.z)
-	print("GLOBAL POS: ", global_position, " gridspace: ", map.gridSpace, " div: ", global_position / map.gridSpace, " tempo: ", temporary3iPosition, " goal POS: ", goalPosition)

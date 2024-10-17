@@ -4,14 +4,14 @@
 code = "shader_type spatial;
 
 uniform sampler2D noise;
-uniform float amount : hint_range(0.0, 0.9, 0.001);
+global uniform float wall_distort : hint_range(0.0, 0.9, 0.001);
 global uniform vec3 player_pos;
 
 varying vec3 world_position;
 
 float f(sampler2D n, float t, vec2 uv, float offset, float jitter) {
-	float o = offset + jitter * (player_pos.x + player_pos.y + player_pos.z) * 0.003;
-	return texture(n, (1.0 + cos(vec2(o, 0.0) + vec2(0.0, t + float(int((t + o) * jitter)) * 0.25) * 0.005 + vec2(uv.x * 0.0625, 0.0))) * 0.5).r < uv.y * amount ? amount * 0.125 : 0.0;
+	float o = offset + jitter * (player_pos.x + player_pos.y + player_pos.z) * 0.005 * wall_distort;
+	return texture(n, (1.0 + cos(vec2(o, 0.0) + vec2(0.0, t + float(int((t + o) * jitter)) * 0.25) * 0.005 + vec2(uv.x * 0.0625, 0.0))) * 0.5).r < uv.y * wall_distort ? wall_distort * 0.25 : 0.0;
 }
 
 void vertex() {
@@ -23,25 +23,23 @@ void fragment() {
 	float t = TIME * 0.5;
 	float multiplier = 1.0 + (f(noise, t, uv, 0.0, 0.15135) + f(noise, t, uv, 10.0, 0.5426) + f(noise, t, uv, 20.0, 0.275363) + f(noise, t, uv, 30.0, 0.1341));
 	ALBEDO *= multiplier;
-	
+
 	vec2 uv2 = vec2(uv.x, 1.0 - min(1.0, uv.y * 0.8));
-	ALBEDO *= (1.0 - texture(noise, uv2 + vec2(cos(TIME * 0.15315), sin(TIME * 0.134151)) * 0.01).r * amount * (1.0 - uv2.y) * 0.2);
-	ALBEDO *= sqrt(uv2.y * 0.5 * amount + (1.0 - amount));
+	ALBEDO *= (1.0 - texture(noise, uv2 + vec2(cos(TIME * 0.15315), sin(TIME * 0.134151)) * 0.01).r * wall_distort * (1.0 - uv2.y) * 0.5);
+	ALBEDO *= sqrt(uv2.y * 0.125 * wall_distort + (1.0 - wall_distort));
 }"
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0x15b"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4apgc"]
 noise_type = 4
-frequency = 0.1833
-fractal_octaves = 8
+frequency = 0.2025
+fractal_lacunarity = 3.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hli42"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_irfro"]
 width = 2048
 height = 2048
-seamless = true
-noise = SubResource("FastNoiseLite_0x15b")
+noise = SubResource("FastNoiseLite_4apgc")
 
 [resource]
 render_priority = 0
 shader = SubResource("Shader_c2f7b")
-shader_parameter/amount = 0.9
-shader_parameter/noise = SubResource("NoiseTexture2D_hli42")
+shader_parameter/noise = SubResource("NoiseTexture2D_irfro")

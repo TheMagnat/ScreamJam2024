@@ -77,5 +77,5 @@ func attack(attackPosition: Vector3):
 func _physics_process(delta: float) -> void:
 	if inAttackAnimation: return
 	
-	parent.velocity = parent.global_position.direction_to(gridToken.goalWorldPosition) * parent.SPEED * delta
-	parent.move_and_slide()
+	#var velocity: Vector3 = parent.global_position.direction_to(gridToken.goalWorldPosition) * parent.SPEED * delta
+	parent.global_position = parent.global_position.lerp(gridToken.goalWorldPosition, 0.5 * parent.SPEED * delta)

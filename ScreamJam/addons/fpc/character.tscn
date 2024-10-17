@@ -1,6 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="Shader" path="res://addons/fpc/character.gdshader" id="3_pevgd"]
 [ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="AudioStream" uid="uid://pabnmo2kh8ri" path="res://Assets/SFX/steps/step_metal1.ogg" id="4_g3qfg"]
@@ -300,43 +301,11 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
-[sub_resource type="Shader" id="Shader_ys522"]
-code = "shader_type canvas_item;
-
-uniform sampler2D viewport : hint_screen_texture, repeat_disable, filter_linear;
-uniform float distortion : hint_range(0.0, 0.6, 0.001);
-
-float crt(vec2 uv, float offset) {
-	return 0.95 + (cos(uv.x * 1200.0 + offset) * 0.25 + cos(uv.y * 1000.0 + offset)) * 0.05;
-}
-
-vec4 distort(vec2 CENTER, float zoom, float distort) {
-	vec2 c = CENTER * zoom * (1.0 - length(CENTER) * distort);
-	return texture(viewport, vec2(0.5, 0.5) + c);
-}
-
-void fragment() {
-	float LENS_DISTORT = distortion * 0.9;
-	float ZOOM = 1.0 - distortion;
-	
-	vec2 CENTER = (SCREEN_UV - vec2(0.5));
-	COLOR = distort(CENTER, ZOOM, LENS_DISTORT);
-	
-	float dist = length(CENTER * 1.0);
-	COLOR *= vec4(1.0 - dist) + distort(CENTER, ZOOM * 0.99, LENS_DISTORT) * dist;
-	COLOR.rgb *= sqrt(1.0 - length(CENTER * 1.25));
-	
-	
-	COLOR.r *= crt(UV, 0.0);
-	COLOR.g *= crt(UV + cos(TIME * 0.005), 1.0);
-	COLOR.b *= crt(UV, 2.0);
-}
-"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o2y5p"]
 resource_local_to_scene = true
-shader = SubResource("Shader_ys522")
+shader = ExtResource("3_pevgd")
 shader_parameter/distortion = 0.0
+shader_parameter/blink = 0.0
 
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
@@ -414,7 +383,6 @@ mouse_filter = 1
 layer = 101
 
 [node name="UserInterface" type="Control" parent="InterfaceLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
