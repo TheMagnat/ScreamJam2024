@@ -8,5 +8,3 @@ gridSpace = 5.0
 thickness = 0.5
 ceil = true
 mapFilePath = "res://Scenes/Demo/map.txt"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

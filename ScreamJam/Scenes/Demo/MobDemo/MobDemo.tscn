@@ -1,3 +1,33 @@
-[gd_scene format=3 uid="uid://pddp1pe3qhsk"]
+[gd_scene load_steps=6 format=3 uid="uid://pddp1pe3qhsk"]
+
+[ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kjvu5"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_fpi3d"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bvl1m"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_qtopx"]
+sky_material = SubResource("ProceduralSkyMaterial_bvl1m")
+
+[sub_resource type="Environment" id="Environment_5624g"]
+background_mode = 2
+sky = SubResource("Sky_qtopx")
+tonemap_mode = 2
+ssil_enabled = true
+glow_enabled = true
 
 [node name="MobDemo" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5624g")
+
+[node name="Map" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_kjvu5")]
+Player = NodePath("../Character")
+
+[node name="Character" parent="." instance=ExtResource("2_fpi3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.838799, 0)

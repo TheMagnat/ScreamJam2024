@@ -40,15 +40,13 @@ class_name BetterCharacterController extends CharacterBody3D
 
 @export_group("Controls")
 # We are using UI controls because they are built into Godot Engine so they can be used right away
-@export var JUMP : String = "ui_accept"
-@export var LEFT : String = "ui_left"
-@export var RIGHT : String = "ui_right"
-@export var FORWARD : String = "ui_up"
-@export var BACKWARD : String = "ui_down"
-## By default this does not pause the game, but that can be changed in _process.
-@export var PAUSE : String = "pause"
-@export var CROUCH : String = "crouch"
-@export var SPRINT : String = "sprint"
+@export var JUMP : String = "Jump"
+@export var LEFT : String = "Left"
+@export var RIGHT : String = "Right"
+@export var FORWARD : String = "Up"
+@export var BACKWARD : String = "Down"
+@export var CROUCH : String = "Crouch"
+@export var SPRINT : String = "Sprint"
 
 # Uncomment if you want controller support
 #@export var controller_sensitivity : float = 0.035
@@ -76,8 +74,6 @@ class_name BetterCharacterController extends CharacterBody3D
 @export var view_bobbing : bool = true
 ## Enables an immersive animation when the player jumps and hits the ground.
 @export var jump_animation : bool = true
-## This determines wether the player can use the pause button, not wether the game will actually pause.
-@export var pausing_enabled : bool = true
 ## Use with caution.
 @export var gravity_enabled : bool = true
 
@@ -140,9 +136,6 @@ func check_controls(): # If you add a control, you might want to add a check for
 	if !InputMap.has_action(BACKWARD):
 		push_error("No control mapped for move backward. Please add an input map control. Disabling movement.")
 		immobile = true
-	if !InputMap.has_action(PAUSE):
-		push_error("No control mapped for pause. Please add an input map control. Disabling pausing.")
-		pausing_enabled = false
 	if !InputMap.has_action(CROUCH):
 		push_error("No control mapped for crouch. Please add an input map control. Disabling crouching.")
 		crouch_enabled = false
@@ -400,17 +393,10 @@ func _process(delta):
 	
 	handle_head_rotation()
 	
-	if pausing_enabled:
-		if Input.is_action_just_pressed(PAUSE):
-			# You may want another node to handle pausing, because this player may get paused too.
-			match Input.mouse_mode:
-				Input.MOUSE_MODE_CAPTURED:
-					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-					#get_tree().paused = false
-				Input.MOUSE_MODE_VISIBLE:
-					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-					#get_tree().paused = false
-
+	# Set the global shader parameters
+	var pos = global_position
+	
+	RenderingServer.global_shader_parameter_set("player_pos", position)
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

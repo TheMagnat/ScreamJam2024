@@ -110,13 +110,6 @@ mesh = SubResource("SphereMesh_n5p6o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.09326)
 base_speed = 5.0
 sprint_speed = 10.0
-JUMP = "Jump"
-LEFT = "Left"
-RIGHT = "Right"
-FORWARD = "Up"
-BACKWARD = "Down"
-CROUCH = "Crouch"
-SPRINT = "Sprint"
 motion_smoothing = false
 
 [node name="CameraRotationRestrictor" type="Node" parent="Character"]
