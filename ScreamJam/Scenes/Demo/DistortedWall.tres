@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://colpuddyi1jsj"]
+
+[sub_resource type="Shader" id="Shader_c2f7b"]
+code = "shader_type spatial;
+
+uniform sampler2D noise;
+
+float f(sampler2D n, float t, vec2 uv, float offset, float jitter) {
+	return texture(n, (1.0 + cos(vec2(offset, 0.0) + vec2(0.0, t + float(int((t + offset) * jitter)) * 0.25) * 0.005 + vec2(abs(uv.x * 0.5 - 0.25), 0.0))) * 0.5).r < uv.y * 0.9 ? 0.25 : 0.0;
+}
+
+void fragment() {
+	float t = TIME;
+	float multiplier = 1.0 + (f(noise, t, UV, 0.0, 0.15135) + f(noise, t, UV, 10.0, 0.5426) + f(noise, t, UV, 20.0, 0.275363) + f(noise, t, UV, 30.0, 0.1341));
+	ALBEDO *= multiplier;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0x15b"]
+noise_type = 4
+frequency = 0.0405
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hli42"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_0x15b")
+
+[resource]
+render_priority = 0
+shader = SubResource("Shader_c2f7b")
+shader_parameter/noise = SubResource("NoiseTexture2D_hli42")

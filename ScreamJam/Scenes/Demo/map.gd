@@ -1,6 +1,8 @@
 @tool
 class_name Map extends Node3D
 
+const DistoredWallMaterial := preload("res://Scenes/Demo/DistortedWall.tres")
+
 # Map parameters
 @export var gridSpace: float = 1.0
 @export var thickness: float = 1.0
@@ -13,11 +15,15 @@ var mapSize: Vector2i
 # Cache
 @onready var wallMesh := BoxMesh.new()
 @onready var wallShape := BoxShape3D.new()
+@onready var fullWallMesh := BoxMesh.new()
+@onready var fullWallShape := BoxShape3D.new()
 
 
 func _ready() -> void:
 	wallMesh.size = Vector3(gridSpace, thickness, gridSpace)
-	wallShape.size = Vector3(gridSpace, thickness, gridSpace)
+	wallShape.size = wallMesh.size
+	fullWallMesh.size = Vector3(gridSpace, gridSpace, gridSpace)
+	fullWallShape.size = fullWallMesh.size
 	
 	loadMap("res://Scenes/Demo/map.txt")
 	generateMapMesh()
@@ -25,28 +31,39 @@ func _ready() -> void:
 # Side :  1
 #        0 2
 #         3
-func createCellWall(elementPosition: Vector3, side: int):
+
+enum WallType {
+	Left, Up, Right, Down
+}
+
+func createCellWall(elementPosition: Vector3, side: WallType):
 	var positionOffset: Vector3
 	var rotationX: float = 0
 	var rotationZ: float = 0
-	if side == 0:
+	if side == WallType.Left:
 		positionOffset = Vector3(-(gridSpace + thickness) / 2.0, gridSpace / 2.0, 0.0)
 		rotationZ = PI / 2.0
-	elif side == 1:
+		rotationX = PI / 2.0
+	elif side == WallType.Up:
 		positionOffset = Vector3(0.0, gridSpace / 2.0, -(gridSpace + thickness) / 2.0)
 		rotationX = PI / 2.0
-	elif side == 2:
+	elif side == WallType.Right:
 		positionOffset = Vector3((gridSpace + thickness) / 2.0, gridSpace / 2.0, 0.0)
 		rotationZ = PI / 2.0
-	elif side == 3:
+		rotationX = PI / 2.0
+	elif side == WallType.Down:
 		positionOffset = Vector3(0.0, gridSpace / 2.0, (gridSpace + thickness) / 2.0)
 		rotationX = PI / 2.0
 	
 	var newWallMesh := MeshInstance3D.new()
 	newWallMesh.mesh = wallMesh
+	newWallMesh.material_override = DistoredWallMaterial
 	newWallMesh.position = elementPosition + positionOffset
 	newWallMesh.rotation.x = rotationX
 	newWallMesh.rotation.z = rotationZ
+	
+	#if side == 2:
+		#newWallMesh.hide()
 	add_child(newWallMesh)
 	
 	# Create collision Shape
@@ -57,11 +74,40 @@ func createCellWall(elementPosition: Vector3, side: int):
 	newCollisionShape.rotation.z = rotationZ
 	add_child(newCollisionShape)
 
-func getMapData(x: int, y: int):
+func createSceneFullWall(elementPosition: Vector3):
+	var positionOffset := Vector3(0.0, gridSpace / 2.0, 0.0)
+	
+	var newWallMesh := MeshInstance3D.new()
+	newWallMesh.mesh = fullWallMesh
+	newWallMesh.material_override = DistoredWallMaterial
+	newWallMesh.position = elementPosition + positionOffset
+	add_child(newWallMesh)
+	
+	# Create collision Shape
+	var newCollisionShape := CollisionShape3D.new()
+	newCollisionShape.shape = fullWallShape
+	newCollisionShape.position = elementPosition + positionOffset
+	add_child(newCollisionShape)
+
+func getMapData(x: int, y: int) -> int:
+	if x < 0 or y < 0 or x >= mapSize.x or y >= mapSize.y:
+		return 0
 	return mapData[x + y * mapSize.x]
 
+func getMapPos(x: int, y: int) -> Vector3:
+	return Vector3(x * gridSpace, 0.0, y * gridSpace)
+
+func drawWallCell(x: int, y: int, side: WallType) -> bool:
+	if getMapData(x, y) != 0:
+		return false
+	var L := getMapData(x - 1, y) == 0
+	var R := getMapData(x + 1, y) == 0
+	var U := getMapData(x, y - 1) == 0
+	var D := getMapData(x, y + 1) == 0
+	return !((side == WallType.Left || side == WallType.Right) && !(U && D) || (side == WallType.Up || side == WallType.Down) && !(L && R))
+
 func createCell(x: int, y: int):
-	var elementPosition := Vector3(x * gridSpace, 0.0, y * gridSpace)
+	var elementPosition := getMapPos(x, y)
 	
 	# Create ground Mesh
 	var newGroundMesh := MeshInstance3D.new()
@@ -91,17 +137,17 @@ func createCell(x: int, y: int):
 		add_child(newCeilShape)
 	
 	# Create Wall Mesh
-	if x == 0 or getMapData(x - 1, y) == 0:
-		createCellWall(elementPosition, 0)
+	if drawWallCell(x - 1, y, WallType.Left):
+		createCellWall(elementPosition, WallType.Left)
 	
-	if y == 0 or getMapData(x, y - 1) == 0:
-		createCellWall(elementPosition, 1)
+	if drawWallCell(x, y - 1, WallType.Up):
+		createCellWall(elementPosition, WallType.Up)
 	
-	if x == (mapSize.x - 1) or getMapData(x + 1, y) == 0:
-		createCellWall(elementPosition, 2)
+	if drawWallCell(x + 1, y, WallType.Right):
+		createCellWall(elementPosition, WallType.Right)
 	
-	if y == (mapSize.y - 1) or getMapData(x, y + 1) == 0:
-		createCellWall(elementPosition, 3)
+	if drawWallCell(x, y + 1, WallType.Down):
+		createCellWall(elementPosition, WallType.Down)
 	
 	
 
@@ -113,6 +159,8 @@ func generateMapMesh():
 	for element in mapData:
 		if element == 1:
 			createCell(currentCol, currentRow)
+		elif !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
+			createSceneFullWall(getMapPos(currentCol, currentRow))
 		
 		currentCol += 1
 		if currentCol == mapSize.x:
