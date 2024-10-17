@@ -104,7 +104,6 @@ const SANITY_MAX := 100.0
 const SANITY_RECOVER := 5.0
 var sanity := SANITY_MAX
 var sanity_display := sanity
-var sanity_tween : Tween
 
 const HEALTH_MAX := 100.0
 const HEALTH_RECOVER := 0.5
@@ -112,11 +111,6 @@ var health := HEALTH_MAX
 
 func damageSanity(dmg: float):
 	sanity -= dmg
-	if sanity_tween: sanity_tween.kill()
-	sanity_tween = get_tree().create_tween()
-	sanity_tween.set_ease(Tween.EASE_IN_OUT)
-	sanity_tween.set_trans(Tween.TRANS_SINE)
-	sanity_tween.tween_property(self, "sanity_display", sanity, 1.0)
 
 func damageHealth(dmg: float):
 	health -= dmg
@@ -232,6 +226,7 @@ func _physics_process(delta):
 				1:
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
+	sanity = minf(SANITY_MAX, sanity + SANITY_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
 
@@ -270,13 +265,13 @@ class FootStep:
 	func stop(): if _tween: _tween.kill()
 	func update():
 		_tween = stream.get_tree().create_tween()
-		_tween.tween_property(stream, "volume_db", volume, 0.5)
-		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.5)
+		_tween.tween_property(stream, "volume_db", volume, 0.25)
+		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.25)
 
 var footStepVolume : Tween
-@onready var FOOTSTEP_WALK := FootStep.new(0.5, -20, 1.0, $StepsMetal)
-@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -26, 0.96, $StepsMetal)
-@onready var FOOTSTEP_RUN := FootStep.new(0.3, -14, 1.02, $StepsMetal)
+@onready var FOOTSTEP_WALK := FootStep.new(0.5, -28, 1.0, $StepsMetal)
+@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -32, 0.96, $StepsMetal)
+@onready var FOOTSTEP_RUN := FootStep.new(0.3, -23, 1.02, $StepsMetal)
 
 var footstep : FootStep
 var lastFootstep := 0.0
@@ -467,8 +462,11 @@ func _process(delta):
 	# Set the global shader parameters
 	var pos = global_position
 	
+	sanity_display += (sanity - sanity_display) * delta * 0.5
+	var sanity01 := (1.0 - (sanity_display/SANITY_MAX))
 	RenderingServer.global_shader_parameter_set("player_pos", position)
-	$PostProcess/ColorRect.material.set_shader_parameter("distortion", (1.0 - (sanity_display/SANITY_MAX)) * 0.6)
+	RenderingServer.global_shader_parameter_set("wall_distort", sanity01 * 0.9)
+	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
 	
 
 
