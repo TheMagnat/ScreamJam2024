@@ -100,6 +100,29 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 # Stores mouse input for rotating the camera in the phyhsics process
 var mouseInput : Vector2 = Vector2(0,0)
 
+const SANITY_MAX := 100.0
+const SANITY_RECOVER := 5.0
+var sanity := SANITY_MAX
+var sanity_display := sanity
+var sanity_tween : Tween
+
+const HEALTH_MAX := 100.0
+const HEALTH_RECOVER := 0.5
+var health := HEALTH_MAX
+
+func damageSanity(dmg: float):
+	sanity -= dmg
+	if sanity_tween: sanity_tween.kill()
+	sanity_tween = get_tree().create_tween()
+	sanity_tween.set_ease(Tween.EASE_IN_OUT)
+	sanity_tween.set_trans(Tween.TRANS_SINE)
+	sanity_tween.tween_property(self, "sanity_display", sanity, 1.0)
+
+func damageHealth(dmg: float):
+	health -= dmg
+	if health < 0.0:
+		print("DEAD DEAD DEAD")
+
 func _ready():
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -445,6 +468,9 @@ func _process(delta):
 	var pos = global_position
 	
 	RenderingServer.global_shader_parameter_set("player_pos", position)
+	$PostProcess/ColorRect.material.set_shader_parameter("distortion", (1.0 - (sanity_display/SANITY_MAX)) * 0.6)
+	
+
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
