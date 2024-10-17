@@ -121,6 +121,8 @@ func _ready():
 	JUMP_ANIMATION.play("RESET")
 	CROUCH_ANIMATION.play("RESET")
 	
+	enter_normal_state()
+	
 	check_controls()
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
@@ -231,12 +233,51 @@ func handle_jumping():
 				velocity.y += jump_velocity
 
 
+
 func handle_movement_input(delta: float, input_dir: Vector2):
 	var direction: Vector2 = input_dir.rotated(-HEAD.rotation.y)
 	handle_movement(delta, direction)
 
+class FootStep:
+	var step: float
+	var volume: float
+	var pitch: float
+	var stream: AudioStreamPlayer3D
+	var _tween : Tween
+	
+	func _init(s: float, v: float, p: float, a: AudioStreamPlayer3D):
+		step = s
+		volume = v
+		pitch = p
+		stream = a
+	
+	func stop(): if _tween: _tween.kill()
+	func update():
+		_tween = stream.get_tree().create_tween()
+		_tween.tween_property(stream, "volume_db", volume, 0.5)
+		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.5)
+
+var footStepVolume : Tween
+@onready var FOOTSTEP_WALK := FootStep.new(0.5, -20, 1.0, $StepsMetal)
+@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -26, 0.96, $StepsMetal)
+@onready var FOOTSTEP_RUN := FootStep.new(0.3, -14, 1.02, $StepsMetal)
+
+var footstep : FootStep
+var lastFootstep := 0.0
+
+func setFootStepVolume(v: float):
+	if footStepVolume: footStepVolume.kill()
+	footStepVolume = get_tree().create_tween()
+	footStepVolume.tween_property($StepsMetal, "volume_db", v, 0.5)
+
 func handle_movement(delta: float, dir: Vector2):
 	var direction = Vector3(dir.x, 0, dir.y)
+	
+	lastFootstep += delta
+	if is_on_floor() && direction.length() > 0.5 && lastFootstep > footstep.step:
+		lastFootstep = 0.0
+		footstep.stream.play()
+	
 	move_and_slide()
 	
 	if in_air_momentum:
@@ -256,7 +297,6 @@ func handle_movement(delta: float, dir: Vector2):
 			velocity.z = direction.z * speed
 
 func handle_head_rotation():
-	
 	if not lockedCamera:
 		HEAD.rotation_degrees.y -= mouseInput.x * mouse_sensitivity
 		if invert_mouse_y:
@@ -322,6 +362,11 @@ func handle_state(moving):
 
 # Any enter state function should only be called once when you want to enter that state, not every frame.
 
+func set_footstep(f: FootStep):
+	if footstep: footstep.stop()
+	footstep = f
+	footstep.update()
+
 func enter_normal_state():
 	#print("entering normal state")
 	var prev_state = state
@@ -329,12 +374,14 @@ func enter_normal_state():
 		CROUCH_ANIMATION.play_backwards("crouch")
 	state = "normal"
 	speed = base_speed
+	set_footstep(FOOTSTEP_WALK)
 
 func enter_crouch_state():
 	#print("entering crouch state")
 	var prev_state = state
 	state = "crouching"
 	speed = crouch_speed
+	set_footstep(FOOTSTEP_CROUCH)
 	CROUCH_ANIMATION.play("crouch")
 
 func enter_sprint_state():
@@ -344,6 +391,7 @@ func enter_sprint_state():
 		CROUCH_ANIMATION.play_backwards("crouch")
 	state = "sprinting"
 	speed = sprint_speed
+	set_footstep(FOOTSTEP_RUN)
 
 
 var wasFovTweenSprint: bool = false

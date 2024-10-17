@@ -1,4 +1,10 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://bx67sf4luhshy"]
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bx67sf4luhshy"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_iascx"]
+resource_name = "Reverb"
+room_size = 0.18
+damping = 0.88
+wet = 0.18
 
 [resource]
 bus/1/name = &"SplashScreen"
@@ -7,3 +13,11 @@ bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = -20.3764
 bus/1/send = &"Master"
+bus/2/name = &"RoomReverb"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectReverb_iascx")
+bus/2/effect/0/enabled = true
