@@ -2,18 +2,24 @@ extends CanvasLayer
 
 @export var availableAnimations: Array[Control]
 
-
+enum Type {
+	None = -1,
+	
+	Shadow = 0,
+	Spike = 1,
+	SpikeBall = 2
+}
 
 func _ready() -> void:
 	for animation in availableAnimations:
 		animation.hide()
 
-func start(callback: Callable, duration: float, animationInIndex: int = 0, animationOutIndex: int = -1, animationParameters: Array = []):
+func start(callback: Callable, duration: float, animationInIndex: Type = Type.Shadow, animationOutIndex: Type = Type.None, animationParameters: Array = []):
 	if animationInIndex >= availableAnimations.size():
 		push_error("Transition - %d is out of range" % animationInIndex)
 		return
 	
-	if animationOutIndex < 0 or animationInIndex >= availableAnimations.size():
+	if animationOutIndex == Type.None or animationInIndex >= availableAnimations.size():
 		if animationInIndex < 0:
 			push_error("Should have at least one animation set")
 			return
