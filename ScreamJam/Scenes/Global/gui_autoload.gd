@@ -16,14 +16,11 @@ var resolutions = {
 	"640x480" : Vector2i(640,480),
 }
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	layer = 120
 	var pauseMenuScene = load(pauseMenuPath).instantiate()
 	add_child(pauseMenuScene)
 	pauseMenuScene.hide()
-	pass # Replace with function body.
-
 
 func _input(_event):
 	if Input.is_action_just_pressed("Pause"):
