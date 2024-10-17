@@ -18,6 +18,7 @@ var resolutions = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	layer = 120
 	var pauseMenuScene = load(pauseMenuPath).instantiate()
 	add_child(pauseMenuScene)
 	pauseMenuScene.hide()

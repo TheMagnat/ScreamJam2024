@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=16 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="Script" path="res://Scenes/Demo/map.gd" id="1_eh1nr"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
@@ -17,10 +17,17 @@ sky_material = SubResource("ProceduralSkyMaterial_02umm")
 background_mode = 2
 sky = SubResource("Sky_xp1a5")
 tonemap_mode = 2
+tonemap_exposure = 2.0
 ssao_enabled = true
 glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.3005
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gqt30"]
+dof_blur_near_enabled = true
+dof_blur_near_distance = 0.01
+dof_blur_near_transition = -1.0
+dof_blur_amount = 1.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_psfs2"]
 frequency = 0.011
@@ -39,10 +46,44 @@ shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_n5p6o"]
 
+[sub_resource type="Shader" id="Shader_ys522"]
+code = "shader_type canvas_item;
+
+uniform sampler2D viewport : hint_screen_texture, repeat_disable, filter_linear;
+
+float crt(vec2 uv, float offset) {
+	return 0.95 + (cos(uv.x * 1200.0 + offset) * 0.25 + cos(uv.y * 1000.0 + offset)) * 0.05;
+}
+
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	
+	vec2 CENTER = (uv - vec2(0.5));
+	vec2 c1 = CENTER * 0.9 * (1.0 - length(CENTER) * 0.075);
+	COLOR = texture(viewport, vec2(0.5, 0.5) + c1);
+	
+	vec2 c2 = CENTER * 0.88 * (1.0 - length(CENTER) * 0.075);
+	float dist = length(CENTER * 1.0);
+	COLOR *= vec4(1.0 - dist) + texture(viewport, vec2(0.5, 0.5) + c2) * dist;
+	COLOR.rgb *= sqrt(1.0 - length(CENTER * 1.25));
+	
+	
+	COLOR.r *= crt(UV, 0.0);
+	COLOR.g *= crt(UV + cos(TIME * 0.005), 1.0);
+	COLOR.b *= crt(UV, 2.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhbb3"]
+resource_local_to_scene = true
+shader = SubResource("Shader_ys522")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_w1wca")
+camera_attributes = SubResource("CameraAttributesPractical_gqt30")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -76,6 +117,9 @@ CROUCH = "Crouch"
 SPRINT = "Sprint"
 motion_smoothing = false
 
+[node name="UserInterface" parent="Character" index="4"]
+visible = false
+
 [node name="DebugPanel" parent="Character/UserInterface" index="0"]
 visible = true
 
@@ -84,5 +128,14 @@ script = ExtResource("4_g5fn0")
 
 [node name="GridRestrictor" type="Node" parent="Character"]
 script = ExtResource("5_olldc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_rhbb3")
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 1
 
 [editable path="Character"]
