@@ -52,25 +52,29 @@ shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 code = "shader_type canvas_item;
 
 uniform sampler2D viewport : hint_screen_texture, repeat_disable, filter_linear;
+uniform float distortion : hint_range(0.0, 0.5, 0.001);
 
 float crt(vec2 uv, float offset) {
 	return 0.95 + (cos(uv.x * 1200.0 + offset) * 0.25 + cos(uv.y * 1000.0 + offset)) * 0.05;
 }
 
+vec4 distort(vec2 CENTER, float zoom, float distort) {
+	vec2 c = CENTER * zoom * (1.0 - length(CENTER) * distort);
+	return texture(viewport, vec2(0.5, 0.5) + c);
+}
 
 void fragment() {
-	vec2 uv = SCREEN_UV;
-
-	vec2 CENTER = (uv - vec2(0.5));
-	vec2 c1 = CENTER * 0.9 * (1.0 - length(CENTER) * 0.075);
-	COLOR = texture(viewport, vec2(0.5, 0.5) + c1);
-
-	vec2 c2 = CENTER * 0.88 * (1.0 - length(CENTER) * 0.075);
+	float LENS_DISTORT = distortion * 0.9;
+	float ZOOM = 1.0 - distortion;
+	
+	vec2 CENTER = (SCREEN_UV - vec2(0.5));
+	COLOR = distort(CENTER, ZOOM, LENS_DISTORT);
+	
 	float dist = length(CENTER * 1.0);
-	COLOR *= vec4(1.0 - dist) + texture(viewport, vec2(0.5, 0.5) + c2) * dist;
+	COLOR *= vec4(1.0 - dist) + distort(CENTER, ZOOM * 0.99, LENS_DISTORT) * dist;
 	COLOR.rgb *= sqrt(1.0 - length(CENTER * 1.25));
-
-
+	
+	
 	COLOR.r *= crt(UV, 0.0);
 	COLOR.g *= crt(UV + cos(TIME * 0.005), 1.0);
 	COLOR.b *= crt(UV, 2.0);
@@ -80,6 +84,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rhbb3"]
 resource_local_to_scene = true
 shader = SubResource("Shader_ys522")
+shader_parameter/distortion = 0.0
 
 [node name="Node3D" type="Node3D"]
 
