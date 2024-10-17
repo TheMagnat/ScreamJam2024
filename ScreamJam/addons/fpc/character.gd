@@ -139,6 +139,7 @@ func _ready():
 	check_controls()
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("blink", 0.0)
+	blink(0.0)
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -465,9 +466,10 @@ func _process(delta):
 	var pos = global_position
 	
 	sanity_display += (sanity - sanity_display) * delta * 0.5
+	sanity_display = maxf(0.0, sanity_display)
 	var sanity01 := (1.0 - (sanity_display/SANITY_MAX))
 	RenderingServer.global_shader_parameter_set("player_pos", position)
-	RenderingServer.global_shader_parameter_set("wall_distort", sanity01 * 0.9)
+	RenderingServer.global_shader_parameter_set("wall_distort", sanity01 * 1.05)
 	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
 
 
@@ -480,6 +482,8 @@ func blink(closing : bool):
 	blink_tween.set_trans(Tween.TRANS_QUART)
 	
 	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, 0.5)
+	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 22050.0, 0.5)
+	
 	if closing:
 		blink_tween.tween_callback(func(): closed_eyes = true)
 	else:
@@ -490,6 +494,10 @@ func _input(event: InputEvent):
 		blink(true)
 	elif event.is_action_released("Blink"):
 		blink(false)
+	
+	#if event.is_action_pressed("ui_end"): #debug
+		#sanity -= 10.0
+		#print(sanity)
 
 
 func _unhandled_input(event : InputEvent):
