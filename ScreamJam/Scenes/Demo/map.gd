@@ -3,6 +3,7 @@ class_name Map extends Node3D
 
 const DistoredWallMaterial := preload("res://Scenes/Demo/DistortedWall.tres")
 const GroundMaterial := preload("res://Scenes/Demo/Ground.tres")
+@export var Player : BetterCharacterController
 
 # Map parameters
 @export var gridSpace: float = 1.0
@@ -37,9 +38,8 @@ func _ready() -> void:
 	loadMap(mapFilePath)
 	generateMapMesh()
 
-# Side :  1
-#        0 2
-#         3
+func _process(_delta: float):
+	DistoredWallMaterial.set_shader_parameter("player_pos", Player.global_position)
 
 enum WallType {
 	Left, Up, Right, Down
@@ -47,29 +47,27 @@ enum WallType {
 
 func createCellWall(elementPosition: Vector3, side: WallType):
 	var positionOffset: Vector3
-	var rotationX: float = 0
-	var rotationZ: float = 0
+	var rot := Vector3()
 	if side == WallType.Left:
 		positionOffset = Vector3(-(gridSpace + thickness) / 2.0, gridSpace / 2.0, 0.0)
-		rotationZ = PI / 2.0
-		rotationX = PI / 2.0
+		rot.z = PI / 2.0
+		rot.x = -PI / 2.0
 	elif side == WallType.Up:
 		positionOffset = Vector3(0.0, gridSpace / 2.0, -(gridSpace + thickness) / 2.0)
-		rotationX = PI / 2.0
+		rot.x = PI / 2.0
 	elif side == WallType.Right:
 		positionOffset = Vector3((gridSpace + thickness) / 2.0, gridSpace / 2.0, 0.0)
-		rotationZ = PI / 2.0
-		rotationX = PI / 2.0
+		rot.z = PI / 2.0
+		rot.x = -PI / 2.0
 	elif side == WallType.Down:
 		positionOffset = Vector3(0.0, gridSpace / 2.0, (gridSpace + thickness) / 2.0)
-		rotationX = PI / 2.0
+		rot.x = PI / 2.0
 	
 	var newWallMesh := MeshInstance3D.new()
 	newWallMesh.mesh = wallMesh
 	newWallMesh.material_override = DistoredWallMaterial
 	newWallMesh.position = elementPosition + positionOffset
-	newWallMesh.rotation.x = rotationX
-	newWallMesh.rotation.z = rotationZ
+	newWallMesh.rotation = rot
 	
 	#if side == 2:
 		#newWallMesh.hide()
@@ -79,8 +77,7 @@ func createCellWall(elementPosition: Vector3, side: WallType):
 	var newCollisionShape := CollisionShape3D.new()
 	newCollisionShape.shape = wallShape
 	newCollisionShape.position = elementPosition + positionOffset
-	newCollisionShape.rotation.x = rotationX
-	newCollisionShape.rotation.z = rotationZ
+	newCollisionShape.rotation = rot
 	add_child(newCollisionShape)
 
 func createSceneFullWall(elementPosition: Vector3):
