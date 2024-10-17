@@ -7,7 +7,7 @@ class_name GridRestrictor extends Node
 @onready var cameraRotationRestrictor: CameraRotationRestrictor = $"../CameraRotationRestrictor"
 
 # DEBUG
-@onready var debugPanel: DebugPanel = $"../UserInterface/DebugPanel"
+@onready var debugPanel: DebugPanel = $"../InterfaceLayer/UserInterface/DebugPanel"
 
 
 @export var lockInGrid: bool = false

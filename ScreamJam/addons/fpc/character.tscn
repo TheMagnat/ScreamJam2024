@@ -343,13 +343,13 @@ _data = {
 "land_right": SubResource("Animation_vsknp")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
+
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
 script = ExtResource("1_0t4e8")
@@ -390,7 +390,18 @@ libraries = {
 }
 speed_scale = 4.0
 
-[node name="UserInterface" type="Control" parent="."]
+[node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_k4wwl")
+target_position = Vector3(0, 0.5, 0)
+
+[node name="EditorModule" type="Node" parent="."]
+script = ExtResource("3_v3ckk")
+
+[node name="InterfaceLayer" type="CanvasLayer" parent="."]
+layer = 101
+
+[node name="UserInterface" type="Control" parent="InterfaceLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -399,8 +410,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
-visible = false
+[node name="DebugPanel" type="PanelContainer" parent="InterfaceLayer/UserInterface"]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
@@ -409,16 +419,8 @@ offset_bottom = 50.0
 theme = SubResource("Theme_wdf0f")
 script = ExtResource("3_x1wcc")
 
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="InterfaceLayer/UserInterface/DebugPanel"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InterfaceLayer/UserInterface/DebugPanel/MarginContainer"]
 layout_mode = 2
-
-[node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("SphereShape3D_k4wwl")
-target_position = Vector3(0, 0.5, 0)
-
-[node name="EditorModule" type="Node" parent="."]
-script = ExtResource("3_v3ckk")

@@ -2,17 +2,21 @@
 class_name Map extends Node3D
 
 const DistoredWallMaterial := preload("res://Scenes/Demo/DistortedWall.tres")
+const GroundMaterial := preload("res://Scenes/Demo/Ground.tres")
 
 # Map parameters
 @export var gridSpace: float = 1.0
 @export var thickness: float = 1.0
 @export var ceil: bool = false
+@export_file("*.txt") var mapFilePath: String
+
 
 # Map data 
 var mapData := PackedInt32Array()
 var mapSize: Vector2i
 
 # Cache
+@onready var groundMesh := PlaneMesh.new()
 @onready var wallMesh := BoxMesh.new()
 @onready var wallShape := BoxShape3D.new()
 @onready var fullWallMesh := BoxMesh.new()
@@ -20,12 +24,17 @@ var mapSize: Vector2i
 
 
 func _ready() -> void:
+	groundMesh.size = Vector2(gridSpace, gridSpace)
+	groundMesh.subdivide_depth = 16.0
+	groundMesh.subdivide_width = 16.0
+	groundMesh.custom_aabb = AABB(Vector3(-gridSpace / 2.0, 0.0, -gridSpace / 2.0), Vector3(gridSpace, 3.0, gridSpace))
+	
 	wallMesh.size = Vector3(gridSpace, thickness, gridSpace)
 	wallShape.size = wallMesh.size
 	fullWallMesh.size = Vector3(gridSpace, gridSpace, gridSpace)
 	fullWallShape.size = fullWallMesh.size
 	
-	loadMap("res://Scenes/Demo/map.txt")
+	loadMap(mapFilePath)
 	generateMapMesh()
 
 # Side :  1
@@ -98,7 +107,8 @@ func getMapPos(x: int, y: int) -> Vector3:
 	return Vector3(x * gridSpace, 0.0, y * gridSpace)
 
 func drawWallCell(x: int, y: int, side: WallType) -> bool:
-	if getMapData(x, y) != 0:
+	var currentCellValue: int = getMapData(x, y)
+	if currentCellValue != 0:
 		return false
 	var L := getMapData(x - 1, y) == 0
 	var R := getMapData(x + 1, y) == 0
@@ -111,7 +121,8 @@ func createCell(x: int, y: int):
 	
 	# Create ground Mesh
 	var newGroundMesh := MeshInstance3D.new()
-	newGroundMesh.mesh = wallMesh
+	newGroundMesh.mesh = groundMesh
+	newGroundMesh.material_override = GroundMaterial
 	newGroundMesh.position = elementPosition
 	add_child(newGroundMesh)
 	
@@ -123,12 +134,21 @@ func createCell(x: int, y: int):
 	
 	
 	if ceil:
-		# Create ground Mesh
+		# Create ceil Mesh
 		var ceilPosition: Vector3 = elementPosition + Vector3(0.0, gridSpace, 0.0)
+		
 		var newCeilMesh := MeshInstance3D.new()
 		newCeilMesh.mesh = wallMesh
 		newCeilMesh.position = ceilPosition
+		newCeilMesh.rotation.x = PI
 		add_child(newCeilMesh)
+		
+		var newCeilMesh2 := MeshInstance3D.new()
+		newCeilMesh2.mesh = groundMesh
+		newCeilMesh2.material_override = GroundMaterial
+		newCeilMesh2.position = ceilPosition + Vector3(0.0, -(0.01 + thickness / 2.0), 0.0)
+		newCeilMesh2.rotation.x = PI
+		add_child(newCeilMesh2)
 		
 		# Create collision Shape
 		var newCeilShape := CollisionShape3D.new()
@@ -159,7 +179,7 @@ func generateMapMesh():
 	for element in mapData:
 		if element == 1:
 			createCell(currentCol, currentRow)
-		elif !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
+		elif element != 2 and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
 			createSceneFullWall(getMapPos(currentCol, currentRow))
 		
 		currentCol += 1
