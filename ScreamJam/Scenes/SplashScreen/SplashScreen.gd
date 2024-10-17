@@ -20,5 +20,5 @@ func startOutAnimation():
 	animationPlayer.animation_finished.connect(loadNextScene)
 	
 func loadNextScene(event):
-	Transition.start(get_tree().change_scene_to_packed.bind(transitionScene), 0.75, -1, 1)
+	Transition.start(get_tree().change_scene_to_packed.bind(transitionScene), 0.75, Transition.Type.None, Transition.Type.SpikeBall)
 	
