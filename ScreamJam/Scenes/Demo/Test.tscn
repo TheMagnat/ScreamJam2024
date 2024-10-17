@@ -52,7 +52,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 code = "shader_type canvas_item;
 
 uniform sampler2D viewport : hint_screen_texture, repeat_disable, filter_linear;
-uniform float distortion : hint_range(0.0, 0.5, 0.001);
+uniform float distortion : hint_range(0.0, 0.6, 0.001);
 
 float crt(vec2 uv, float offset) {
 	return 0.95 + (cos(uv.x * 1200.0 + offset) * 0.25 + cos(uv.y * 1000.0 + offset)) * 0.05;
@@ -81,7 +81,7 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhbb3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j6hwq"]
 resource_local_to_scene = true
 shader = SubResource("Shader_ys522")
 shader_parameter/distortion = 0.0
@@ -110,21 +110,43 @@ mesh = SubResource("SphereMesh_n5p6o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.09326)
 base_speed = 5.0
 sprint_speed = 10.0
+crouch_speed = 1.0
+acceleration = 10.0
+jump_velocity = 4.5
+mouse_sensitivity = 0.1
+invert_mouse_y = false
+immobile = false
+JUMP = "Jump"
+LEFT = "Left"
+RIGHT = "Right"
+FORWARD = "Up"
+BACKWARD = "Down"
+CROUCH = "Crouch"
+SPRINT = "Sprint"
+jumping_enabled = true
+in_air_momentum = true
 motion_smoothing = false
+sprint_enabled = true
+crouch_enabled = true
+crouch_mode = 0
+sprint_mode = 0
+dynamic_fov = true
+continuous_jumping = true
+view_bobbing = true
+jump_animation = true
+gravity_enabled = true
+lockedCamera = false
+handled = false
+handled_input = Vector2(0, 0)
+handled_sprint = false
+
+[node name="ColorRect" parent="Character/PostProcess" index="0"]
+material = SubResource("ShaderMaterial_j6hwq")
 
 [node name="CameraRotationRestrictor" type="Node" parent="Character"]
 script = ExtResource("4_g5fn0")
 
 [node name="GridRestrictor" type="Node" parent="Character"]
 script = ExtResource("5_olldc")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 100
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_rhbb3")
-offset_right = 1152.0
-offset_bottom = 648.0
-mouse_filter = 1
 
 [editable path="Character"]
