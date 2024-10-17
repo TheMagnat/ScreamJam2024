@@ -412,8 +412,6 @@ layout_mode = 2
 [node name="StepsMetal" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_olyiy")
 volume_db = -12.0
-<<<<<<< HEAD
-=======
 bus = &"RoomReverb"
 
 [node name="noise1" type="AudioStreamPlayer" parent="."]
@@ -431,4 +429,3 @@ autoplay = true
 stream = ExtResource("18_g00yu")
 volume_db = -40.0
 autoplay = true
->>>>>>> c58d20b28b8a92e70b5f1ae00f822255c04751a4
