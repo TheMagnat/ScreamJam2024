@@ -276,11 +276,6 @@ var footStepVolume : Tween
 var footstep : FootStep
 var lastFootstep := 0.0
 
-func setFootStepVolume(v: float):
-	if footStepVolume: footStepVolume.kill()
-	footStepVolume = get_tree().create_tween()
-	footStepVolume.tween_property($StepsMetal, "volume_db", v, 0.5)
-
 func handle_movement(delta: float, dir: Vector2):
 	var direction = Vector3(dir.x, 0, dir.y)
 	
