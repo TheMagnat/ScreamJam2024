@@ -71,11 +71,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.41283, 0)
 material_override = SubResource("ShaderMaterial_jrr3h")
 mesh = SubResource("SphereMesh_n5p6o")
 
-[node name="Character" parent="." instance=ExtResource("3_wdy7h")]
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_wdy7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.09326)
 base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
+environment = NodePath("../WorldEnvironment")
 
 [node name="CameraRotationRestrictor" type="Node" parent="Character"]
 script = ExtResource("4_g5fn0")

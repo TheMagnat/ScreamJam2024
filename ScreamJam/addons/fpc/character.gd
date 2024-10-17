@@ -83,6 +83,8 @@ class_name BetterCharacterController extends CharacterBody3D
 @export var handled_input := Vector2.ZERO
 @export var handled_sprint: bool = false
 
+@export var environment: WorldEnvironment
+
 # Member variables
 var speed : float = base_speed
 var current_speed : float = 0.0
@@ -452,6 +454,10 @@ func headbob_animation(moving):
 			HEADBOB_ANIMATION.speed_scale = 1
 			HEADBOB_ANIMATION.play("RESET", 1)
 
+func noise(stream: AudioStreamPlayer, min_db: float, max_db: float, min_fact: float, max_fact: float, fact: float):
+	stream.volume_db = min_db + (max_db - min_db) * minf(max_fact, fact - min_fact)/(max_fact - min_fact)
+
+
 
 func _process(delta):
 	$InterfaceLayer/UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
@@ -468,8 +474,17 @@ func _process(delta):
 	sanity_display += (sanity - sanity_display) * delta * 0.5
 	sanity_display = maxf(0.0, sanity_display)
 	var sanity01 := (1.0 - (sanity_display/SANITY_MAX))
+	
+	noise($noise1, -40.0, 0.0, 0.0, 0.4, sanity01)
+	noise($noise2, -40.0, -15.0, 0.2, 0.6, sanity01)
+	noise($noise3, -40.0, -10.0, 0.2, 1.0, sanity01)
+	
+	var sanitySquare := sanity01 * sanity01
+	environment.camera_attributes.dof_blur_near_distance = 8.0 * sanitySquare
+	AudioServer.get_bus_effect(0, 1).pre_gain_db = 15.0 * sanitySquare
+	AudioServer.get_bus_effect(0, 1).ceiling_db = -24.0 * sqrt(sanity01)
 	RenderingServer.global_shader_parameter_set("player_pos", position)
-	RenderingServer.global_shader_parameter_set("wall_distort", sanity01 * 1.05)
+	RenderingServer.global_shader_parameter_set("wall_distort", sanity01)
 	RenderingServer.global_shader_parameter_set("sanity", sanity01)
 	
 	if Debug.debug:
@@ -487,7 +502,7 @@ func blink(closing : bool):
 	blink_tween.set_trans(Tween.TRANS_QUART)
 	
 	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, 0.5)
-	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 22050.0, 0.5)
+	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 20050.0, 0.5)
 	
 	if closing:
 		blink_tween.tween_callback(func(): closed_eyes = true)
