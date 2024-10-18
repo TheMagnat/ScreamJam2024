@@ -11,7 +11,7 @@ ceiling_db = 0.0
 [sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_jjux5"]
 resource_name = "StereoEnhance"
 pan_pullout = 1.22
-surround = 0.24
+surround = 0.06
 
 [sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_6rd38"]
 resource_name = "Distortion"
@@ -51,3 +51,9 @@ bus/2/volume_db = 0.0
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectReverb_iascx")
 bus/2/effect/0/enabled = true
+bus/3/name = &"AmbiencePeaceful"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"

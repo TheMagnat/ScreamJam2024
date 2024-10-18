@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://du4tlpxv8sr4i"]
+
+[ext_resource type="Script" path="res://Scenes/Global/ambience.gd" id="1_cjuxp"]
+[ext_resource type="AudioStream" uid="uid://coavsg33aly4f" path="res://Assets/SFX/music/music_ambience1.ogg" id="1_u1r64"]
+[ext_resource type="AudioStream" uid="uid://cxl7qpryntfyb" path="res://Assets/SFX/music/scary1_loop.ogg" id="3_tkt6k"]
+
+[node name="Ambience" type="Node"]
+script = ExtResource("1_cjuxp")
+
+[node name="Peaceful" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Peaceful"]
+stream = ExtResource("1_u1r64")
+volume_db = -10.0
+
+[node name="SpookyDookie" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tkt6k")
+volume_db = -60.0
+autoplay = true

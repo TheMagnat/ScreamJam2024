@@ -25,6 +25,7 @@ GuiAutoload="*res://Scenes/Global/gui_autoload.gd"
 Transition="*res://Scenes/Global/Transition/Transition.tscn"
 EventBus="*res://Scenes/Global/EventBus.gd"
 GridEntityManager="*res://Scenes/Demo/MobDemo/GridEntityManager.gd"
+Ambience="*res://Scenes/Global/ambience.tscn"
 
 [display]
 
