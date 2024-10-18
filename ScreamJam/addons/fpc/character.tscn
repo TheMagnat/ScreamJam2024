@@ -415,7 +415,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="HandPosition" type="Marker3D" parent="Head"]
-transform = Transform3D(0.144356, 0, -0.989525, 0, 1, 0, 0.989526, 0, 0.144356, 0.379, -0.367, -0.462)
+transform = Transform3D(0.14436, 0, -0.989524, 0, 1, 0, 0.989525, 0, 0.14436, 0.379, -0.367, -0.462)
 
 [node name="AttackAnimation" type="AnimationPlayer" parent="Head/HandPosition"]
 libraries = {
@@ -458,6 +458,7 @@ mouse_filter = 1
 
 [node name="InterfaceLayer" type="CanvasLayer" parent="."]
 layer = 101
+visible = false
 
 [node name="UserInterface" type="Control" parent="InterfaceLayer"]
 layout_mode = 3
@@ -486,6 +487,7 @@ layout_mode = 2
 [node name="StepsMetal" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_olyiy")
 volume_db = -12.0
+max_polyphony = 2
 bus = &"RoomReverb"
 
 [node name="noise1" type="AudioStreamPlayer" parent="."]

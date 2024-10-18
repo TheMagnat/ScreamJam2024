@@ -276,8 +276,8 @@ class FootStep:
 		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.25)
 
 var footStepVolume : Tween
-@onready var FOOTSTEP_WALK := FootStep.new(0.5, -28, 1.0, $StepsMetal)
-@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -32, 0.96, $StepsMetal)
+@onready var FOOTSTEP_WALK := FootStep.new(0.5, -30, 1.0, $StepsMetal)
+@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -40, 0.96, $StepsMetal)
 @onready var FOOTSTEP_RUN := FootStep.new(0.3, -23, 1.02, $StepsMetal)
 
 var footstep : FootStep
