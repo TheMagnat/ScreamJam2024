@@ -120,6 +120,9 @@ func damageHealth(dmg: float):
 		print("DEAD DEAD DEAD")
 
 func _ready():
+	
+	GridEntityManager.player = self
+	
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	

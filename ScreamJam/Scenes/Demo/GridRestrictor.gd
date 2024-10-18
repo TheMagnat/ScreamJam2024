@@ -28,6 +28,9 @@ func activate():
 	gridToken.setInitialPosition()
 	inMovement = true
 
+func getFrontPosition() -> Vector2i:
+	return gridToken.goalPosition + Vector2i(Vector2(0, -1.0).rotated(2 * PI - cameraRotationRestrictor.goalRotation ).round())
+
 func _physics_process(delta: float) -> void:
 	if not gridToken.isFree:
 		if not inMovement or reachedGoal:
@@ -44,7 +47,7 @@ func _physics_process(delta: float) -> void:
 				
 				var goal2dPosition = gridToken.goalPosition + Vector2i(directionVector.round())
 				
-				if map.isAvailable(goal2dPosition):
+				if map.isAvailable( goal2dPosition ) and GridEntityManager.isAvailable( goal2dPosition ):
 					if rotateCameraOnMove and cameraRotationRestrictor.lockCamera:
 						cameraRotationRestrictor.goalRotation = - PI / 2.0 - directionVector.angle()
 						cameraRotationRestrictor.updateHeadRotation()

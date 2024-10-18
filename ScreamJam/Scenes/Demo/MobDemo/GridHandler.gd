@@ -53,7 +53,7 @@ func walkTargetDirection() -> void:
 		newGoalPosition.x += directionToTest.x
 		newGoalPosition.y += directionToTest.y
 		
-		if map.isAvailable( newGoalPosition ) and parent.gridEntityManager.isAvailable( newGoalPosition ):
+		if map.isAvailable( newGoalPosition ) and GridEntityManager.isAvailable( newGoalPosition ):
 			
 			if target.get_node("GridToken").goalPosition == newGoalPosition:
 				attack(target.global_position)
@@ -67,12 +67,13 @@ var attackTween: Tween
 func attack(attackPosition: Vector3):
 	inAttackAnimation = true
 	
-	print("ATTACK")
 	if attackTween: attackTween.kill()
 	attackTween = create_tween()
 	attackTween.tween_property(parent, "global_position", attackPosition, 0.25)
 	attackTween.tween_property(parent, "global_position", gridToken.goalWorldPosition, 0.25)
 	attackTween.tween_property(self, "inAttackAnimation", false, 0.0)
+	
+	target.damageHealth(parent.dmg)
 
 func _physics_process(delta: float) -> void:
 	if inAttackAnimation: return

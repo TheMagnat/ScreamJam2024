@@ -1,18 +1,24 @@
-class_name GridEntityManager extends Node
+extends Node
 
-@onready var player: BetterCharacterController = $"../Character"
+
+var player: BetterCharacterController
 
 var entities: Array[GridEntity]
-
-func _init() -> void:
-	EventBus.newGridEntity.connect(newEntity)
 
 func _ready() -> void:
 	EventBus.playerGridStep.connect(onStep)
 	
 func newEntity(entity: GridEntity):
-	entity.gridEntityManager = self
 	entities.append(entity)
+
+func entityDied(entityDied: GridEntity):
+	entities.erase(entityDied)
+
+func getEntityAt(gridPosition: Vector2i) -> GridEntity:
+	for entity in entities: 
+		if entity.gridToken.goalPosition == gridPosition:
+			return entity
+	return null
 
 func onStep():
 	entities.sort_custom(func(entityA: GridEntity, entityB: GridEntity):

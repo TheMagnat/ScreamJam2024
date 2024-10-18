@@ -3,6 +3,8 @@
 [sub_resource type="Shader" id="Shader_2ob4h"]
 code = "shader_type spatial;
 
+global uniform float sanity;
+
 uniform sampler2D noise;
 
 varying vec3 world_position;
@@ -20,7 +22,12 @@ void vertex() {
 	// Cool
 	vec2 uv = vec2(world_position.x + world_position.y, world_position.z) * 0.25;
 	float noiseValue = texture(noise, uv + time).r;
-	VERTEX += NORMAL * noiseValue * 1.0;
+	
+	VERTEX += NORMAL * noiseValue * (0.1 + sanity * 3.0);
+	
+	float randValue = texture(noise, vec2(world_position.x, world_position.z + world_position.y) + time).r;
+	
+	//VERTEX += randValue * sanity;
 	
 	// Cool 2
 	//vec2 uv = vec2(world_position.x + world_position.y, world_position.z) * 0.005;

@@ -4,7 +4,6 @@ extends Node
 # Grid
 var gridStepDelay: Timer
 signal playerGridStep
-signal newGridEntity(GridEntity)
 
 func _ready() -> void:
 	gridStepDelay = Timer.new()
