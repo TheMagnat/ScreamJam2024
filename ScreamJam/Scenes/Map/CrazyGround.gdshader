@@ -1,11 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://due1qktvfeg1"]
-
-[sub_resource type="Shader" id="Shader_2ob4h"]
-code = "shader_type spatial;
+shader_type spatial;
 
 global uniform float sanity;
 
 uniform sampler2D noise;
+uniform float sanityFactor = 3.0;
 
 varying vec3 world_position;
 
@@ -23,7 +21,7 @@ void vertex() {
 	vec2 uv = vec2(world_position.x + world_position.y, world_position.z) * 0.25;
 	float noiseValue = texture(noise, uv + time).r;
 	
-	VERTEX += NORMAL * noiseValue * (0.1 + sanity * 3.0);
+	VERTEX += NORMAL * noiseValue * (0.1 + sanity * sanityFactor);
 	
 	float randValue = texture(noise, vec2(world_position.x, world_position.z + world_position.y) + time).r;
 	
@@ -34,19 +32,3 @@ void vertex() {
 	//float noiseValue = texture(noise, uv + time).r;
 	//VERTEX += NORMAL * noiseValue * 2.0;
 }
-"
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0x15b"]
-noise_type = 4
-frequency = 0.0405
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fpygc"]
-width = 1024
-height = 1024
-seamless = true
-noise = SubResource("FastNoiseLite_0x15b")
-
-[resource]
-render_priority = 0
-shader = SubResource("Shader_2ob4h")
-shader_parameter/noise = SubResource("NoiseTexture2D_fpygc")

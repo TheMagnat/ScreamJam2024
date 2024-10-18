@@ -73,6 +73,7 @@ navigation_mesh = SubResource("NavigationMesh_gxk6b")
 
 [node name="Map" parent="NavigationRegion3D" node_paths=PackedStringArray("Player") instance=ExtResource("1_kl7dy")]
 Player = NodePath("../../Character")
+mapFilePath = "res://Scenes/Map/MapFile/map.txt"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.41283, 0)

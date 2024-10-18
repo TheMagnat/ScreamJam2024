@@ -57,6 +57,7 @@ attenuation_filter_db = -12.0
 doppler_tracking = 1
 
 [node name="Detection" type="Area3D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Detection"]
 shape = SubResource("SphereShape3D_6dd8b")

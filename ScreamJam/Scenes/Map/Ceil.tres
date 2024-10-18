@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dqhsew74qmqhu"]
+
+[ext_resource type="Shader" path="res://Scenes/Map/CrazyGround.gdshader" id="1_oa0en"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0x15b"]
+noise_type = 4
+frequency = 0.0405
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fpygc"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_0x15b")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_oa0en")
+shader_parameter/sanityFactor = 3.75
+shader_parameter/noise = SubResource("NoiseTexture2D_fpygc")

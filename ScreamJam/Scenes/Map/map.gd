@@ -1,8 +1,10 @@
 @tool
 class_name Map extends Node3D
 
-const DistoredWallMaterial := preload("res://Scenes/Demo/DistortedWall.tres")
-const GroundMaterial := preload("res://Scenes/Demo/Ground.tres")
+const DistoredWallMaterial := preload("res://Scenes/Map/DistortedWall.tres")
+const GroundMaterial := preload("res://Scenes/Map/Ground.tres")
+const CeilMaterial := preload("res://Scenes/Map/Ceil.tres")
+
 @export var Player : Character
 
 # Map parameters
@@ -29,6 +31,9 @@ var wallInstanceTransforms: Array[Transform3D]
 
 @onready var groundMultimesh := MultiMesh.new()
 var groundInstanceTransforms: Array[Transform3D]
+
+@onready var ceilMultimesh := MultiMesh.new()
+var ceilInstanceTransforms: Array[Transform3D]
 
 # Utility functions
 func isAvailable(goal2dPosition: Vector2i):
@@ -94,11 +99,25 @@ func generateMap() -> void:
 	for i in groundInstanceTransforms.size():
 		groundMultimesh.set_instance_transform(i, groundInstanceTransforms[i])
 	
-	var groundInstanceTransforms := MultiMeshInstance3D.new()
-	groundInstanceTransforms.multimesh = groundMultimesh
-	groundInstanceTransforms.material_override = GroundMaterial
+	var groundMultiMeshInstance := MultiMeshInstance3D.new()
+	groundMultiMeshInstance.multimesh = groundMultimesh
+	groundMultiMeshInstance.material_override = GroundMaterial
 	
-	add_child(groundInstanceTransforms)
+	add_child(groundMultiMeshInstance)
+	
+	# Ceil MultiMesh
+	ceilMultimesh.mesh = groundMesh
+	ceilMultimesh.transform_format = MultiMesh.TRANSFORM_3D
+	ceilMultimesh.instance_count = ceilInstanceTransforms.size()
+	
+	for i in ceilInstanceTransforms.size():
+		ceilMultimesh.set_instance_transform(i, ceilInstanceTransforms[i])
+	
+	var ceilMultiMeshInstance := MultiMeshInstance3D.new()
+	ceilMultiMeshInstance.multimesh = ceilMultimesh
+	ceilMultiMeshInstance.material_override = CeilMaterial
+	
+	add_child(ceilMultiMeshInstance)
 
 enum WallType {
 	Left, Up, Right, Down
@@ -189,7 +208,7 @@ func createCell(x: int, y: int):
 		# Create ceil Mesh
 		var ceilPosition: Vector3 = elementPosition + Vector3(0.0, gridSpace, 0.0)
 		wallInstanceTransforms.push_back( Transform3D(Basis.from_euler(Vector3(PI, 0.0, 0.0)), ceilPosition) )
-		groundInstanceTransforms.push_back( Transform3D(Basis.from_euler(Vector3(PI, 0.0, 0.0)), ceilPosition + Vector3(0.0, -(0.01 + thickness / 2.0), 0.0)) )
+		ceilInstanceTransforms.push_back( Transform3D(Basis.from_euler(Vector3(PI, 0.0, 0.0)), ceilPosition + Vector3(0.0, -(0.01 + thickness / 2.0), 0.0)) )
 		
 		# Create collision Shape
 		var newCeilShape := CollisionShape3D.new()
