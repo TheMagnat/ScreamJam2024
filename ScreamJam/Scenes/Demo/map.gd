@@ -13,7 +13,7 @@ const GroundMaterial := preload("res://Scenes/Demo/Ground.tres")
 
 
 # Map data 
-var mapData := PackedInt32Array()
+var mapData : Array[CellType]
 var mapSize: Vector2i
 
 # Cache
@@ -124,10 +124,18 @@ func createSceneFullWall(elementPosition: Vector3):
 	newCollisionShape.shape = fullWallShape
 	newCollisionShape.position = elementPosition + positionOffset
 	add_child(newCollisionShape)
+
+enum CellType {
+	Empty = 0,
 	
-func getMapData(x: int, y: int) -> int:
+	Normal = 1,
+	Opening = 2,
+	Spawn = 3
+}
+
+func getMapData(x: int, y: int) -> CellType:
 	if x < 0 or y < 0 or x >= mapSize.x or y >= mapSize.y:
-		return 0
+		return CellType.Empty
 	return mapData[x + y * mapSize.x]
 
 func getMapPos(x: int, y: int) -> Vector3:
@@ -137,10 +145,10 @@ func drawWallCell(x: int, y: int, side: WallType) -> bool:
 	var currentCellValue: int = getMapData(x, y)
 	if currentCellValue != 0:
 		return false
-	var L := getMapData(x - 1, y) == 0
-	var R := getMapData(x + 1, y) == 0
-	var U := getMapData(x, y - 1) == 0
-	var D := getMapData(x, y + 1) == 0
+	var L := getMapData(x - 1, y) == CellType.Empty
+	var R := getMapData(x + 1, y) == CellType.Empty
+	var U := getMapData(x, y - 1) == CellType.Empty
+	var D := getMapData(x, y + 1) == CellType.Empty
 	return !((side == WallType.Left || side == WallType.Right) && !(U && D) || (side == WallType.Up || side == WallType.Down) && !(L && R))
 
 func createCell(x: int, y: int):
@@ -189,9 +197,9 @@ func generateMapMesh():
 	var currentRow: int = 0
 	
 	for element in mapData:
-		if element == 1:
+		if element == CellType.Normal:
 			createCell(currentCol, currentRow)
-		elif element != 2 and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
+		elif element != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
 			createSceneFullWall(getMapPos(currentCol, currentRow))
 		
 		currentCol += 1
@@ -205,14 +213,14 @@ func loadMap(path: String) -> void:
 	var content: String = file.get_as_text()
 	
 	mapData.clear()
-	var mapDataArray: Array[PackedInt32Array] = []
+	var mapDataArray: Array = []
 	
 	var rows: PackedStringArray = content.split("\n")
 	var rowLength: int = 0
 	
 	var rowCount: int = 0
 	for row in rows:
-		var rowArray := PackedInt32Array()
+		var rowArray : Array[CellType]
 		
 		var columns: PackedStringArray = row.split(" ")
 		if columns.is_empty() or columns[0].is_empty():
@@ -232,7 +240,7 @@ func loadMap(path: String) -> void:
 			mapData.append(element)
 		
 		for i in range(row.size(), rowLength):
-			mapData.append(0)
+			mapData.append(CellType.Empty)
 	
 	print(rowCount)
 	mapSize.x = rowLength
