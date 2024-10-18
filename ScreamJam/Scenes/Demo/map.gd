@@ -31,7 +31,7 @@ var wallInstanceTransforms: Array[Transform3D]
 var groundInstanceTransforms: Array[Transform3D]
 
 func isAvailable(goal2dPosition: Vector2i):
-	return getMapData(goal2dPosition.x, goal2dPosition.y) != 0
+	return getMapData(goal2dPosition.x, goal2dPosition.y) != CellType.Empty
 
 func _ready() -> void:
 	generateMap()
@@ -142,8 +142,8 @@ func getMapPos(x: int, y: int) -> Vector3:
 	return Vector3(x * gridSpace, 0.0, y * gridSpace)
 
 func drawWallCell(x: int, y: int, side: WallType) -> bool:
-	var currentCellValue: int = getMapData(x, y)
-	if currentCellValue != 0:
+	var currentCellValue: CellType = getMapData(x, y)
+	if currentCellValue != CellType.Empty:
 		return false
 	var L := getMapData(x - 1, y) == CellType.Empty
 	var R := getMapData(x + 1, y) == CellType.Empty
