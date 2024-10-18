@@ -11,7 +11,8 @@ albedo_color = Color(1, 0, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqylk"]
 
-[node name="FreeMob" type="CharacterBody3D"]
+[node name="FreeMob" type="CharacterBody3D" groups=["ClassicEntity"]]
+collision_layer = 5
 script = ExtResource("1_gca65")
 SPEED = 4.0
 

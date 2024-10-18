@@ -1,15 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://prjptwmbf5os"]
+[gd_scene load_steps=7 format=3 uid="uid://prjptwmbf5os"]
 
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridMob.gd" id="1_lcm6q"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridHandler.gd" id="2_nli8t"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="3_gsfjl"]
 [ext_resource type="Script" path="res://Scenes/Enemies/PlayerDetector.gd" id="4_ijdes"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lprpi"]
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_n3rnr"]
 
-[node name="GridMob" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.178, 0, 0.311)
+[node name="GridMob" type="StaticBody3D" groups=["ClassicEntity"]]
+collision_layer = 4
 script = ExtResource("1_lcm6q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_lprpi")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true

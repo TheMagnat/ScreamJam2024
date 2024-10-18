@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=42 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/Dagger.tscn" id="2_vh6h3"]
@@ -108,6 +108,9 @@ _data = {
 "RESET": SubResource("Animation_j8cx7"),
 "crouch": SubResource("Animation_5ec5e")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f85ux"]
+size = Vector3(2, 2, 4)
 
 [sub_resource type="Animation" id="Animation_lej81"]
 resource_name = "AttackAnimation"
@@ -416,6 +419,15 @@ libraries = {
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="FrontRangeArea" type="Area3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9034)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/FrontRangeArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.130052)
+shape = SubResource("BoxShape3D_f85ux")
 
 [node name="HandPosition" type="Marker3D" parent="Head"]
 transform = Transform3D(0.14436, 0, -0.989524, 0, 1, 0, 0.989525, 0, 0.14436, 0.379, -0.367, -0.462)

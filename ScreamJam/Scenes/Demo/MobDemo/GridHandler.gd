@@ -109,14 +109,17 @@ func walkToLastTarget():
 		newGoalPosition.x += directionToTest.x
 		newGoalPosition.y += directionToTest.y
 		
-		if map.isAvailable( newGoalPosition ) and GridEntityManager.isAvailable( newGoalPosition ):
-			
+		# If the cell exist...
+		if map.isAvailable( newGoalPosition ):
+			# ...And if the player is on it, attack
 			if target and lastTargetGoalPosition == newGoalPosition:
 				parent.attack(target, gridToken.goalWorldPosition)
-			else:
-				gridToken.goalPosition = newGoalPosition
+				break
 			
-			break
+			# ...Or if their is no player and no other entity go on it
+			if GridEntityManager.isAvailable( newGoalPosition ):
+				gridToken.goalPosition = newGoalPosition
+				break
 
 func _physics_process(delta: float) -> void:
 	if parent.inAttackAnimation: return

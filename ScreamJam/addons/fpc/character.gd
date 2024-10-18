@@ -120,18 +120,34 @@ func rands() -> float:
 	return signf(randf() - 0.5)
 
 var damageTween: Tween
+var lastTweenDelta: float = 0.0
+var lastRotDiff: Vector3
 func damageHealth(dmg: float, dot := false):
 	health -= dmg
 	if !dot:
-		if damageTween: damageTween.kill()
+		if damageTween:
+			damageTween.kill()
+			lastRotDiff -= lastRotDiff * lastTweenDelta
+		else:
+			lastRotDiff = Vector3.ZERO
+		
 		damageTween = create_tween()
 		damageTween.set_ease(Tween.EASE_OUT)
 		damageTween.set_trans(Tween.TRANS_SINE)
 		var d := dmg * 0.01
 		var preRot := HEAD.rotation
 		preRot.z = 0.0
-		HEAD.rotation += Vector3(d * rands(), d * rands(), d * rands())
-		damageTween.tween_property($Head, "rotation", preRot, 0.3)
+		var newRotDiff := Vector3(d * rands(), d * rands(), d * rands())
+		
+		HEAD.rotation += newRotDiff
+		lastRotDiff -= newRotDiff
+		
+		lastTweenDelta = 0.0
+		damageTween.tween_method(func(delta: float):
+			var deltaDiff: float = delta - lastTweenDelta
+			HEAD.rotation += lastRotDiff * deltaDiff
+			lastTweenDelta = delta,
+		0.0, 1.0, 0.3)
 	
 	if health < 0.0:
 		die.emit()

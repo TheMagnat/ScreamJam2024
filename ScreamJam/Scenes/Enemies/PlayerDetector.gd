@@ -6,9 +6,6 @@ var target: Node3D
 
 const headOffset := Vector3.UP * 1.0
 
-# Cache
-@onready var gridHandler: GridHandler = $"../GridHandler"
-
 
 func _ready() -> void:
 	target = GridEntityManager.player

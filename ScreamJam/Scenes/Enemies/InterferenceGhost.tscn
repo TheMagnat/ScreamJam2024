@@ -21,7 +21,8 @@ void vertex() {
 void fragment() {
 	float p = player_pos.x + player_pos.y + player_pos.z + cos(TIME + UV.x + UV.y);
 	ALBEDO.rgb = vec3(cos(p * 113.0), sin(p * 12.0), cos(p * 6462.0)) * 0.1;
-}"
+}
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gud50"]
 render_priority = 0

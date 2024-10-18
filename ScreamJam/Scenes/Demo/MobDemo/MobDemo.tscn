@@ -67,10 +67,11 @@ script = ExtResource("4_5tjqd")
 gridToken = NodePath("../GridToken")
 
 [node name="GridMob" parent="." node_paths=PackedStringArray("map") instance=ExtResource("7_x7mii")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3784, 0, 0)
 map = NodePath("../NavigationRegion3D/Map")
 
 [node name="GridMob2" parent="." node_paths=PackedStringArray("map") instance=ExtResource("7_x7mii")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.352, 0, 4.69603)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.1676, 0, -0.233149)
 map = NodePath("../NavigationRegion3D/Map")
 
 [node name="FreeMob" parent="." instance=ExtResource("8_xwjyf")]

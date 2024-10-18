@@ -36,6 +36,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/debug_camera/plugin.cfg", "res://addons/post_processing/plugin.cfg")
 
+[global_group]
+
+ClassicEntity=""
+
 [input]
 
 Left={
@@ -118,6 +122,7 @@ Attack={
 
 3d_physics/layer_1="Map"
 3d_physics/layer_2="Player"
+3d_physics/layer_3="ClassicEntity"
 
 [rendering]
 
