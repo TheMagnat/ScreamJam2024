@@ -1,8 +1,10 @@
 extends Node3D
 
 @export var MOVE_SPEED := 1.0
-@export var DPS := 150.0
-@export var DAMAGE_DISTANCE := 8.0
+@export var DPS_SANITY := 150.0
+@export var DPS_HEALTH := 150.0
+@export var DAMAGE_SANITY_DISTANCE := 9.0
+@export var DAMAGE_HEALTH_DISTANCE := 4.0
 
 var player: Character
 
@@ -16,6 +18,10 @@ func _ready():
 func follow(body): if body is Character: player = body
 func unfollow(body): if body is Character: player = null
 
+func damage(delta: float, distance: float, dps: float) -> float:
+	var d := global_position.distance_to(player.position) / distance
+	return maxf(0.0, 1.0 - sqrt(d)) * dps * delta
+
 func _physics_process(delta: float):
 	if player == null:
 		return
@@ -23,9 +29,8 @@ func _physics_process(delta: float):
 	var dir := global_position.direction_to(player.position) * MOVE_SPEED * delta
 	global_position += Vector3(dir.x, 0.0, dir.z)
 	
-	var d := global_position.distance_to(player.position) / DAMAGE_DISTANCE
-	var dist := maxf(0.0, 1.0 - sqrt(d))
-	player.damageSanity(dist * delta * DPS, 0.25)
+	player.damageSanity(damage(delta, DAMAGE_SANITY_DISTANCE, DPS_SANITY), 0.25)
+	player.damageHealth(damage(delta, DAMAGE_HEALTH_DISTANCE, DPS_HEALTH), true)
 
 func _process(delta:float):
 	if player == null:
