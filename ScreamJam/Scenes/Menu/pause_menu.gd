@@ -92,10 +92,7 @@ func _on_resolution_options_item_selected(index: int):
 	get_window().set_size(GuiAutoload.resolutions[key])
 
 func _on_full_screen_check_box_toggled(toggled_on: bool):
-	if toggled_on:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN if toggled_on else DisplayServer.WINDOW_MODE_WINDOWED)
 
 func _on_input_button_pressed(button : Button, action : InputEvent):
 	if !isRemapping:

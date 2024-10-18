@@ -546,7 +546,7 @@ func _input(event: InputEvent):
 		print(sanity)
 	if event.is_action_pressed("ui_home"):
 		damageHealth(10.0)
-		
+		print(health)
 
 
 func _unhandled_input(event : InputEvent):
