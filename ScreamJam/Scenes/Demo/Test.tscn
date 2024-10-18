@@ -80,11 +80,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.41283, 0)
 material_override = SubResource("ShaderMaterial_jrr3h")
 mesh = SubResource("SphereMesh_n5p6o")
 
-[node name="Entity" parent="." instance=ExtResource("7_wwkf4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, 0)
-
 [node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("3_wdy7h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.09326)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)
 base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
@@ -101,6 +98,9 @@ rotateCameraOnMove = true
 
 [node name="GridToken" type="Node3D" parent="Character"]
 script = ExtResource("6_h0pw4")
+
+[node name="InterferenceGhost" parent="." instance=ExtResource("7_wwkf4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.5, 0)
 
 [node name="GridEntityManager" type="Node" parent="."]
 script = ExtResource("7_dmy4d")

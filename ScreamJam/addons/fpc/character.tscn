@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=48 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/Dagger.tscn" id="2_vh6h3"]
@@ -18,8 +18,14 @@
 [ext_resource type="AudioStream" uid="uid://dcr0c1gfhke6w" path="res://Assets/SFX/steps/step_metal10.ogg" id="14_vrhjc"]
 [ext_resource type="AudioStream" uid="uid://8klkxr62rddd" path="res://Assets/SFX/noise/noise1.ogg" id="16_jncaw"]
 [ext_resource type="AudioStream" uid="uid://c28hepeugpk6c" path="res://Assets/SFX/noise/noise2.ogg" id="17_a5d4c"]
+[ext_resource type="AudioStream" uid="uid://chew24oh7dyik" path="res://Assets/SFX/steps/step_concrete1.ogg" id="17_d0tqo"]
 [ext_resource type="AudioStream" uid="uid://cs1onigspbp87" path="res://Assets/SFX/noise/noise3.ogg" id="18_g00yu"]
+[ext_resource type="AudioStream" uid="uid://bphici5ky216f" path="res://Assets/SFX/steps/step_concrete2.ogg" id="18_wgewb"]
+[ext_resource type="AudioStream" uid="uid://dsnfe0a3cej2r" path="res://Assets/SFX/steps/step_concrete3.ogg" id="19_ihgic"]
 [ext_resource type="AudioStream" uid="uid://f8p6nw6wiqbw" path="res://Assets/SFX/noise/tintinnus.ogg" id="20_13moh"]
+[ext_resource type="AudioStream" uid="uid://bjyuon727hfeb" path="res://Assets/SFX/steps/step_concrete4.ogg" id="20_u3i4r"]
+[ext_resource type="AudioStream" uid="uid://cgrqrye0wt0vg" path="res://Assets/SFX/steps/step_concrete5.ogg" id="21_u6ivp"]
+[ext_resource type="AudioStream" uid="uid://dx5ce3bw0qc6n" path="res://Assets/SFX/steps/step_concrete6.ogg" id="22_7kqfx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
@@ -395,6 +401,15 @@ stream_8/stream = ExtResource("13_ktixa")
 stream_9/stream = ExtResource("14_vrhjc")
 stream_10/stream = ExtResource("6_skq3o")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3b7dx"]
+streams_count = 6
+stream_0/stream = ExtResource("17_d0tqo")
+stream_1/stream = ExtResource("18_wgewb")
+stream_2/stream = ExtResource("19_ihgic")
+stream_3/stream = ExtResource("20_u3i4r")
+stream_4/stream = ExtResource("21_u6ivp")
+stream_5/stream = ExtResource("22_7kqfx")
+
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
 collision_layer = 2
 script = ExtResource("1_0t4e8")
@@ -488,6 +503,12 @@ layout_mode = 2
 
 [node name="StepsMetal" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_olyiy")
+volume_db = -12.0
+max_polyphony = 2
+bus = &"RoomReverb"
+
+[node name="StepsConcrete" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_3b7dx")
 volume_db = -12.0
 max_polyphony = 2
 bus = &"RoomReverb"

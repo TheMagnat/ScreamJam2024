@@ -294,17 +294,12 @@ class FootStep:
 		_tween.parallel().tween_property(stream, "pitch_scale", pitch, 0.25)
 
 var footStepVolume : Tween
-@onready var FOOTSTEP_WALK := FootStep.new(0.5, -30, 1.0, $StepsMetal)
-@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -40, 0.96, $StepsMetal)
-@onready var FOOTSTEP_RUN := FootStep.new(0.3, -23, 1.02, $StepsMetal)
+@onready var FOOTSTEP_WALK := FootStep.new(0.5, -25, 1.0, $StepsConcrete)
+@onready var FOOTSTEP_CROUCH := FootStep.new(1.5, -35, 0.96, $StepsConcrete)
+@onready var FOOTSTEP_RUN := FootStep.new(0.3, -16, 1.02, $StepsConcrete)
 
 var footstep : FootStep
 var lastFootstep := 0.0
-
-func setFootStepVolume(v: float):
-	if footStepVolume: footStepVolume.kill()
-	footStepVolume = get_tree().create_tween()
-	footStepVolume.tween_property($StepsMetal, "volume_db", v, 0.5)
 
 func handle_movement(delta: float, dir: Vector2):
 	var direction = Vector3(dir.x, 0, dir.y)
