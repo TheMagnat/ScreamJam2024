@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=41 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/Dagger.tscn" id="2_vh6h3"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://8klkxr62rddd" path="res://Assets/SFX/noise/noise1.ogg" id="16_jncaw"]
 [ext_resource type="AudioStream" uid="uid://c28hepeugpk6c" path="res://Assets/SFX/noise/noise2.ogg" id="17_a5d4c"]
 [ext_resource type="AudioStream" uid="uid://cs1onigspbp87" path="res://Assets/SFX/noise/noise3.ogg" id="18_g00yu"]
+[ext_resource type="AudioStream" uid="uid://f8p6nw6wiqbw" path="res://Assets/SFX/noise/tintinnus.ogg" id="20_13moh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
@@ -372,6 +373,7 @@ resource_local_to_scene = true
 shader = ExtResource("3_pevgd")
 shader_parameter/distortion = 0.0
 shader_parameter/blink = 0.0
+shader_parameter/damage = null
 
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
@@ -504,4 +506,9 @@ autoplay = true
 [node name="noise3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_g00yu")
 volume_db = -40.0
+autoplay = true
+
+[node name="tintinnus" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_13moh")
+volume_db = -60.0
 autoplay = true

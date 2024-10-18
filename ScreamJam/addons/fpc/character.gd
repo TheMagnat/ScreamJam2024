@@ -6,6 +6,7 @@
 
 class_name Character extends CharacterBody3D
 
+signal die
 
 ## The settings for the character's movement and feel.
 @export_category("Character")
@@ -105,19 +106,33 @@ var mouseInput : Vector2 = Vector2(0,0)
 const SANITY_MAX := 100.0
 const SANITY_RECOVER := 5.0
 var sanity := SANITY_MAX
-var sanity_display := sanity
 
 const HEALTH_MAX := 100.0
-const HEALTH_RECOVER := 0.5
+const HEALTH_RECOVER := 1.0
 var health := HEALTH_MAX
 
 func damageSanity(dmg: float, eyes_closed_factor := 1.0):
 	sanity -= dmg * (eyes_closed_factor if closed_eyes else 1.0)
 
-func damageHealth(dmg: float):
+func rands() -> float:
+	return signf(randf() - 0.5)
+
+var damageTween: Tween
+func damageHealth(dmg: float, dot := false):
 	health -= dmg
+	if !dot:
+		if damageTween: damageTween.kill()
+		damageTween = create_tween()
+		damageTween.set_ease(Tween.EASE_OUT)
+		damageTween.set_trans(Tween.TRANS_SINE)
+		var d := dmg * 0.01
+		var preRot := HEAD.rotation
+		preRot.z = 0.0
+		HEAD.rotation += Vector3(d * rands(), d * rands(), d * rands())
+		damageTween.tween_property($Head, "rotation", preRot, 0.3)
+	
 	if health < 0.0:
-		print("DEAD DEAD DEAD")
+		die.emit()
 
 func _ready():
 	GridEntityManager.player = self
@@ -234,6 +249,7 @@ func _physics_process(delta):
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
 	sanity = minf(SANITY_MAX, sanity + SANITY_RECOVER * delta)
+	health = minf(HEALTH_MAX, health + HEALTH_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
 
@@ -460,7 +476,8 @@ func noise(stream: AudioStreamPlayer, min_db: float, max_db: float, min_fact: fl
 	stream.volume_db = min_db + (max_db - min_db) * minf(max_fact, fact - min_fact)/(max_fact - min_fact)
 
 
-
+var sanity_display := sanity
+var health_display := health
 func _process(delta):
 	$InterfaceLayer/UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
 	var status : String = state
@@ -473,8 +490,9 @@ func _process(delta):
 	# Set the global shader parameters
 	var pos = global_position
 	
-	sanity_display += (sanity - sanity_display) * delta * 0.5
-	sanity_display = maxf(0.0, sanity_display)
+	sanity_display = clampf(sanity_display + (sanity - sanity_display) * minf(1.0, delta * 2.0), 0.0, SANITY_MAX)
+	health_display = clampf(health_display + (health - health_display) * minf(1.0, delta * 4.0), 0.0, HEALTH_MAX)
+	
 	var sanity01 := (1.0 - (sanity_display/SANITY_MAX))
 	
 	noise($noise1, -40.0, 0.0, 0.0, 0.4, sanity01)
@@ -493,7 +511,13 @@ func _process(delta):
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("Sanity", sanity, 4)
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
-
+	
+	var dmg := 1.0 - health_display/HEALTH_MAX
+	AudioServer.get_bus_effect(0, 4).cutoff_hz = 20500 - dmg * 19000.0
+	AudioServer.get_bus_effect(0, 3).drive = dmg * dmg * 0.3
+	
+	noise($tintinnus, -50.0, -25.0, 0.0, 1.0, dmg)
+	$PostProcess/ColorRect.material.set_shader_parameter("damage", dmg)
 
 var closed_eyes := false
 var blink_tween: Tween
@@ -518,8 +542,11 @@ func _input(event: InputEvent):
 		blink(false)
 	
 	if event.is_action_pressed("ui_end"): #debug
-		sanity -= 10.0
+		damageSanity(10.0)
 		print(sanity)
+	if event.is_action_pressed("ui_home"):
+		damageHealth(10.0)
+		
 
 
 func _unhandled_input(event : InputEvent):

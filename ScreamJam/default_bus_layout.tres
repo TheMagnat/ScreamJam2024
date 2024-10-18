@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://bx67sf4luhshy"]
+[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://bx67sf4luhshy"]
 
 [sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_xolce"]
 resource_name = "LowPassFilter"
@@ -13,6 +13,13 @@ resource_name = "StereoEnhance"
 pan_pullout = 1.22
 surround = 0.24
 
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_6rd38"]
+resource_name = "Distortion"
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_u3jqd"]
+resource_name = "LowPassFilter"
+cutoff_hz = 20500.0
+
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_iascx"]
 resource_name = "Reverb"
 room_size = 0.18
@@ -26,6 +33,10 @@ bus/0/effect/1/effect = SubResource("AudioEffectHardLimiter_ji63w")
 bus/0/effect/1/enabled = true
 bus/0/effect/2/effect = SubResource("AudioEffectStereoEnhance_jjux5")
 bus/0/effect/2/enabled = true
+bus/0/effect/3/effect = SubResource("AudioEffectDistortion_6rd38")
+bus/0/effect/3/enabled = true
+bus/0/effect/4/effect = SubResource("AudioEffectLowPassFilter_u3jqd")
+bus/0/effect/4/enabled = true
 bus/1/name = &"SplashScreen"
 bus/1/solo = false
 bus/1/mute = false
