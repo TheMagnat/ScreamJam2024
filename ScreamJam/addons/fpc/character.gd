@@ -248,7 +248,7 @@ func _physics_process(delta):
 				1:
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
-	sanity = minf(SANITY_MAX, sanity + SANITY_RECOVER * delta)
+	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > 0.0 else (1.0 - sanity * 0.25))) * delta)
 	health = minf(HEALTH_MAX, health + HEALTH_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
