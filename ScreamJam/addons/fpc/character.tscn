@@ -396,6 +396,7 @@ stream_9/stream = ExtResource("14_vrhjc")
 stream_10/stream = ExtResource("6_skq3o")
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
+collision_layer = 2
 script = ExtResource("1_0t4e8")
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
@@ -460,7 +461,6 @@ mouse_filter = 1
 
 [node name="InterfaceLayer" type="CanvasLayer" parent="."]
 layer = 101
-visible = false
 
 [node name="UserInterface" type="Control" parent="InterfaceLayer"]
 layout_mode = 3

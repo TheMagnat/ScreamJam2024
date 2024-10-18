@@ -30,12 +30,34 @@ var wallInstanceTransforms: Array[Transform3D]
 @onready var groundMultimesh := MultiMesh.new()
 var groundInstanceTransforms: Array[Transform3D]
 
+# Utility functions
 func isAvailable(goal2dPosition: Vector2i):
 	return getMapData(goal2dPosition.x, goal2dPosition.y) != 0
 
+
+func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
+	var neighbors: Array[Vector2i]
+	
+	var left  := centerCel + Vector2i(-1, 0)
+	var right := centerCel + Vector2i(1, 0)
+	var up    := centerCel + Vector2i(0, 1)
+	var down  := centerCel + Vector2i(0, -1)
+	
+	if isAvailable(left):
+		neighbors.push_back(left)
+	if isAvailable(right):
+		neighbors.push_back(right)
+	if isAvailable(up):
+		neighbors.push_back(up)
+	if isAvailable(down):
+		neighbors.push_back(down)
+	
+	return neighbors
+
+# Generation
 func _ready() -> void:
 	generateMap()
-	
+
 func generateMap() -> void:
 	groundMesh.size = Vector2(gridSpace, gridSpace)
 	groundMesh.subdivide_depth = 16.0
@@ -152,7 +174,7 @@ func createCell(x: int, y: int):
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
 	newCollisionShape.shape = wallShape
-	newCollisionShape.position = elementPosition
+	newCollisionShape.position = elementPosition - Vector3(0.0, thickness / 2.0, 0.0)
 	add_child(newCollisionShape)
 	
 	if ceil:
@@ -234,6 +256,5 @@ func loadMap(path: String) -> void:
 		for i in range(row.size(), rowLength):
 			mapData.append(0)
 	
-	print(rowCount)
 	mapSize.x = rowLength
 	mapSize.y = rowCount

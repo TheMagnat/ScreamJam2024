@@ -1,16 +1,7 @@
-class_name GridEntity extends Node3D
+class_name GridEntity extends ClassicEntity
 
 
-const SPEED = 6.0
-
-@export var dmg: float = 10.0
-@export var health: float = 30.0:
-	set(value):
-		print("Mob took damages: ", health - value)
-		health = value
-		if health <= 0:
-			print("LOL MOB DEAD")
-			onDeath()
+@export var map: Map
 
 
 # Cache
@@ -18,6 +9,10 @@ const SPEED = 6.0
 @onready var gridHandler: GridHandler = $GridHandler
 
 func _ready() -> void:
+	#DEBUG
+	#RenderingServer.set_debug_generate_wireframes(true)
+	#get_viewport().debug_draw = 4
+	
 	# EventBus.playerGridStep.connect(step)
 	
 	# TODO: retirer et rendre dynamique

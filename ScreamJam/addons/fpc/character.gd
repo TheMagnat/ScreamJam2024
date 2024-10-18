@@ -83,8 +83,10 @@ signal die
 @export var handled: bool = false
 @export var handled_input := Vector2.ZERO
 @export var handled_sprint: bool = false
+@export var map: Map
 
 @export var environment: WorldEnvironment
+
 
 # Member variables
 var speed : float = base_speed
@@ -509,6 +511,7 @@ func _process(delta):
 	
 	if Debug.debug:
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("Sanity", sanity, 4)
+		$InterfaceLayer/UserInterface/DebugPanel.add_property("Health", health, 5)
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
 	

@@ -1,7 +1,7 @@
 class_name GridRestrictor extends Node
 
 @onready var character: Character = $".."
-@onready var map: Map = $"../../NavigationRegion3D/Map"
+@onready var map: Map = get_parent().map
 
 @onready var gridSpace: float = map.gridSpace
 
@@ -16,6 +16,26 @@ var reachedGoal: bool = false
 
 @export var rotateCameraOnMove: bool = false
 
+# Deactivated grid variables
+var timeToStep: Timer
+@export var stepDelay: float = 1.0:
+	set(value):
+		stepDelay = value
+		if timeToStep:
+			timeToStep.wait_time = stepDelay
+
+func _ready() -> void:
+	timeToStep = Timer.new()
+	timeToStep.wait_time = stepDelay
+	timeToStep.timeout.connect(onStepTimerTimeout)
+	add_child(timeToStep)
+	
+	#TODO: Si on sauvegarde la progression, ici mettre à faux si on veut ne plus le mettre sur la grille au chargement
+	gridToken.map = map
+	activate()
+
+func onStepTimerTimeout():
+	EventBus.playerGridStep.emit()
 
 func activate():
 	gridToken.isFree = false
@@ -27,6 +47,15 @@ func activate():
 	
 	gridToken.setInitialPosition()
 	inMovement = true
+	
+	timeToStep.stop()
+
+func deactivate():
+	character.immobile = false
+	character.handled = false
+	
+	timeToStep.start()
+	
 
 func getFrontPosition() -> Vector2i:
 	return gridToken.goalPosition + Vector2i(Vector2(0, -1.0).rotated(2 * PI - cameraRotationRestrictor.goalRotation ).round())
@@ -103,5 +132,4 @@ func _input(event: InputEvent) -> void:
 		if not gridToken.isFree:
 			activate()
 		else:
-			character.immobile = false
-			character.handled = false
+			deactivate()
