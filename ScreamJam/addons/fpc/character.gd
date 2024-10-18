@@ -4,7 +4,7 @@
 # Quality Godot First Person Controller v2
 
 
-class_name BetterCharacterController extends CharacterBody3D
+class_name Character extends CharacterBody3D
 
 
 ## The settings for the character's movement and feel.
@@ -111,8 +111,8 @@ const HEALTH_MAX := 100.0
 const HEALTH_RECOVER := 0.5
 var health := HEALTH_MAX
 
-func damageSanity(dmg: float):
-	sanity -= dmg
+func damageSanity(dmg: float, eyes_closed_factor := 1.0):
+	sanity -= dmg * (eyes_closed_factor if closed_eyes else 1.0)
 
 func damageHealth(dmg: float):
 	health -= dmg
@@ -120,7 +120,6 @@ func damageHealth(dmg: float):
 		print("DEAD DEAD DEAD")
 
 func _ready():
-	
 	GridEntityManager.player = self
 	
 	#It is safe to comment this line if your game doesn't start with the mouse captured
@@ -487,7 +486,7 @@ func _process(delta):
 	AudioServer.get_bus_effect(0, 1).pre_gain_db = 15.0 * sanitySquare
 	AudioServer.get_bus_effect(0, 1).ceiling_db = -24.0 * sqrt(sanity01)
 	RenderingServer.global_shader_parameter_set("player_pos", position)
-	RenderingServer.global_shader_parameter_set("wall_distort", sanity01)
+	RenderingServer.global_shader_parameter_set("wall_distort", sqrt(sanity01))
 	RenderingServer.global_shader_parameter_set("sanity", sanity01)
 	
 	if Debug.debug:

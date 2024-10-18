@@ -3,7 +3,7 @@ class_name Map extends Node3D
 
 const DistoredWallMaterial := preload("res://Scenes/Demo/DistortedWall.tres")
 const GroundMaterial := preload("res://Scenes/Demo/Ground.tres")
-@export var Player : BetterCharacterController
+@export var Player : Character
 
 # Map parameters
 @export var gridSpace: float = 1.0
@@ -30,14 +30,12 @@ var wallInstanceTransforms: Array[Transform3D]
 @onready var groundMultimesh := MultiMesh.new()
 var groundInstanceTransforms: Array[Transform3D]
 
-
 func isAvailable(goal2dPosition: Vector2i):
 	return getMapData(goal2dPosition.x, goal2dPosition.y) != 0
 
-## Map generation... ##
 func _ready() -> void:
 	generateMap()
-
+	
 func generateMap() -> void:
 	groundMesh.size = Vector2(gridSpace, gridSpace)
 	groundMesh.subdivide_depth = 16.0

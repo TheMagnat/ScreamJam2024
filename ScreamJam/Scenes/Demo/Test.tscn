@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=21 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kl7dy"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="6_h0pw4"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridEntityManager.gd" id="7_dmy4d"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridMob.gd" id="7_fxwh2"]
+[ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="7_wwkf4"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridHandler.gd" id="8_jahht"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
@@ -80,6 +81,9 @@ Player = NodePath("../../Character")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.41283, 0)
 material_override = SubResource("ShaderMaterial_jrr3h")
 mesh = SubResource("SphereMesh_n5p6o")
+
+[node name="Entity" parent="." instance=ExtResource("7_wwkf4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, 0)
 
 [node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_wdy7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.09326)

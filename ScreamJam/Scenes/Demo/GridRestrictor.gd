@@ -1,6 +1,6 @@
 class_name GridRestrictor extends Node
 
-@onready var character: BetterCharacterController = $".."
+@onready var character: Character = $".."
 @onready var map: Map = $"../../NavigationRegion3D/Map"
 
 @onready var gridSpace: float = map.gridSpace

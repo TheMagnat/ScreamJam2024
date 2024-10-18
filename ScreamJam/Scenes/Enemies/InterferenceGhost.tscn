@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://1i6amyg428g6"]
+
+[ext_resource type="AudioStream" uid="uid://2v4hykr7ncuw" path="res://Assets/SFX/enemies/entity1_loop.ogg" id="1_815gi"]
+[ext_resource type="Script" path="res://Scenes/Enemies/interference_ghost.gd" id="1_vx7iw"]
+
+[sub_resource type="Shader" id="Shader_1765p"]
+code = "shader_type spatial;
+
+global uniform vec3 player_pos;
+
+uniform float distort : hint_range(0.25, 4.0, 0.01);
+
+void vertex() {
+	float t = TIME * 0.1;
+	VERTEX *= distort * distort;
+	VERTEX.y += cos(t * 8.5425 + VERTEX.x * 13.0) * distort;
+	VERTEX.x += sin(t * 9.21 + VERTEX.y * 13.0) * distort;
+	VERTEX.z += sin(t * 1.254 + (VERTEX.x + VERTEX.y) * 13.0) * distort;
+}
+
+void fragment() {
+	float p = player_pos.x + player_pos.y + player_pos.z + cos(TIME + UV.x + UV.y);
+	ALBEDO.rgb = vec3(cos(p * 113.0), sin(p * 12.0), cos(p * 6462.0)) * 0.1;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gud50"]
+render_priority = 0
+shader = SubResource("Shader_1765p")
+shader_parameter/distort = 0.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bu86x"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6dd8b"]
+radius = 64.0
+
+[node name="InterferenceGhost" type="Node3D"]
+script = ExtResource("1_vx7iw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("ShaderMaterial_gud50")
+transparency = 0.5
+mesh = SubResource("CylinderMesh_bu86x")
+skeleton = NodePath("../AudioStreamPlayer3D")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("1_815gi")
+volume_db = 20.0
+max_db = 6.0
+pitch_scale = 0.23
+autoplay = true
+max_distance = 30.0
+panning_strength = 0.36
+bus = &"RoomReverb"
+attenuation_filter_cutoff_hz = 2000.0
+attenuation_filter_db = -12.0
+doppler_tracking = 1
+
+[node name="Detection" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detection"]
+shape = SubResource("SphereShape3D_6dd8b")

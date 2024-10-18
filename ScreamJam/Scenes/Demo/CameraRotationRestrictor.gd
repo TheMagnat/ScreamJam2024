@@ -1,6 +1,6 @@
 class_name CameraRotationRestrictor extends Node
 
-@onready var character: BetterCharacterController = get_parent()
+@onready var character: Character = get_parent()
 @onready var camera: Camera3D = get_parent().get_node("Head/Camera")
 @onready var head: Node3D = get_parent().get_node("Head")
 

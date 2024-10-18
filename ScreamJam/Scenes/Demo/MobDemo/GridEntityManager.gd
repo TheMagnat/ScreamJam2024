@@ -1,7 +1,7 @@
 extends Node
 
 
-var player: BetterCharacterController
+var player: Character
 
 var entities: Array[GridEntity]
 
