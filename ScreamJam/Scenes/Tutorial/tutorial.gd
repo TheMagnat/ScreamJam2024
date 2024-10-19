@@ -14,11 +14,17 @@ func _ready() -> void:
 	$CanvasLayer/Tutorial.hide()
 	
 	var t := create_tween()
-	t.tween_method(func(x: float): $CanvasLayer/ColorRect.material.set_shader_parameter("pixelize", x), 0.0, 1.0, 3.0)
+	t.tween_callback($intro.play)
+	t.tween_method(func(x: float): $CanvasLayer/ColorRect.material.set_shader_parameter("pixelize", x), 0.0, 1.0, 2.25)
+	t.tween_interval(1.0)
 	
-	t.tween_callback($CanvasLayer/Tutorial.show)
+	t.tween_callback(func():
+		$CanvasLayer/Tutorial.show()
+		$action.play())
 	t.tween_interval(2.0)
-	t.tween_callback($CanvasLayer/Tutorial.hide)
+	t.tween_callback(func():
+		$CanvasLayer/Tutorial.hide()
+		$action.play())
 	t.tween_callback(next_step)
 
 func _exit_tree():

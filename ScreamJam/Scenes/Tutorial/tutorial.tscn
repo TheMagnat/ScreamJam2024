@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://b70sfx2l07fnh"]
+[gd_scene load_steps=16 format=3 uid="uid://b70sfx2l07fnh"]
 
 [ext_resource type="Script" path="res://Scenes/Tutorial/tutorial.gd" id="1_bujhw"]
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_c84bv"]
 [ext_resource type="PackedScene" uid="uid://cdn2oqit1gq4v" path="res://Scenes/Demo/Test.tscn" id="2_86hwq"]
+[ext_resource type="AudioStream" uid="uid://by6t6604jpris" path="res://Assets/SFX/tutorial/8bit_intro.ogg" id="4_1twop"]
 [ext_resource type="AudioStream" uid="uid://dwe1jljijcfhh" path="res://Assets/SFX/tutorial/8bit_validate.ogg" id="4_kh0yp"]
 [ext_resource type="AudioStream" uid="uid://nis7xan2np8n" path="res://Assets/SFX/tutorial/8bit_action.ogg" id="5_1kl2u"]
 [ext_resource type="AudioStream" uid="uid://dn2ljmbfi1oif" path="res://Assets/SFX/tutorial/8bit_eye.ogg" id="6_vamv3"]
@@ -106,6 +107,10 @@ vertical_alignment = 1
 material = SubResource("ShaderMaterial_11ee7")
 offset_right = 1152.0
 offset_bottom = 648.0
+
+[node name="intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1twop")
+volume_db = -4.0
 
 [node name="validate" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_kh0yp")
