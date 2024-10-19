@@ -21,6 +21,7 @@ const CeilMaterial := preload("res://Scenes/Map/Ceil.tres")
 # Map data 
 var mapData : Array[CellType]
 var mapSize: Vector2i
+var playerSpawn: Vector3
 
 # Cache
 @onready var groundMesh := PlaneMesh.new()
@@ -49,7 +50,9 @@ var fullCeilInstanceTransforms: Array[Transform3D]
 
 # Utility functions
 func isAvailable(goal2dPosition: Vector2i):
-	return getMapData(goal2dPosition.x, goal2dPosition.y) == CellType.Normal
+	#spawns are walkable
+	var cellType = getMapData(goal2dPosition.x, goal2dPosition.y)
+	return cellType == CellType.Normal || cellType == CellType.Spawn
 
 
 func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
@@ -200,12 +203,14 @@ func createSceneFullWall(elementPosition: Vector3):
 	newCollisionShape.position = elementPosition + positionOffset
 	add_child(newCollisionShape)
 
+#TODO: use this as a bitfield to flag walkable cells 
 enum CellType {
 	Empty = 0,
 	
 	Normal = 1,
 	Opening = 2,
 	Hole = 3,
+	#spawns are available
 	Spawn = 4
 }
 
@@ -274,8 +279,10 @@ func generateMapMesh():
 	var currentRow: int = 0
 	
 	for element in mapData:
-		if element == CellType.Normal or element == CellType.Hole:
+		if element == CellType.Normal or element == CellType.Hole or element == CellType.Spawn:
 			createCell(currentCol, currentRow)
+			if element == CellType.Spawn:
+				playerSpawn = Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace)
 		elif element != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
 			createSceneFullWall(getMapPos(currentCol, currentRow))
 		

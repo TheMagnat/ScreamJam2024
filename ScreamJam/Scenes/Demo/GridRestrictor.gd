@@ -119,6 +119,8 @@ func _physics_process(delta: float) -> void:
 		debugPanel.add_property("InMovement", inMovement, 4)
 		debugPanel.add_property("Current Position", character.position, 5)
 		debugPanel.add_property("Goal Position", gridToken.goalWorldPosition, 6)
+		debugPanel.add_property("Current Grid Pos", (character.position / map.gridSpace).round(), 5)
+		debugPanel.add_property("Goal Grid Pos", (gridToken.goalWorldPosition / map.gridSpace).round(), 6)
 		
 		
 		

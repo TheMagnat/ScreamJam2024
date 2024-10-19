@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqup810i65rh"]
+
+[ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_bx3s3"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_euk7i"]
+[ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="3_52cip"]
+[ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="4_bv0cq"]
+[ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="5_4igvd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6j1xm"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_ql732"]
+sky_material = SubResource("ProceduralSkyMaterial_6j1xm")
+
+[sub_resource type="Environment" id="Environment_3iust"]
+background_mode = 2
+sky = SubResource("Sky_ql732")
+tonemap_mode = 2
+tonemap_exposure = 2.0
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 2.0
+glow_blend_mode = 1
+fog_mode = 1
+fog_light_color = Color(0, 0, 1, 1)
+fog_light_energy = 16.0
+fog_sun_scatter = 1.0
+fog_density = 1.0
+fog_aerial_perspective = 1.0
+fog_height = 1024.0
+fog_depth_begin = 3.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.3005
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_v61f3"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 0.01
+dof_blur_near_transition = -1.0
+dof_blur_amount = 0.2
+
+[node name="MediumRound" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3iust")
+camera_attributes = SubResource("CameraAttributesPractical_v61f3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 3.0
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+
+[node name="Map" parent="NavigationRegion3D" instance=ExtResource("1_bx3s3")]
+mapFilePath = "res://Scenes/Map/MapFile/medium_round.txt"
+
+[node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("2_euk7i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)
+base_speed = 5.0
+sprint_speed = 10.0
+motion_smoothing = false
+map = NodePath("../NavigationRegion3D/Map")
+environment = NodePath("../WorldEnvironment")
+
+[node name="CameraRotationRestrictor" type="Node" parent="Character"]
+script = ExtResource("3_52cip")
+
+[node name="GridRestrictor" type="Node" parent="Character" node_paths=PackedStringArray("gridToken")]
+script = ExtResource("4_bv0cq")
+gridToken = NodePath("../GridToken")
+rotateCameraOnMove = true
+
+[node name="GridToken" type="Node3D" parent="Character" node_paths=PackedStringArray("map")]
+script = ExtResource("5_4igvd")
+map = NodePath("../../NavigationRegion3D/Map")
