@@ -49,7 +49,7 @@ var fullCeilInstanceTransforms: Array[Transform3D]
 
 # Utility functions
 func isAvailable(goal2dPosition: Vector2i):
-	return getMapData(goal2dPosition.x, goal2dPosition.y) != CellType.Empty
+	return getMapData(goal2dPosition.x, goal2dPosition.y) == CellType.Normal
 
 
 func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
@@ -205,7 +205,8 @@ enum CellType {
 	
 	Normal = 1,
 	Opening = 2,
-	Spawn = 3
+	Hole = 3,
+	Spawn = 4
 }
 
 func getMapData(x: int, y: int) -> CellType:
@@ -273,7 +274,7 @@ func generateMapMesh():
 	var currentRow: int = 0
 	
 	for element in mapData:
-		if element == CellType.Normal:
+		if element == CellType.Normal or element == CellType.Hole:
 			createCell(currentCol, currentRow)
 		elif element != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
 			createSceneFullWall(getMapPos(currentCol, currentRow))

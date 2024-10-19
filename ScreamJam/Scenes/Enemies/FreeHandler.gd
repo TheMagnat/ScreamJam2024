@@ -11,7 +11,7 @@ var targetLastPosition: Vector3
 @onready var navigationAgent: NavigationAgent3D = $"../NavigationAgent3D"
 
 # Random direction handler
-var timeSinceRandomDir: float = 0.0
+var timeSinceRandomDir: float = 3.0
 var randomDirection: Vector3
 
 func _physics_process(delta: float) -> void:

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://btrjj2on2u83k"]
+
+[ext_resource type="Shader" path="res://Scenes/Global/FlashEvents/FlashEvent.gdshader" id="1_f8kkl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utsxg"]
+shader = ExtResource("1_f8kkl")
+
+[node name="FlashEvent" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_utsxg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
