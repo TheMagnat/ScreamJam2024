@@ -94,7 +94,7 @@ func _on_resolution_options_item_selected(index: int):
 func _on_full_screen_check_box_toggled(toggled_on: bool):
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN if toggled_on else DisplayServer.WINDOW_MODE_WINDOWED)
 
-func _on_input_button_pressed(button : Button, action : InputEvent):
+func _on_input_button_pressed(button : Button, action : String):
 	if !isRemapping:
 		isRemapping = true
 		actionRemapping = action

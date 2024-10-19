@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwnah50iuq62x"]
+[gd_scene load_steps=4 format=3 uid="uid://cwnah50iuq62x"]
 
 [ext_resource type="Script" path="res://Scenes/Menu/pause_menu.gd" id="1_bttxp"]
+[ext_resource type="Theme" uid="uid://bci64pmwpnu56" path="res://Scenes/Menu/PauseMenuTheme.tres" id="1_clyq6"]
+[ext_resource type="Material" uid="uid://c4da17pubpfnj" path="res://Scenes/Menu/PauseMenuPanelShaderMaterial.tres" id="3_rgiot"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -9,9 +11,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_clyq6")
 script = ExtResource("1_bttxp")
 
 [node name="Panel" type="PanelContainer" parent="."]
+material = ExtResource("3_rgiot")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3

@@ -1,0 +1,50 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://bci64pmwpnu56"]
+
+[ext_resource type="FontFile" uid="uid://uyf1cn3ck54s" path="res://Assets/TeutonFett.otf" id="1_3nnsx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xhff"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aekpu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7eyn"]
+bg_color = Color(0.740165, 0.607751, 0.38974, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grl1x"]
+bg_color = Color(0.87969, 0.761426, 0.571723, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_203ap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jnkrb"]
+bg_color = Color(0.172833, 0.172833, 0.172833, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_d3xbm"]
+base_font = ExtResource("1_3nnsx")
+opentype_features = {
+1801810542: 1
+}
+spacing_top = 1
+spacing_bottom = 1
+
+[resource]
+default_font = SubResource("FontVariation_d3xbm")
+default_font_size = 18
+Button/colors/font_color = Color(0.458824, 0.458824, 0.458824, 1)
+Button/colors/font_focus_color = Color(0.458824, 0.458824, 0.458824, 1)
+Button/colors/font_hover_color = Color(0.878431, 0.760784, 0.572549, 1)
+Button/colors/font_hover_pressed_color = Color(0.878431, 0.760784, 0.572549, 1)
+Button/colors/font_pressed_color = Color(0.741176, 0.607843, 0.388235, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_1xhff")
+CheckBox/styles/focus = SubResource("StyleBoxEmpty_aekpu")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_j7eyn")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_grl1x")
+HSlider/styles/slider = null
+Label/colors/font_color = Color(0.458824, 0.458824, 0.458824, 1)
+OptionButton/colors/font_color = Color(0.458824, 0.458824, 0.458824, 1)
+OptionButton/colors/font_focus_color = Color(0.458824, 0.458824, 0.458824, 1)
+OptionButton/colors/font_hover_color = Color(0.741176, 0.607843, 0.388235, 1)
+OptionButton/colors/font_hover_pressed_color = Color(0.878431, 0.760784, 0.572549, 1)
+OptionButton/colors/font_pressed_color = Color(0.878431, 0.760784, 0.572549, 1)
+OptionButton/styles/focus = SubResource("StyleBoxEmpty_203ap")
+PopupMenu/colors/font_color = Color(0.458824, 0.458824, 0.458824, 1)
+PopupMenu/colors/font_hover_color = Color(0.878431, 0.760784, 0.572549, 1)
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_jnkrb")
