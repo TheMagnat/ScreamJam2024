@@ -6,21 +6,24 @@ const STATES := [
 	["Press %s to turn left", "RotateLeft"],
 	["Press %s to turn right", "RotateRight"],
 	["Move around with %s %s %s %s", ["Up", "Left", "Right", "Down"]],
-	["If it gets too scary, press %s", "Blink"],
-	["Now, find the exit! :)", []]
 ]
 
 func _ready() -> void:
 	RenderingServer.global_shader_parameter_set("wall_distort", 0.0)
+	RenderingServer.global_shader_parameter_set("breathing", 0.0)
 	$CanvasLayer/Tutorial.hide()
 	
 	var t := create_tween()
 	t.tween_method(func(x: float): $CanvasLayer/ColorRect.material.set_shader_parameter("pixelize", x), 0.0, 1.0, 3.0)
 	
 	t.tween_callback($CanvasLayer/Tutorial.show)
-	t.tween_interval(1.0)
+	t.tween_interval(2.0)
 	t.tween_callback($CanvasLayer/Tutorial.hide)
 	t.tween_callback(next_step)
+
+func _exit_tree():
+	print("Exitting tutorial")
+	RenderingServer.global_shader_parameter_set("breathing", 1.0)
 
 func get_event(action: String) -> String:
 	var events = InputMap.action_get_events(action)
@@ -29,38 +32,45 @@ func get_event(action: String) -> String:
 	return ""
 
 var step := -1
+const BLINK_STEP := 12
+const BLINK_INFO := ["If it gets too scary, press %s", "Blink"]
 func next_step():
 	step += 1
 	
-	if STATES.size() <= step:
+	if STATES.size() <= step && step != BLINK_STEP:
 		return
-	
-	if STATES[step][1] is Array:
-		var arr := []
-		for action in STATES[step][1]:
-			arr.append(get_event(action))
-		$CanvasLayer/Text.text = STATES[step][0] % arr
+	var state: Array
+	if step == BLINK_STEP:
+		state = BLINK_INFO
 	else:
-		$CanvasLayer/Text.text = STATES[step][0] % get_event(STATES[step][1])
+		state = STATES[step]
 	
-	if step == (STATES.size() - 1):
-		var t := create_tween()
-		t.tween_property($CanvasLayer/Text, "modulate:a", 0.0, 5.0)
-		t.parallel().tween_method(func(x: float): $CanvasLayer/ColorRect.material.set_shader_parameter("pixelize", x), 1.0, 0.0, 10.0)
-		t.tween_callback(get_tree().change_scene_to_packed.bind(nextScene))
+	if state[1] is Array:
+		var arr := []
+		for action in state[1]:
+			arr.append(get_event(action))
+		$CanvasLayer/Text.text = state[0] % arr
+	else:
+		$CanvasLayer/Text.text = state[0] % get_event(state[1])
+	
+	if step > 0:
+		$validate.play()
 
 var rotating := false
-const ROT_TIME := 0.125
+const ROT_TIME := 0.2
+
+func rot_step(t: Tween, a: float):
+	t.tween_callback(func():
+		$Camera3D.rotation.y += a
+		$action.play())
+	t.tween_interval(ROT_TIME)
+
 func rotate_camera(a: float):
 	rotating = true
 	var t := create_tween()
-	t.tween_callback(func(): $Camera3D.rotation.y += a / 4.0)
-	t.tween_interval(ROT_TIME)
-	t.tween_callback(func(): $Camera3D.rotation.y += a / 4.0)
-	t.tween_interval(ROT_TIME)
-	t.tween_callback(func(): $Camera3D.rotation.y += a / 4.0)
-	t.tween_interval(ROT_TIME)
-	t.tween_callback(func(): $Camera3D.rotation.y += a / 4.0)
+	rot_step(t, a / 3.0)
+	rot_step(t, a / 3.0)
+	rot_step(t, a / 3.0)
 	t.tween_callback(func(): rotating = false)
 
 func check_step(i: int):
@@ -68,24 +78,38 @@ func check_step(i: int):
 
 var blink_tween: Tween
 var closed_eyes := false
-func blink(closing : bool):
-	if closing == closed_eyes: return
-	
+func blink_step(t: Tween, s: float):
+	t.tween_callback(func():
+		$CanvasLayer/ColorRect.material.set_shader_parameter("blink", s)
+		$eye.play())
+	t.tween_interval(ROT_TIME)
+
+func blink():
+	closed_eyes = true
 	if blink_tween: blink_tween.kill()
 	blink_tween = create_tween()
-	blink_tween.tween_callback(func(): $CanvasLayer/ColorRect.material.set_shader_parameter("blink", 0.4))
-	blink_tween.tween_interval(0.25)
-	blink_tween.tween_callback(func(): $CanvasLayer/ColorRect.material.set_shader_parameter("blink", 1.0 if closing else 0.0))
+	blink_step(blink_tween, 0.2)
+	blink_step(blink_tween, 0.4)
+	blink_step(blink_tween, 1.0)
 	
-	if closing:
-		blink_tween.tween_callback(func(): closed_eyes = true)
-	else:
-		closed_eyes = false
+	blink_tween.tween_callback(func():
+		Ambience.next_ambience()
+		get_tree().change_scene_to_packed(nextScene))
 
-const DIST := 5.0
+func move_step(t: Tween, dir: Vector3):
+	t.tween_callback(func():
+		$Camera3D.position += dir
+		$action.play())
+	t.tween_interval(ROT_TIME)
 
 var moving := false
 func move(a: float):
+	var dir : Vector3 = Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * $Map.gridSpace
+	var expectedPos : Vector3 = ($Camera3D.position + dir)/$Map.gridSpace
+	
+	if !$Map.isAvailable(Vector2i(expectedPos.x + 0.1, expectedPos.z + 0.1)):
+		return
+	
 	moving = true
 	var t := create_tween()
 	
@@ -93,28 +117,17 @@ func move(a: float):
 		rotate_camera(a)
 		t.tween_interval(ROT_TIME * 3.5)
 	
-	var dir := Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * DIST
-	t.tween_callback(func(): $Camera3D.position += dir / 4.0)
-	t.tween_interval(ROT_TIME)
-	t.tween_callback(func(): $Camera3D.position += dir / 4.0)
-	t.tween_interval(ROT_TIME)
-	t.tween_callback(func(): $Camera3D.position += dir / 4.0)
-	t.tween_interval(ROT_TIME)
-	t.tween_callback(func(): $Camera3D.position += dir / 4.0)
+	move_step(t, dir / 3.0)
+	move_step(t, dir / 3.0)
+	move_step(t, dir / 3.0)
 	t.tween_callback(func(): moving = false)
 
 func _input(event: InputEvent):
-	if rotating || moving:
+	if closed_eyes || rotating || moving:
 		return
 	
-	if event.is_action_pressed("Blink") and check_step(3):
-		blink(true)
-	elif event.is_action_released("Blink"):
-		blink(false)
-		next_step()
-	
-	if closed_eyes:
-		return
+	if event.is_action_pressed("Blink") and step == BLINK_STEP:
+		blink()
 	
 	if event.is_action_pressed("RotateLeft") and check_step(0):
 		rotate_camera(PI/2.0)

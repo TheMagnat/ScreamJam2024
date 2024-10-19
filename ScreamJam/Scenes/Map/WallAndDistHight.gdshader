@@ -35,6 +35,7 @@ uniform vec3 uv2_offset;
 
 uniform sampler2D noise;
 global uniform float wall_distort : hint_range(0.0, 0.9, 0.001);
+global uniform float breathing : hint_range(0.0, 1.0, 0.001);
 global uniform vec3 player_pos;
 
 varying vec3 world_position;
@@ -52,6 +53,8 @@ void vertex() {
 void fragment() {
 	vec2 base_uv = UV;
 
+	float time = TIME * breathing;
+
 	{
 		// Height: Enabled
 		vec3 view_dir = normalize(normalize(-VERTEX + EYE_OFFSET) * mat3(TANGENT * heightmap_flip.x, -BINORMAL * heightmap_flip.y, NORMAL));
@@ -61,7 +64,7 @@ void fragment() {
 		float layer_depth = 1.0 / num_layers;
 		float current_layer_depth = 0.0;
 		// Breathing effect here with the "wall_distort" and cos(TIME)
-		vec2 p = view_dir.xy * (heightmap_scale * (1.0 + cos(TIME * 2.0) * (0.02 + wall_distort * 0.98) * 6.0)) * 0.01;
+		vec2 p = view_dir.xy * (heightmap_scale * (1.0 + cos(time * 2.0) * (0.02 + wall_distort * 0.98) * 6.0)) * 0.01;
 		vec2 delta = p / num_layers;
 		vec2 ofs = base_uv;
 		float depth = 1.0 - texture(texture_heightmap, ofs).r;
@@ -84,7 +87,7 @@ void fragment() {
 	}
 
 	// Rainy / Water effect
-	float randValue = texture(noise, UV * 0.2 + vec2(sin(TIME) * 0.00001, -0.05) * TIME).r;
+	float randValue = texture(noise, UV * 0.2 + vec2(sin(time) * 0.00001, -0.05) * time).r;
 	float modifier = randValue * (0.075 + wall_distort * 0.9) * 0.05;
 	vec2 vecModifier = vec2(0.0, 0.4) * modifier;
 	base_uv += vecModifier;
