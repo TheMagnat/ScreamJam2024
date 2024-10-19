@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c4da17pubpfnj"]
+
+[ext_resource type="Shader" path="res://Scenes/Menu/DissolveUi.gdshader" id="1_bnlgy"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hnivt"]
+noise_type = 2
+frequency = 0.0142
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v1j14"]
+seamless = true
+noise = SubResource("FastNoiseLite_hnivt")
+
+[resource]
+shader = ExtResource("1_bnlgy")
+shader_parameter/dissolveFactor = 1.4
+shader_parameter/scrollSpeed = 0.21
+shader_parameter/alphaThreshold = 0.461
+shader_parameter/borderSize = 0.04
+shader_parameter/borderStrength = 0.106
+shader_parameter/xTranslate = 0.795
+shader_parameter/frontColor = null
+shader_parameter/backColor = Color(0.0313726, 0.0313726, 0.0313726, 1)
+shader_parameter/noise = SubResource("NoiseTexture2D_v1j14")
