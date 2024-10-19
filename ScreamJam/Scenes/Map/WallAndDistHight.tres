@@ -1,0 +1,41 @@
+[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://bd0xh03ryyac0"]
+
+[ext_resource type="Texture2D" uid="uid://bcxa1c5psy46s" path="res://Assets/Ground/Wall_Horror_ambientocclusion.png" id="1_i5327"]
+[ext_resource type="Shader" path="res://Scenes/Map/WallAndDistHight.gdshader" id="1_sbtju"]
+[ext_resource type="Texture2D" uid="uid://dbt671qei65kt" path="res://Assets/Ground/Wall_Horror_height.png" id="2_p3514"]
+[ext_resource type="Texture2D" uid="uid://et4akonvupd1" path="res://Assets/Ground/Wall_Horror_normal.png" id="3_s66au"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4apgc"]
+noise_type = 4
+frequency = 0.2025
+fractal_lacunarity = 3.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_81hd0"]
+width = 2048
+height = 2048
+noise = SubResource("FastNoiseLite_4apgc")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_sbtju")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/ao_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/ao_light_affect = 1.0
+shader_parameter/heightmap_scale = 5.0
+shader_parameter/heightmap_min_layers = 8
+shader_parameter/heightmap_max_layers = 32
+shader_parameter/heightmap_flip = Vector2(1, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_normal = ExtResource("3_s66au")
+shader_parameter/texture_ambient_occlusion = ExtResource("1_i5327")
+shader_parameter/texture_heightmap = ExtResource("2_p3514")
+shader_parameter/noise = SubResource("NoiseTexture2D_81hd0")
