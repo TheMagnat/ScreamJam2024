@@ -111,9 +111,9 @@ void fragment() {
 	
 	
 	float oldAO = AO;
-	AO = mix(AO, (1.0 - AO), pow(wall_distort, 6.0)); // Color inversion
+	AO = mix(AO, (1.0 - AO), pow(wall_distort, 4.0)); // Color inversion
 	
-	ALBEDO += ((1.0 - oldAO) * 10.0 * pow(wall_distort, 3.0)); // Flash White
+	ALBEDO += ((1.0 - oldAO) * 10.0 * pow(wall_distort, 2.0)); // Flash White
 	ALBEDO += vec3(3.0, 0.0, 0.0) * ((1.0 - oldAO) * 80.0 * pow(wall_distort, 48.0)); // Flash Red at the end
 	
 	vec2 uv = vec2((world_position.x + world_position.z), world_position.y) * 0.25;

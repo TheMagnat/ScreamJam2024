@@ -43,8 +43,7 @@ camera_attributes = SubResource("CameraAttributesPractical_beql3")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_dqf6q")
 
-[node name="Map" parent="NavigationRegion3D" node_paths=PackedStringArray("Player") instance=ExtResource("1_kjvu5")]
-Player = NodePath("../../Character")
+[node name="Map" parent="NavigationRegion3D" instance=ExtResource("1_kjvu5")]
 mapFilePath = "res://Scenes/Map/MapFile/MobMapTest.txt"
 
 [node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("2_fpi3d")]
