@@ -185,6 +185,8 @@ func _ready():
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
 	blink(true)
+	await get_tree().create_timer(0.5).timeout
+	blink(false)
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode

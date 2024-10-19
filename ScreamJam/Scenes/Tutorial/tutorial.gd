@@ -126,7 +126,7 @@ func _input(event: InputEvent):
 	if closed_eyes || rotating || moving:
 		return
 	
-	if event.is_action_pressed("Blink") and step == BLINK_STEP:
+	if event.is_action_pressed("Blink") and step >= BLINK_STEP:
 		blink()
 	
 	if event.is_action_pressed("RotateLeft") and check_step(0):
