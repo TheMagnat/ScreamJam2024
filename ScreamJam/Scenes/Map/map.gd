@@ -5,8 +5,6 @@ const DistoredWallMaterial := preload("res://Scenes/Map/DistortedWall.tres")
 const GroundMaterial := preload("res://Scenes/Map/Ground.tres")
 const CeilMaterial := preload("res://Scenes/Map/Ceil.tres")
 
-@export var Player : Character
-
 # Map parameters
 @export var gridSpace: float = 1.0
 @export var thickness: float = 1.0

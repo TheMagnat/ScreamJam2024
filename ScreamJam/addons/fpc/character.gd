@@ -175,7 +175,9 @@ func _ready():
 	
 	check_controls()
 	
-	$PostProcess/ColorRect.material.set_shader_parameter("blink", 0.0)
+	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
+	blink(1.0)
+	await get_tree().create_timer(0.5).timeout
 	blink(0.0)
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
