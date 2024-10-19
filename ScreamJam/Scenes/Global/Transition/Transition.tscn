@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://de2wa3g6in18b"]
+[gd_scene load_steps=11 format=3 uid="uid://de2wa3g6in18b"]
 
 [ext_resource type="Script" path="res://Scenes/Global/Transition/Transition.gd" id="1_1meok"]
 [ext_resource type="PackedScene" uid="uid://dvcrh7d5lyidw" path="res://Scenes/Global/Transition/TransitionAnimation/SpikeAnimation.tscn" id="2_446xc"]
 [ext_resource type="PackedScene" uid="uid://b6kdri4ti8at" path="res://Scenes/Global/Transition/TransitionAnimation/ShadowAnimation.tscn" id="2_srxmi"]
 [ext_resource type="PackedScene" uid="uid://b623xev475p6t" path="res://Scenes/Global/Transition/TransitionAnimation/SpikeBallAnimation.tscn" id="3_j7bqy"]
+[ext_resource type="PackedScene" uid="uid://bjqp83rv7gy3g" path="res://Scenes/Global/Transition/TransitionAnimation/Alpha.tscn" id="5_um4tr"]
 
 [sub_resource type="Animation" id="Animation_fx1el"]
 length = 0.001
@@ -82,13 +83,15 @@ _data = {
 process_mode = 3
 layer = 128
 script = ExtResource("1_1meok")
-availableAnimations = [NodePath("SpikeAnimation"), NodePath("SpikeBallAnimation"), NodePath("ShadowAnimation")]
+availableAnimations = [NodePath("SpikeAnimation"), NodePath("SpikeBallAnimation"), NodePath("ShadowAnimation"), NodePath("Alpha")]
 
 [node name="ShadowAnimation" parent="." instance=ExtResource("2_srxmi")]
 
 [node name="SpikeAnimation" parent="." instance=ExtResource("2_446xc")]
 
 [node name="SpikeBallAnimation" parent="." instance=ExtResource("3_j7bqy")]
+
+[node name="Alpha" parent="." instance=ExtResource("5_um4tr")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -5,7 +5,7 @@ extends Node3D
 const STATES := [
 	["Press %s to turn left", "RotateLeft"],
 	["Press %s to turn right", "RotateRight"],
-	["Move around with %s %s %s %s", ["Up", "Left", "Right", "Down"]],
+	["Move around with %s %s %s %s", ["Up", "Left", "Down", "Right"]],
 ]
 
 func _ready() -> void:
@@ -100,7 +100,7 @@ func blink():
 	
 	blink_tween.tween_callback(func():
 		Ambience.next_ambience()
-		get_tree().change_scene_to_packed(nextScene))
+		Transition.start(get_tree().change_scene_to_packed.bind(nextScene), 0.5, Transition.Type.Alpha, Transition.Type.Alpha))
 
 func move_step(t: Tween, dir: Vector3):
 	t.tween_callback(func():

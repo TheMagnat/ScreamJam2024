@@ -7,7 +7,8 @@ enum Type {
 	
 	Shadow = 0,
 	Spike = 1,
-	SpikeBall = 2
+	SpikeBall = 2,
+	Alpha = 3
 }
 
 func _ready() -> void:
