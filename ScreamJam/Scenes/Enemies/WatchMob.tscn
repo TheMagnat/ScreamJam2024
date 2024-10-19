@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://djyoj4qtpi6jx"]
+
+[ext_resource type="Script" path="res://Scenes/Enemies/FreeMob.gd" id="1_4q00q"]
+[ext_resource type="Script" path="res://Scenes/Enemies/FreeHandler.gd" id="2_jltnh"]
+[ext_resource type="Script" path="res://Scenes/Enemies/PlayerDetector.gd" id="3_xr2ic"]
+[ext_resource type="Script" path="res://Scenes/Enemies/QuanticNode.gd" id="4_2f1j5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_behdd"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n3rnr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqylk"]
+
+[node name="WatchMob" type="CharacterBody3D" groups=["ClassicEntity"]]
+collision_layer = 5
+script = ExtResource("1_4q00q")
+SPEED = 4.0
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_behdd")
+mesh = SubResource("CapsuleMesh_n3rnr")
+
+[node name="FreeHandler" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("2_jltnh")
+parent = NodePath("..")
+
+[node name="PlayerDetector" type="Node3D" parent="." node_paths=PackedStringArray("nodeToUpdate")]
+script = ExtResource("3_xr2ic")
+nodeToUpdate = NodePath("../FreeHandler")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_rqylk")
+
+[node name="QuanticNode" type="Node3D" parent="."]
+script = ExtResource("4_2f1j5")

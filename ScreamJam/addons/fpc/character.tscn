@@ -1,7 +1,6 @@
-[gd_scene load_steps=49 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=48 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
-[ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/Dagger.tscn" id="2_vh6h3"]
 [ext_resource type="Shader" path="res://addons/fpc/character.gdshader" id="3_pevgd"]
 [ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
@@ -116,7 +115,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f85ux"]
-size = Vector3(2, 2, 4)
+size = Vector3(2, 2, 5.03491)
 
 [sub_resource type="Animation" id="Animation_lej81"]
 resource_name = "AttackAnimation"
@@ -438,24 +437,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 [node name="FrontRangeArea" type="Area3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9034)
 collision_layer = 0
-collision_mask = 4
+collision_mask = 12
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/FrontRangeArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.130052)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.647508)
 shape = SubResource("BoxShape3D_f85ux")
 
-[node name="HandPosition" type="Marker3D" parent="Head"]
+[node name="RightHandPosition" type="Marker3D" parent="Head"]
 transform = Transform3D(0.14436, 0, -0.989524, 0, 1, 0, 0.989525, 0, 0.14436, 0.379, -0.367, -0.462)
 
-[node name="AttackAnimation" type="AnimationPlayer" parent="Head/HandPosition"]
+[node name="LeftHandPosition" type="Marker3D" parent="Head"]
+transform = Transform3D(-0.0801989, 0, 0.996778, 0, 1, 0, -0.996779, 0, -0.0801988, -0.543, -0.494, -0.518)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+far = 20.0
+
+[node name="AttackAnimation" type="AnimationPlayer" parent="Head"]
+root_node = NodePath("../RightHandPosition")
 libraries = {
 "": SubResource("AnimationLibrary_mtltv")
 }
 speed_scale = 1.5
-
-[node name="Dagger" parent="Head/HandPosition" instance=ExtResource("2_vh6h3")]
-
-[node name="Camera" type="Camera3D" parent="Head"]
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {

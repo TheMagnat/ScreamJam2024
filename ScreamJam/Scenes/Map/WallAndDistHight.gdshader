@@ -61,7 +61,7 @@ void fragment() {
 		float layer_depth = 1.0 / num_layers;
 		float current_layer_depth = 0.0;
 		// Breathing effect here with the "wall_distort" and cos(TIME)
-		vec2 p = view_dir.xy * (heightmap_scale * (1.0 + cos(TIME * 2.0) * (0.02 + wall_distort * 0.98) * 4.0)) * 0.01;
+		vec2 p = view_dir.xy * (heightmap_scale * (1.0 + cos(TIME * 2.0) * (0.02 + wall_distort * 0.98) * 6.0)) * 0.01;
 		vec2 delta = p / num_layers;
 		vec2 ofs = base_uv;
 		float depth = 1.0 - texture(texture_heightmap, ofs).r;
@@ -111,16 +111,30 @@ void fragment() {
 	
 	
 	float oldAO = AO;
-	AO = mix(AO, (1.0 - AO), pow(wall_distort, 4.0)); // Color inversion
+	//AO = mix(AO, (1.0 - AO), pow(wall_distort, 8.0)); // Color inversion
+	AO = mix(AO, (1.0 - AO), smoothstep(0.6, 1.0, wall_distort));
 	
-	ALBEDO += ((1.0 - oldAO) * 10.0 * pow(wall_distort, 2.0)); // Flash White
-	ALBEDO += vec3(3.0, 0.0, 0.0) * ((1.0 - oldAO) * 80.0 * pow(wall_distort, 48.0)); // Flash Red at the end
+	ALBEDO += ((1.0 - oldAO) * 10.0 * pow(wall_distort, 4.0)); // Flash White
 	
-	vec2 uv = vec2((world_position.x + world_position.z), world_position.y) * 0.25;
-	float t = TIME * 0.5;
-	float multiplier = 1.0 + (f(noise, t, uv, 0.0, 0.15135) + f(noise, t, uv, 10.0, 0.5426) + f(noise, t, uv, 20.0, 0.275363) + f(noise, t, uv, 30.0, 0.1341));
-	ALBEDO *= multiplier;
+	
+	//vec3 redRes = vec3(1.0, 0.03138, 0.03138) * ((1.0 - oldAO) * 80.0 * pow(wall_distort, 16.0));
+	//ALBEDO += redRes; // Flash Red at the end
+	
+	vec2 independantUv = vec2((world_position.x + world_position.z), world_position.y) * 0.25;
+	vec2 uv = vec2(base_uv.x, 1.0 - base_uv.y);
+	//uv = independantUv;
+	//vec2 uv2 = vec2(base_uv.x, 1.0 - base_uv.y);
 
+	float t = TIME * 0.5;
+	float multiplier = 1.0 + (
+		//f(noise, t, independantUv, 0.0, 0.15135) +
+		f(noise, t, uv, 10.0, 0.5426) +
+		f(noise, t, uv, 20.0, 0.275363) +
+		f(noise, t, uv, 30.0, 0.1341) +
+		0.0
+	);
+	ALBEDO *= multiplier;
+ 
 	vec2 uv2 = vec2(uv.x, 1.0 - min(1.0, uv.y * 0.8));
 	ALBEDO *= (1.0 - texture(noise, uv2 + vec2(cos(TIME * 0.15315), sin(TIME * 0.134151)) * 0.01).r * wall_distort * (1.0 - uv2.y) * 0.5);
 	ALBEDO *= sqrt(uv2.y * 0.125 * wall_distort + (1.0 - wall_distort));

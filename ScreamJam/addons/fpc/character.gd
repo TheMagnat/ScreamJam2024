@@ -153,6 +153,7 @@ func damageHealth(dmg: float, dot := false):
 		die.emit()
 
 func _ready():
+	Global.player = self
 	GridEntityManager.player = self
 	
 	#It is safe to comment this line if your game doesn't start with the mouse captured
@@ -524,7 +525,8 @@ func _process(delta):
 	
 	if Debug.debug:
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("Sanity", sanity, 4)
-		$InterfaceLayer/UserInterface/DebugPanel.add_property("Health", health, 5)
+		$InterfaceLayer/UserInterface/DebugPanel.add_property("sanity_display", sanity_display, 5)
+		$InterfaceLayer/UserInterface/DebugPanel.add_property("Health", health, 6)
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("distortion", sanity01 * 0.7)
 	
@@ -538,9 +540,21 @@ func _process(delta):
 	Ambience.set_ambience(sanity01)
 
 var closed_eyes := false
+var shouldOpen := false
 var blink_tween: Tween
+var fast_blink_tween: Tween
 func blink(closing : bool):
+	if not closing and fast_blink_tween.is_running():
+		shouldOpen = true
+		return
+	
+	shouldOpen = false
+	
 	if blink_tween: blink_tween.kill()
+	if fast_blink_tween: fast_blink_tween.kill()
+	
+	fast_blink_tween = create_tween()
+	
 	blink_tween = create_tween()
 	blink_tween.set_ease(Tween.EASE_OUT)
 	blink_tween.set_trans(Tween.TRANS_QUART)
@@ -548,8 +562,16 @@ func blink(closing : bool):
 	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, 0.5)
 	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 20050.0, 0.5)
 	
+	fast_blink_tween.tween_interval(0.20)
+	
 	if closing:
-		blink_tween.tween_callback(func(): closed_eyes = true)
+		fast_blink_tween.tween_callback(func(): closed_eyes = true)
+		fast_blink_tween.parallel().tween_interval(0.05)
+		fast_blink_tween.tween_callback(func():
+			if shouldOpen:
+				shouldOpen = false
+				blink.call_deferred(false)
+		)
 	else:
 		closed_eyes = false
 

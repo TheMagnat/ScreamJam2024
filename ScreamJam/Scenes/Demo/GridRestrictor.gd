@@ -123,7 +123,7 @@ func _physics_process(delta: float) -> void:
 		
 		
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Action"):
+	if event.is_action_pressed("Idle"):
 		if EventBus.gridStepDelay.is_stopped():
 			EventBus.playerGridStep.emit()
 	

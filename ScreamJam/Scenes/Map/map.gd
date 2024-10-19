@@ -71,9 +71,15 @@ func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
 	
 	return neighbors
 
+var availablePos: PackedVector3Array
+func getRandomPos() -> Vector3:
+	return availablePos[randi_range(0, availablePos.size() - 1)]
+
 # Generation
 func _ready() -> void:
 	generateMap()
+	
+	Global.map = self
 
 func generateMap() -> void:
 	groundMesh.size = Vector2(gridSpace, gridSpace)
@@ -221,7 +227,8 @@ func drawWallCell(x: int, y: int, side: WallType) -> bool:
 	return !((side == WallType.Left || side == WallType.Right) && !(U && D) || (side == WallType.Up || side == WallType.Down) && !(L && R))
 
 func createCell(x: int, y: int):
-	var elementPosition := getMapPos(x, y)
+	var elementPosition: Vector3 = getMapPos(x, y)
+	availablePos.push_back( elementPosition )
 	
 	# Create ground Mesh
 	groundInstanceTransforms.push_back( Transform3D(Basis(), elementPosition) )
@@ -239,10 +246,10 @@ func createCell(x: int, y: int):
 		ceilInstanceTransforms.push_back( Transform3D(Basis.from_euler(Vector3(PI, 0.0, 0.0)), ceilPosition + Vector3(0.0, -(0.01 + thickness / 2.0), 0.0)) )
 		
 		# Create collision Shape
-		var newCeilShape := CollisionShape3D.new()
-		newCeilShape.shape = groundShape
-		newCeilShape.position = ceilPosition
-		add_child(newCeilShape)
+		#var newCeilShape := CollisionShape3D.new()
+		#newCeilShape.shape = groundShape
+		#newCeilShape.position = ceilPosition
+		#add_child(newCeilShape)
 
 	
 	# Create Wall Mesh

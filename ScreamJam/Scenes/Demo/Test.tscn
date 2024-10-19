@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=19 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kl7dy"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="6_h0pw4"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridEntityManager.gd" id="7_dmy4d"]
 [ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="7_wwkf4"]
+[ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="9_373d5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -25,6 +26,14 @@ ssao_enabled = true
 glow_enabled = true
 glow_intensity = 2.0
 glow_blend_mode = 1
+fog_mode = 1
+fog_light_color = Color(0, 0, 1, 1)
+fog_light_energy = 16.0
+fog_sun_scatter = 1.0
+fog_density = 1.0
+fog_aerial_perspective = 1.0
+fog_height = 1024.0
+fog_depth_begin = 3.5
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.3005
 
@@ -105,3 +114,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.5, 0)
 
 [node name="GridEntityManager" type="Node" parent="."]
 script = ExtResource("7_dmy4d")
+
+[node name="Eye" parent="." instance=ExtResource("9_373d5")]
+transform = Transform3D(-0.999934, 0, -0.0115015, 0, 1, 0, 0.0115015, 0, -0.999934, 5.20041, 2.34053, 24.5309)

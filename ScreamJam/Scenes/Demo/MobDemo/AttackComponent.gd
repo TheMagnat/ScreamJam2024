@@ -1,34 +1,29 @@
 @tool
-extends Node3D
+class_name AttackComponent extends Node3D
 
-@export var handNode: Node3D
-@onready var attackAnimation: AnimationPlayer = $"../Head/HandPosition/AttackAnimation"
+@onready var attackAnimationPlayer: AnimationPlayer = $"../Head/AttackAnimation"
 @onready var frontArea: Area3D = $"../Head/FrontRangeArea"
-
 
 # Cache
 @onready var gridRestrictor: GridRestrictor = $"../GridRestrictor"
 
 # Debug
-const DAGGER_TEST = preload("res://Scenes/PlayerTools/Dagger.tscn")
+const DAGGER_TEST = preload("res://Scenes/PlayerTools/DaggerTool.tscn")
 
 func _ready() -> void:
-	
-	var testTool = DAGGER_TEST.instantiate()
-	
-	handNode.add_child(testTool)
-	
 	# Attack animation
-	attackAnimation.animation_finished.connect(attackFinished)
-	
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Attack"):
-		if not inAttackAnimation:
-			attack()
+	attackAnimationPlayer.animation_finished.connect(attackFinished)
 
 var inAttackAnimation: bool = false
+func tryAttack() -> bool:
+	if not inAttackAnimation:
+		attack()
+		return true
+	
+	return false
+	
 func attack():
-	attackAnimation.play("AttackAnimation")
+	attackAnimationPlayer.play("AttackAnimation")
 	inAttackAnimation = true
 
 	var bestBody: Node3D = null
