@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="1_bp2e4"]
 [ext_resource type="Script" path="res://Scenes/SplashScreen/SplashScreen.gd" id="1_c54uc"]
-[ext_resource type="PackedScene" uid="uid://cdn2oqit1gq4v" path="res://Scenes/Demo/Test.tscn" id="2_2ucp0"]
 [ext_resource type="AudioStream" uid="uid://bjolk65ku2d1a" path="res://Assets/SFX/drammatic-cinematic-glitch-183848.mp3" id="2_haay0"]
+[ext_resource type="PackedScene" uid="uid://b70sfx2l07fnh" path="res://Scenes/Tutorial/tutorial.tscn" id="2_i8jhb"]
 [ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="2_wwa1d"]
 [ext_resource type="Texture2D" uid="uid://ce8wre1sqpwjt" path="res://Assets/SplashScreen/splatter.png" id="4_34pdg"]
 
@@ -336,7 +336,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_c54uc")
-transitionScene = ExtResource("2_2ucp0")
+transitionScene = ExtResource("2_i8jhb")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_haay0")
