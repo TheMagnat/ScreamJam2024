@@ -10,6 +10,10 @@ var targetLastPosition: Vector3
 # Cache
 @onready var navigationAgent: NavigationAgent3D = $"../NavigationAgent3D"
 
+# Random direction handler
+var timeSinceRandomDir: float = 0.0
+var randomDirection: Vector3
+
 func _physics_process(delta: float) -> void:
 	if parent.inAttackAnimation: return
 	
@@ -34,8 +38,19 @@ func _physics_process(delta: float) -> void:
 			goToLastPosition()
 	
 	else:
-		#TODO: Ici pas de last position, avancer en random ?
-		pass
+		if timeSinceRandomDir == 0.0:
+			randomDirection = Vector3(randf_range(-1, 1), 0.0, randf_range(-1, 1)).normalized()
+			
+		timeSinceRandomDir += delta
+		
+		targetLastPosition = parent.global_position + randomDirection * 30.0
+		
+		if timeSinceRandomDir > 5.0:
+			timeSinceRandomDir = 0.0
+		elif timeSinceRandomDir > 3.0:
+			pass # Idle
+		else:
+			goToLastPosition()
 	
 	
 		

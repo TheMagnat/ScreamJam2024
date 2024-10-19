@@ -20,8 +20,9 @@ func activate():
 	rotationTween.tween_property(head, "rotation", Vector3(0.0, goalRotation, 0.0), rotationTime)
 
 func updateGoalRotation(newOffset: float):
-	goalRotation -= newOffset * PI / 2.0
-	updateHeadRotation()
+	if not character.locked:
+		goalRotation -= newOffset * PI / 2.0
+		updateHeadRotation()
 	
 func updateHeadRotation():
 	if rotationTween: rotationTween.kill()
@@ -29,7 +30,7 @@ func updateHeadRotation():
 	#rotationTween.tween_property(head, "rotation:y", goalRotation, rotationTime)
 	var originalRotation: float = head.rotation.y
 	rotationTween.tween_method(func(current: float): head.rotation.y = lerp_angle(originalRotation, goalRotation, current), 0.0, 1.0, rotationTime)
-		
+	
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("RotateLeft"):

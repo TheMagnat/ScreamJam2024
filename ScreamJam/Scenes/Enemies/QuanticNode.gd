@@ -1,12 +1,14 @@
 class_name QuanticNode extends Node3D
 
 
+@onready var sanityAttacker: SanityAttacker = $"../SanityAttacker"
+
 @export var observed: GeometryInstance3D
 @export var target: Character
 
 const headOffset := Vector3(0.0, 1.0, 0.0)
-const mobHeightRand := Vector2(2.0, 3.0)
-const distMax: float = 10.0
+const mobHeightRand := Vector2(1.5, 2.5)
+const distMax: float = 8.0
 
 var foundTimer: Timer
 
@@ -28,6 +30,9 @@ func foundTimeOut():
 var isWatching: bool = false
 func _process(delta: float) -> void:
 	
+	if target.sanity <= 0.0 and isWatching:
+		return
+	
 	if not target.closed_eyes:
 		if isInFrustum and (isWatching or global_position.distance_to(target.global_position) < distMax):
 			if not RayHelper.castRay(global_position, target.global_position + headOffset, 0b01):
@@ -47,6 +52,8 @@ func stopedWatching():
 	
 	pos.y += randf_range(mobHeightRand.x, mobHeightRand.y)
 	get_parent().global_position = pos
+	
+	sanityAttacker.setTrueDmgs()
 	
 	foundTimer.start()
 

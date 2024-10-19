@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5yqh34euaadp"]
+[gd_scene load_steps=10 format=3 uid="uid://b5yqh34euaadp"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/Model/FaceFront.gd" id="1_c2na1"]
 [ext_resource type="Texture2D" uid="uid://jnj1w16s5ei2" path="res://Assets/Mobs/Eye/oeilfond.png" id="1_pma5n"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scenes/Enemies/QuanticNode.gd" id="2_yytee"]
 [ext_resource type="Script" path="res://Scenes/Enemies/SanityAttacker.gd" id="3_nhb25"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Model/SanityRotator.gd" id="4_3qeja"]
+[ext_resource type="Script" path="res://Scenes/Enemies/HypnotizeNode.gd" id="7_1f7uy"]
 
 [sub_resource type="Shader" id="Shader_ewxwc"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
@@ -108,6 +109,9 @@ alpha_cut = 1
 alpha_scissor_threshold = 0.1
 texture = ExtResource("2_fr3pa")
 script = ExtResource("4_3qeja")
+
+[node name="HypnotizeNode" type="Node3D" parent="."]
+script = ExtResource("7_1f7uy")
 
 [connection signal="screen_entered" from="QuanticNode/VisibleOnScreenNotifier3D" to="QuanticNode" method="_on_visible_on_screen_notifier_3d_screen_entered"]
 [connection signal="screen_exited" from="QuanticNode/VisibleOnScreenNotifier3D" to="QuanticNode" method="_on_visible_on_screen_notifier_3d_screen_exited"]

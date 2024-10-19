@@ -110,3 +110,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.387, 0, 16.384)
 
 [node name="Eye" parent="." instance=ExtResource("12_qsvwo")]
 transform = Transform3D(-0.910763, 0, -0.41293, 0, 1, 0, 0.41293, 0, -0.910763, 2.56727, 1.91103, 11.0084)
+
+[node name="Eye2" parent="." instance=ExtResource("12_qsvwo")]
+transform = Transform3D(0.831091, 0, 0.556136, 0, 1, 0, -0.556136, 0, 0.831091, 6.37936, 1.92654, 14.2016)

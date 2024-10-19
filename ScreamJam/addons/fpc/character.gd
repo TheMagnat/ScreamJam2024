@@ -84,6 +84,7 @@ signal die
 @export var handled_input := Vector2.ZERO
 @export var handled_sprint: bool = false
 @export var map: Map
+@export var locked: bool = false # When true NOT ANY MOVE can be done
 
 @export var environment: WorldEnvironment
 
@@ -113,9 +114,15 @@ const HEALTH_MAX := 100.0
 const HEALTH_RECOVER := 1.0
 var health := HEALTH_MAX
 
-func damageSanity(dmg: float, eyes_closed_factor := 1.0):
+func damageSanity(dmg: float, eyes_closed_factor := 1.0, under_zero_factor := 1.0):
+	var oldSanityZ: float = minf(0.0, sanity)
 	sanity -= dmg * (eyes_closed_factor if closed_eyes else 1.0)
-
+	
+	var underZDmgs: float = min(sanity - oldSanityZ, 0.0)
+	
+	if underZDmgs != 0.0:
+		damageHealth(-underZDmgs)
+	
 func rands() -> float:
 	return signf(randf() - 0.5)
 
@@ -237,7 +244,7 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	if !immobile: # Immobility works by interrupting user input, so other forces can still be applied to the player
+	if !immobile and !locked: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 	
 	
@@ -321,7 +328,7 @@ var footstep : FootStep
 var lastFootstep := 0.0
 
 func handle_movement(delta: float, dir: Vector2):
-	var direction = Vector3(dir.x, 0, dir.y)
+	var direction = Vector3(dir.x, 0, dir.y) if not locked else Vector3.ZERO
 	
 	lastFootstep += delta
 	if is_on_floor() && direction.length() > 0.5 && lastFootstep > footstep.step:
@@ -347,7 +354,7 @@ func handle_movement(delta: float, dir: Vector2):
 			velocity.z = direction.z * speed
 
 func handle_head_rotation():
-	if not lockedCamera:
+	if not lockedCamera and not locked:
 		HEAD.rotation_degrees.y -= mouseInput.x * mouse_sensitivity
 		if invert_mouse_y:
 			HEAD.rotation_degrees.x -= mouseInput.y * mouse_sensitivity * -1.0
