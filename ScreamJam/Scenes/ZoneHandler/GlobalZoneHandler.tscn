@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxcntuddwyte7"]
+
+[ext_resource type="Script" path="res://Scenes/ZoneHandler/GlobalZoneHandler.gd" id="1_bn3ml"]
+[ext_resource type="AudioStream" uid="uid://daweg6pkse58m" path="res://Assets/SFX/wind/blow.wav" id="2_lt126"]
+
+[node name="GlobalZoneHandler" type="Node"]
+script = ExtResource("1_bn3ml")
+
+[node name="BlowPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_lt126")

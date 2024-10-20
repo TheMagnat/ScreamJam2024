@@ -1,11 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://df0kghg6xdjku"]
+[gd_scene load_steps=3 format=3 uid="uid://df0kghg6xdjku"]
 
+[ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="1_o5hqr"]
 [ext_resource type="Texture2D" uid="uid://4x6rhn23vblp" path="res://icon.svg" id="2_ce3hn"]
 
-[node name="Torch" type="Node3D" groups=["Tool"]]
+[node name="Torch" type="Node3D" node_paths=PackedStringArray("omniLight") groups=["Tool"]]
+script = ExtResource("1_o5hqr")
+omniLight = NodePath("OmniLight3D")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.13, 0, 0, 0, 0.465, 0, 0, 0, 1, 0, 0.13757, -0.0238688)
+transform = Transform3D(0.13, 0, 0, 0, 0.465, 0, 0, 0, 1, 0, 0.138, 0)
+cast_shadow = 0
 shaded = true
 alpha_cut = 1
 texture = ExtResource("2_ce3hn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+light_color = Color(0.964706, 0.603922, 0.329412, 1)
+light_energy = 1.5
+light_volumetric_fog_energy = 0.05
+light_size = 0.1
+shadow_enabled = true
+omni_range = 15.0

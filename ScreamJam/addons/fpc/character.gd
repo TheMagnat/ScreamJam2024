@@ -85,6 +85,7 @@ class_name Character extends CharacterBody3D
 @export var locked: bool = false # When true NOT ANY MOVE can be done
 
 @export var environment: WorldEnvironment
+@onready var lootComponent: LootComponent = $LootComponent
 
 
 # Member variables
@@ -121,7 +122,7 @@ func damageSanity(dmg: float, eyes_closed_factor := 1.0, under_zero_factor := 1.
 	var underZDmgs: float = min(sanity - oldSanityZ, 0.0)
 	
 	if underZDmgs != 0.0:
-		damageHealth(-underZDmgs * under_zero_factor)
+		damageHealth(-underZDmgs * under_zero_factor, true)
 	
 func rands() -> float:
 	return signf(randf() - 0.5)

@@ -29,6 +29,7 @@ Ambience="*res://Scenes/Global/ambience.tscn"
 RayHelper="*res://Scenes/Global/RayHelper.gd"
 Global="*res://Scenes/Global/Global.gd"
 FlashEvent="*res://Scenes/Global/FlashEvent.tscn"
+GlobalZoneHandler="*res://Scenes/ZoneHandler/GlobalZoneHandler.tscn"
 
 [display]
 

@@ -8,9 +8,6 @@ uniform float sanityFactor = 3.0;
 
 varying vec3 world_position;
 
-float f(sampler2D n, float t, vec2 uv, float offset, float jitter) {
-	return texture(n, (1.0 + cos(vec2(offset, 0.0) + vec2(0.0, t + float(int((t + offset) * jitter)) * 0.25) * 0.005 + vec2(abs(uv.x * 0.5 - 0.25), 0.0))) * 0.5).r < uv.y * 0.9 ? 0.25 : 0.0;
-}
 
 void vertex() {
 
@@ -33,8 +30,4 @@ void vertex() {
 	//vec2 uv = vec2(world_position.x + world_position.y, world_position.z) * 0.005;
 	//float noiseValue = texture(noise, uv + time).r;
 	//VERTEX += NORMAL * noiseValue * 2.0;
-}
-
-void fragment() {
-	//ALBEDO *= 1.0 - pow(wall_distort, 2.0); // Color inversion
 }

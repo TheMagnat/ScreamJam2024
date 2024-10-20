@@ -388,17 +388,12 @@ shader_parameter/damage = null
 code = "shader_type canvas_item;
 
 void vertex() {
-	VERTEX.y += cos(TIME * 1000.0 + VERTEX.x) * 0.5;
+	VERTEX.y += cos(TIME * 1000.0 + VERTEX.x) * 0.5 + cos(TIME * 1.0 + VERTEX.x * 0.025) * 4.0;
 }
 
 void fragment() {
 	COLOR.a *= sqrt(max(0.0, 1.0 - UV.y - sin(TIME * 100.0 + UV.x * cos(TIME * 426.0) * 10.0) * 0.05));
 }
-
-//void light() {
-	// Called for every pixel for every light affecting the CanvasItem.
-	// Uncomment to replace the default light processing function with this one.
-//}
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x7hrx"]
@@ -475,7 +470,7 @@ transform = Transform3D(0.14436, 0, -0.989524, 0, 1, 0, 0.989525, 0, 0.14436, 0.
 transform = Transform3D(0.520607, 7.38794e-09, 0.853795, -0.0909057, 0.994316, 0.0554302, -0.848943, -0.106472, 0.517648, -0.531637, -0.476176, -0.569411)
 
 [node name="Camera" type="Camera3D" parent="Head"]
-far = 20.0
+far = 30.0
 
 [node name="AttackAnimation" type="AnimationPlayer" parent="Head"]
 root_node = NodePath("../RightHandPosition")

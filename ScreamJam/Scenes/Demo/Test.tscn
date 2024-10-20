@@ -1,14 +1,20 @@
-[gd_scene load_steps=19 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=25 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kl7dy"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_wdy7h"]
 [ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="4_g5fn0"]
+[ext_resource type="Script" path="res://Scenes/Player/ActionComponent.gd" id="4_sf7w2"]
+[ext_resource type="Script" path="res://Scenes/Player/LootComponent.gd" id="5_ccfrp"]
 [ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="5_olldc"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="6_h0pw4"]
+[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/AttackComponent.gd" id="6_t6siv"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridEntityManager.gd" id="7_dmy4d"]
 [ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="7_wwkf4"]
 [ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="9_373d5"]
+[ext_resource type="PackedScene" uid="uid://d06t6b7e04vba" path="res://Scenes/PlayerTools/TorchDrop.tscn" id="13_nudwx"]
+[ext_resource type="PackedScene" uid="uid://2hoedglenkg0" path="res://Scenes/Entity/DarkCube.tscn" id="14_t4dd1"]
+[ext_resource type="PackedScene" uid="uid://dwomyfeulccpb" path="res://Scenes/ZoneHandler/ZoneTrigger.tscn" id="15_88dqo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,6 +26,9 @@ sky_material = SubResource("ProceduralSkyMaterial_02umm")
 [sub_resource type="Environment" id="Environment_w1wca"]
 background_mode = 2
 sky = SubResource("Sky_ql732")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.08
 tonemap_mode = 2
 tonemap_exposure = 2.0
 ssao_enabled = true
@@ -35,7 +44,8 @@ fog_aerial_perspective = 1.0
 fog_height = 1024.0
 fog_depth_begin = 3.5
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.3005
+volumetric_fog_density = 0.305
+volumetric_fog_length = 42.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gqt30"]
 dof_blur_far_enabled = true
@@ -73,12 +83,6 @@ shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 environment = SubResource("Environment_w1wca")
 camera_attributes = SubResource("CameraAttributesPractical_gqt30")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
-shadow_bias = 0.03
-shadow_normal_bias = 3.0
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_gxk6b")
 
@@ -97,6 +101,32 @@ sprint_speed = 10.0
 motion_smoothing = false
 map = NodePath("../NavigationRegion3D/Map")
 environment = NodePath("../WorldEnvironment")
+
+[node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]
+script = ExtResource("4_sf7w2")
+lootComponent = NodePath("../LootComponent")
+attackComponent = NodePath("../AttackComponent")
+
+[node name="LootComponent" type="Node3D" parent="Character"]
+script = ExtResource("5_ccfrp")
+
+[node name="Label" type="Label" parent="Character/LootComponent"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -58.52
+offset_right = 20.0
+offset_bottom = -35.52
+grow_horizontal = 2
+grow_vertical = 0
+text = "Take"
+
+[node name="AttackComponent" type="Node3D" parent="Character"]
+script = ExtResource("6_t6siv")
 
 [node name="CameraRotationRestrictor" type="Node" parent="Character"]
 script = ExtResource("4_g5fn0")
@@ -117,3 +147,25 @@ script = ExtResource("7_dmy4d")
 
 [node name="Eye" parent="." instance=ExtResource("9_373d5")]
 transform = Transform3D(-0.999934, 0, -0.0115015, 0, 1, 0, 0.0115015, 0, -0.999934, 5.2, 2.036, 24.531)
+
+[node name="Torch" parent="." instance=ExtResource("13_nudwx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.89968, 1.17154, 29.7372)
+
+[node name="DarkCube" parent="." instance=ExtResource("14_t4dd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 60)
+
+[node name="DarkCube2" parent="." instance=ExtResource("14_t4dd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 65)
+
+[node name="DarkCube3" parent="." instance=ExtResource("14_t4dd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 70)
+
+[node name="DarkCube4" parent="." instance=ExtResource("14_t4dd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 75)
+
+[node name="DarkCube5" parent="." instance=ExtResource("14_t4dd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 80)
+
+[node name="ZoneTrigger" parent="." instance=ExtResource("15_88dqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 85)
+zoneNumber = 2
