@@ -2,7 +2,11 @@ extends Node3D
 
 
 @export var minDistance: float = 8.0
+@onready var material: ShaderMaterial = $Sprite3D.material_override
 
-func _physics_process(delta: float) -> void:
-	if global_position.distance_to(Global.player.global_position) < minDistance:
+func _process(delta: float) -> void:
+	var distToPlayer: float = global_position.distance_to(Global.player.global_position)
+	if distToPlayer < minDistance:
 		queue_free()
+	
+	material.set_shader_parameter("dist", clampf((distToPlayer - 8.0), 0.0, 1.0))

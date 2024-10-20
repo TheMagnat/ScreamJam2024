@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://df0kghg6xdjku"]
+
+[ext_resource type="Texture2D" uid="uid://4x6rhn23vblp" path="res://icon.svg" id="2_ce3hn"]
+
+[node name="Torch" type="Node3D" groups=["Tool"]]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.13, 0, 0, 0, 0.465, 0, 0, 0, 1, 0, 0.13757, -0.0238688)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("2_ce3hn")

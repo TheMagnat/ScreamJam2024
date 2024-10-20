@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://d06t6b7e04vba"]
+
+[ext_resource type="Script" path="res://Scenes/PlayerTools/Loot.gd" id="1_hnrth"]
+[ext_resource type="PackedScene" uid="uid://df0kghg6xdjku" path="res://Scenes/PlayerTools/TorchTool.tscn" id="2_12c6o"]
+[ext_resource type="Texture2D" uid="uid://4x6rhn23vblp" path="res://icon.svg" id="3_dx65i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_twbx6"]
+size = Vector3(1, 1.29591, 0.0650635)
+
+[node name="Torch" type="StaticBody3D" groups=["Tool"]]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_hnrth")
+toolScene = ExtResource("2_12c6o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.304268, -0.0354614)
+shape = SubResource("BoxShape3D_twbx6")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.13, 0, 0, 0, 0.465, 0, 0, 0, 1, 0, 0.13757, -0.0238688)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("3_dx65i")

@@ -197,6 +197,7 @@ func spawn():
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
 	blink(true)
+	shouldOpen = true
 	
 	$GridRestrictor.activate()
 	
@@ -222,7 +223,8 @@ func _ready():
 	
 	$PostProcess/Label.modulate.a = 0.0
 	spawn()
-		
+	global_position.y = 0.0 # Only on first spawn to have a seemless transition with the tutorial
+	
 	$GridRestrictor.activate()
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
@@ -588,7 +590,7 @@ var shouldOpen := false
 var blink_tween: Tween
 var fast_blink_tween: Tween
 func blink(closing : bool):
-	if not closing and fast_blink_tween.is_running():
+	if not closing and (fast_blink_tween and fast_blink_tween.is_running()):
 		shouldOpen = true
 		return
 	

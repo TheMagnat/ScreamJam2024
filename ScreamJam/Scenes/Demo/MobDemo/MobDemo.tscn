@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://pddp1pe3qhsk"]
+[gd_scene load_steps=19 format=3 uid="uid://pddp1pe3qhsk"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kjvu5"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_fpi3d"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/DaggerDrop.tscn" id="8_sb53c"]
 [ext_resource type="PackedScene" uid="uid://bmcknkhmj376d" path="res://Scenes/Enemies/FreeMob.tscn" id="8_xwjyf"]
 [ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="12_qsvwo"]
+[ext_resource type="PackedScene" uid="uid://d06t6b7e04vba" path="res://Scenes/PlayerTools/TorchDrop.tscn" id="13_kb1tu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bvl1m"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -113,3 +114,6 @@ transform = Transform3D(-0.910763, 0, -0.41293, 0, 1, 0, 0.41293, 0, -0.910763, 
 
 [node name="Eye2" parent="." instance=ExtResource("12_qsvwo")]
 transform = Transform3D(0.831091, 0, 0.556136, 0, 1, 0, -0.556136, 0, 0.831091, 6.37936, 1.92654, 14.2016)
+
+[node name="Torch" parent="." instance=ExtResource("13_kb1tu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.159165, 0.803746, -1.67067)

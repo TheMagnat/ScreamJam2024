@@ -9,9 +9,13 @@ var rightHandTool: Node3D = null
 @onready var leftHand: Marker3D = $"../Head/LeftHandPosition"
 var leftHandTool: Node3D = null
 
-func tryLoot(left: bool) -> bool:
+func tryLoot() -> bool:
 	if nearestLoot:
-		take(nearestLoot, left)
+		if nearestLoot is Weapon:
+			take(nearestLoot, false)
+		else:
+			take(nearestLoot, true)
+		
 		return true
 	
 	return false

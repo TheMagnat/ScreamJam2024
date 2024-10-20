@@ -9,6 +9,8 @@ const STATES := [
 ]
 
 func _ready() -> void:
+	Global.inTutorial = true
+	
 	RenderingServer.global_shader_parameter_set("wall_distort", 0.0)
 	RenderingServer.global_shader_parameter_set("breathing", 0.0)
 	$CanvasLayer/Tutorial.hide()
@@ -30,6 +32,7 @@ func _ready() -> void:
 func _exit_tree():
 	print("Exitting tutorial")
 	RenderingServer.global_shader_parameter_set("breathing", 1.0)
+	Global.inTutorial = false
 
 func get_event(action: String) -> String:
 	var events = InputMap.action_get_events(action)

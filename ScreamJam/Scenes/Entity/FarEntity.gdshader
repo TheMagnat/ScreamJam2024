@@ -1,6 +1,7 @@
 shader_type spatial;
 
 uniform sampler2D tex;
+uniform float dist;
 
 global uniform float sanity;
 
@@ -17,7 +18,7 @@ void vertex() {
 void fragment() {
 	vec4 img = texture(tex, UV);
 	ALBEDO = mix(img.rgb, vec3(1.0, 0.0, 0.0), sanity) * 10.0 * (1.0 + sanity * 200.0);
-	ALPHA = img.a;
+	ALPHA = img.a * dist;
 }
 
 //void light() {

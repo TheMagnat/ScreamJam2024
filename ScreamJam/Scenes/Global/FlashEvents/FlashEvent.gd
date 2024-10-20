@@ -21,6 +21,8 @@ var eventInProgress: bool = false
 var events: Array[Callable] = [spawnFarEntity]
 
 func _physics_process(delta: float) -> void:
+	if Global.inTutorial: return
+	
 	elapsedTimeSinceLastEvent += delta
 	
 	if Engine.get_physics_frames() % 10 or eventInProgress:
