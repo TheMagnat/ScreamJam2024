@@ -520,7 +520,6 @@ vertical_alignment = 1
 material = SubResource("ShaderMaterial_x7hrx")
 offset_right = 1152.0
 offset_bottom = 648.0
-text = "Nightmares don't always end by waking up"
 label_settings = SubResource("LabelSettings_xsfrp")
 horizontal_alignment = 1
 vertical_alignment = 1
