@@ -121,7 +121,7 @@ func damageSanity(dmg: float, eyes_closed_factor := 1.0, under_zero_factor := 1.
 	var underZDmgs: float = min(sanity - oldSanityZ, 0.0)
 	
 	if underZDmgs != 0.0:
-		damageHealth(-underZDmgs)
+		damageHealth(-underZDmgs * under_zero_factor)
 	
 func rands() -> float:
 	return signf(randf() - 0.5)
