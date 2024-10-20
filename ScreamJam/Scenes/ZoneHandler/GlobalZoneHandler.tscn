@@ -8,3 +8,4 @@ script = ExtResource("1_bn3ml")
 
 [node name="BlowPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_lt126")
+volume_db = 10.0

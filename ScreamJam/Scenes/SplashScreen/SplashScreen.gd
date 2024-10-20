@@ -8,6 +8,8 @@ extends Control
 @onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 	animationPlayer.play("SplashGlitchIn")
 	animationPlayer.animation_finished.connect(animationFinished)
 

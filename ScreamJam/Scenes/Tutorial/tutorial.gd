@@ -9,8 +9,6 @@ const STATES := [
 ]
 
 func _ready() -> void:
-	Global.inTutorial = true
-	
 	RenderingServer.global_shader_parameter_set("wall_distort", 0.0)
 	RenderingServer.global_shader_parameter_set("breathing", 0.0)
 	$CanvasLayer/Tutorial.hide()
@@ -32,7 +30,6 @@ func _ready() -> void:
 func _exit_tree():
 	print("Exitting tutorial")
 	RenderingServer.global_shader_parameter_set("breathing", 1.0)
-	Global.inTutorial = false
 
 var step := -1
 const BLINK_STEP := 12
@@ -103,10 +100,10 @@ func move_step(t: Tween, dir: Vector3):
 
 var moving := false
 func move(a: float):
-	var dir : Vector3 = Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * $Map.gridSpace
-	var expectedPos : Vector3 = ($Camera3D.position + dir)/$Map.gridSpace
+	var dir : Vector3 = Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * $MapHolder/Map.gridSpace
+	var expectedPos : Vector3 = ($Camera3D.position + dir)/$MapHolder/Map.gridSpace
 	
-	if !$Map.isAvailable(Vector2i(expectedPos.x + signf(expectedPos.x) * 0.1, expectedPos.z + signf(expectedPos.z) * 0.1)):
+	if !$MapHolder/Map.isAvailable(Vector2i(expectedPos.x + signf(expectedPos.x) * 0.1, expectedPos.z + signf(expectedPos.z) * 0.1)):
 		return
 	
 	moving = true

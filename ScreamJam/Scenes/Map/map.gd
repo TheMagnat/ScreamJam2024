@@ -23,7 +23,7 @@ const CellAvailabilityFilter := 15
 # Map data 
 var mapData : Array[CellType]
 var mapSize: Vector2i
-var availableSpawns: Array[Vector3]
+@export_storage var availableSpawns: Array[Vector3]
 
 # Cache
 @onready var groundMesh := PlaneMesh.new()
@@ -38,17 +38,8 @@ var availableSpawns: Array[Vector3]
 @onready var ceilMesh := BoxMesh.new()
 
 # Cached generated map
-@onready var wallMultimesh := MultiMesh.new()
-var wallInstanceTransforms: Array[Transform3D]
-
-@onready var groundMultimesh := MultiMesh.new()
-var groundInstanceTransforms: Array[Transform3D]
-
-@onready var ceilMultimesh := MultiMesh.new()
-var ceilInstanceTransforms: Array[Transform3D]
-
-@onready var fullCeilMultimesh := MultiMesh.new()
-var fullCeilInstanceTransforms: Array[Transform3D]
+@export var cached: bool = false
+@export var cachedFile: String = ""
 
 # Utility functions
 func isWorldPosAvailable(worldPosition: Vector3) -> bool:
@@ -79,7 +70,7 @@ func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
 	
 	return neighbors
 
-var availablePos: PackedVector3Array
+@export_storage var availablePos: PackedVector3Array
 func getRandomPos() -> Vector3:
 	return availablePos[randi_range(0, availablePos.size() - 1)]
 
@@ -87,7 +78,8 @@ func getRandomPos() -> Vector3:
 func _ready() -> void:
 	generateMap()
 	
-	Global.map = self
+	if not Engine.is_editor_hint():
+		Global.map = self
 
 func generateMap() -> void:
 	groundMesh.size = Vector2(gridSpace, gridSpace)
@@ -103,62 +95,19 @@ func generateMap() -> void:
 	fullWallShape.size = Vector3(gridSpace, gridSpace, gridSpace)
 	
 	loadMap(mapFilePath)
+	
+	if cached:
+		return
+	
+	for child in get_children():
+		child.free()
+	
+	availablePos.clear()
+	availableSpawns.clear()
+	
 	generateMapMesh()
 	
-	# Wall MultiMesh
-	wallMultimesh.mesh = wallMesh
-	wallMultimesh.transform_format = MultiMesh.TRANSFORM_3D
-	wallMultimesh.instance_count = wallInstanceTransforms.size()
-	for i in wallInstanceTransforms.size():
-		wallMultimesh.set_instance_transform(i, wallInstanceTransforms[i])
-	
-	var wallMultiMeshInstance := MultiMeshInstance3D.new()
-	wallMultiMeshInstance.multimesh = wallMultimesh
-	wallMultiMeshInstance.material_override = DistoredWallMaterial
-	
-	add_child(wallMultiMeshInstance)
-	
-	# Ground MultiMesh
-	groundMultimesh.mesh = groundMesh
-	groundMultimesh.transform_format = MultiMesh.TRANSFORM_3D
-	groundMultimesh.instance_count = groundInstanceTransforms.size()
-	
-	for i in groundInstanceTransforms.size():
-		groundMultimesh.set_instance_transform(i, groundInstanceTransforms[i])
-	
-	var groundMultiMeshInstance := MultiMeshInstance3D.new()
-	groundMultiMeshInstance.multimesh = groundMultimesh
-	groundMultiMeshInstance.material_override = GroundMaterial
-	
-	add_child(groundMultiMeshInstance)
-	
-	# Ceil MultiMesh
-	ceilMultimesh.mesh = groundMesh
-	ceilMultimesh.transform_format = MultiMesh.TRANSFORM_3D
-	ceilMultimesh.instance_count = ceilInstanceTransforms.size()
-	
-	for i in ceilInstanceTransforms.size():
-		ceilMultimesh.set_instance_transform(i, ceilInstanceTransforms[i])
-	
-	var ceilMultiMeshInstance := MultiMeshInstance3D.new()
-	ceilMultiMeshInstance.multimesh = ceilMultimesh
-	ceilMultiMeshInstance.material_override = CeilMaterial
-	
-	add_child(ceilMultiMeshInstance)
-	
-	# Full Ceil MultiMesh
-	fullCeilMultimesh.mesh = ceilMesh
-	fullCeilMultimesh.transform_format = MultiMesh.TRANSFORM_3D
-	fullCeilMultimesh.instance_count = fullCeilInstanceTransforms.size()
-	
-	for i in fullCeilInstanceTransforms.size():
-		fullCeilMultimesh.set_instance_transform(i, fullCeilInstanceTransforms[i])
-	
-	var fullCeilMultiMeshInstance := MultiMeshInstance3D.new()
-	fullCeilMultiMeshInstance.multimesh = fullCeilMultimesh
-	#fullCeilMultiMeshInstance.material_override = CeilMaterial
-	
-	add_child(fullCeilMultiMeshInstance)
+	cached = true
 
 enum WallType {
 	Left, Up, Right, Down
@@ -182,14 +131,23 @@ func createCellWall(elementPosition: Vector3, side: WallType):
 		positionOffset = Vector3(0.0, gridSpace / 2.0, (gridSpace + thickness) / 2.0)
 		#rot.x = PI / 2.0
 	
-	wallInstanceTransforms.push_back( Transform3D(Basis.from_euler(rot) * Basis.from_scale(Vector3(gridSpace, gridSpace, thickness)), elementPosition + positionOffset) )
+	var newWallMeshInstance := MeshInstance3D.new()
+	newWallMeshInstance.mesh = wallMesh
+	newWallMeshInstance.position = elementPosition + positionOffset
+	newWallMeshInstance.rotation = rot
+	newWallMeshInstance.scale = Vector3(gridSpace, gridSpace, thickness)
+	newWallMeshInstance.material_override = DistoredWallMaterial
+	add_child(newWallMeshInstance)
+	newWallMeshInstance.owner = get_parent().get_parent()
 	
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
 	newCollisionShape.shape = wallShape
 	newCollisionShape.position = elementPosition + positionOffset
 	newCollisionShape.rotation = rot
+	
 	add_child(newCollisionShape)
+	newCollisionShape.owner = get_parent().get_parent()
 
 func createSceneFullWall(elementPosition: Vector3):
 	var positionOffset := Vector3(0.0, gridSpace / 2.0, 0.0)
@@ -199,14 +157,17 @@ func createSceneFullWall(elementPosition: Vector3):
 	newWallMesh.material_override = DistoredWallMaterial
 	newWallMesh.position = elementPosition + positionOffset
 	newWallMesh.scale = Vector3(gridSpace, gridSpace, gridSpace)
-	#wallInstanceTransforms.push_back( Transform3D(Basis(), elementPosition + positionOffset) )
+	
 	add_child(newWallMesh)
+	newWallMesh.owner = get_parent().get_parent()
 	
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
 	newCollisionShape.shape = fullWallShape
 	newCollisionShape.position = elementPosition + positionOffset
+	
 	add_child(newCollisionShape)
+	newCollisionShape.owner = get_parent().get_parent()
 
 #TODO: use this as a bitfield to flag walkable cells 
 enum CellType {
@@ -243,19 +204,39 @@ func createCell(x: int, y: int):
 	availablePos.push_back( elementPosition )
 	
 	# Create ground Mesh
-	groundInstanceTransforms.push_back( Transform3D(Basis(), elementPosition) )
+	var newGroundMeshInstance := MeshInstance3D.new()
+	newGroundMeshInstance.mesh = groundMesh
+	newGroundMeshInstance.position = elementPosition
+	newGroundMeshInstance.material_override = GroundMaterial
+	add_child(newGroundMeshInstance)
+	newGroundMeshInstance.owner = get_parent().get_parent()
 	
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
 	newCollisionShape.shape = groundShape
 	newCollisionShape.position = elementPosition - Vector3(0.0, thickness / 2.0, 0.0)
+	
 	add_child(newCollisionShape)
+	newCollisionShape.owner = get_parent().get_parent()
 	
 	if ceil:
 		# Create ceil Mesh
 		var ceilPosition: Vector3 = elementPosition + Vector3(0.0, gridSpace, 0.0)
-		fullCeilInstanceTransforms.push_back( Transform3D(Basis(), ceilPosition) )
-		ceilInstanceTransforms.push_back( Transform3D(Basis.from_euler(Vector3(PI, 0.0, 0.0)), ceilPosition + Vector3(0.0, -(0.01 + thickness / 2.0), 0.0)) )
+		
+		var newCeilMeshInstance := MeshInstance3D.new()
+		newCeilMeshInstance.mesh = groundMesh
+		newCeilMeshInstance.position = ceilPosition + Vector3(0.0, -(0.01 + thickness / 2.0), 0.0)
+		newCeilMeshInstance.rotation = Vector3(PI, 0.0, 0.0)
+		newCeilMeshInstance.material_override = CeilMaterial
+		add_child(newCeilMeshInstance)
+		newCeilMeshInstance.owner = get_parent().get_parent()
+		
+		var newFullCeilMeshInstance := MeshInstance3D.new()
+		newFullCeilMeshInstance.mesh = ceilMesh
+		newFullCeilMeshInstance.position = ceilPosition
+		newFullCeilMeshInstance.rotation = Vector3(PI, 0.0, 0.0)
+		add_child(newFullCeilMeshInstance)
+		newFullCeilMeshInstance.owner = get_parent().get_parent()
 		
 		# Create collision Shape
 		#var newCeilShape := CollisionShape3D.new()

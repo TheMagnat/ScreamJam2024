@@ -1,13 +1,17 @@
-[gd_scene load_steps=19 format=3 uid="uid://pddp1pe3qhsk"]
+[gd_scene load_steps=28 format=3 uid="uid://pddp1pe3qhsk"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kjvu5"]
+[ext_resource type="Material" uid="uid://due1qktvfeg1" path="res://Scenes/Map/Ground.tres" id="2_575hg"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_fpi3d"]
+[ext_resource type="Material" uid="uid://dqhsew74qmqhu" path="res://Scenes/Map/Ceil.tres" id="3_6pt6e"]
 [ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="3_b7dkc"]
 [ext_resource type="Script" path="res://Scenes/Player/LootComponent.gd" id="3_pkff7"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/AttackComponent.gd" id="3_v6qvy"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="3_xdbcu"]
 [ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="4_5tjqd"]
 [ext_resource type="Script" path="res://Scenes/Player/ActionComponent.gd" id="4_421vf"]
+[ext_resource type="Material" uid="uid://bd0xh03ryyac0" path="res://Scenes/Map/WallAndDistHight.tres" id="4_an61k"]
+[ext_resource type="ArrayMesh" uid="uid://d468yewea2vv" path="res://Assets/SimpleCube.obj" id="5_vbjiq"]
 [ext_resource type="PackedScene" uid="uid://prjptwmbf5os" path="res://Scenes/Enemies/GridMob.tscn" id="7_x7mii"]
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/DaggerDrop.tscn" id="8_sb53c"]
 [ext_resource type="PackedScene" uid="uid://bmcknkhmj376d" path="res://Scenes/Enemies/FreeMob.tscn" id="8_xwjyf"]
@@ -35,6 +39,24 @@ vertices = PackedVector3Array(28, 5.5, -2, 28, 5.5, 2.25, 32, 5.5, 2.25, 32, 5.5
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(8, 6, 9), PackedInt32Array(9, 6, 7), PackedInt32Array(10, 8, 9), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 10), PackedInt32Array(13, 10, 9), PackedInt32Array(15, 14, 11), PackedInt32Array(11, 14, 10), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(16, 12, 19), PackedInt32Array(19, 12, 20), PackedInt32Array(20, 12, 13), PackedInt32Array(24, 23, 21), PackedInt32Array(21, 23, 22), PackedInt32Array(28, 27, 25), PackedInt32Array(25, 27, 26), PackedInt32Array(29, 31, 30), PackedInt32Array(33, 32, 18), PackedInt32Array(18, 32, 17), PackedInt32Array(17, 32, 29), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 29), PackedInt32Array(29, 34, 31), PackedInt32Array(37, 36, 38), PackedInt32Array(38, 36, 39), PackedInt32Array(5, 38, 4), PackedInt32Array(4, 38, 39), PackedInt32Array(36, 37, 40), PackedInt32Array(40, 37, 41), PackedInt32Array(44, 41, 42), PackedInt32Array(42, 41, 14), PackedInt32Array(42, 14, 43), PackedInt32Array(43, 14, 15), PackedInt32Array(45, 40, 44), PackedInt32Array(44, 40, 41), PackedInt32Array(43, 46, 42), PackedInt32Array(50, 49, 47), PackedInt32Array(47, 49, 48), PackedInt32Array(54, 53, 51), PackedInt32Array(51, 53, 52), PackedInt32Array(57, 56, 55), PackedInt32Array(31, 58, 30), PackedInt32Array(30, 58, 46), PackedInt32Array(55, 59, 57), PackedInt32Array(57, 59, 60), PackedInt32Array(62, 61, 60), PackedInt32Array(59, 42, 60), PackedInt32Array(60, 42, 46), PackedInt32Array(60, 46, 58), PackedInt32Array(60, 58, 62), PackedInt32Array(66, 65, 63), PackedInt32Array(63, 65, 64), PackedInt32Array(70, 69, 67), PackedInt32Array(67, 69, 68), PackedInt32Array(72, 71, 73), PackedInt32Array(73, 71, 74), PackedInt32Array(57, 73, 56), PackedInt32Array(56, 73, 74), PackedInt32Array(77, 76, 75), PackedInt32Array(75, 78, 77), PackedInt32Array(77, 78, 81), PackedInt32Array(77, 81, 80), PackedInt32Array(77, 80, 79), PackedInt32Array(61, 82, 78), PackedInt32Array(78, 82, 81), PackedInt32Array(82, 83, 81), PackedInt32Array(61, 62, 82), PackedInt32Array(87, 86, 84), PackedInt32Array(84, 86, 85), PackedInt32Array(91, 90, 88), PackedInt32Array(88, 90, 89), PackedInt32Array(93, 92, 94), PackedInt32Array(94, 92, 95), PackedInt32Array(72, 94, 71), PackedInt32Array(71, 94, 95), PackedInt32Array(93, 76, 92), PackedInt32Array(92, 76, 77)]
 geometry_parsed_geometry_type = 1
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_nasmn"]
+custom_aabb = AABB(-2.5, 0, -2.5, 5, 3, 5)
+size = Vector2(5, 5)
+subdivide_width = 16
+subdivide_depth = 16
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2cukq"]
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pjq04"]
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hc3gq"]
+size = Vector3(5, 5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n2v7r"]
+size = Vector3(5, 5, 5)
+
 [node name="MobDemo" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -50,6 +72,1141 @@ navigation_mesh = SubResource("NavigationMesh_dqf6q")
 
 [node name="Map" parent="NavigationRegion3D" instance=ExtResource("1_kjvu5")]
 mapFilePath = "res://Scenes/Map/MapFile/MobMapTest.txt"
+availableSpawns = Array[Vector3]([Vector3(0, 1, 0)])
+availablePos = PackedVector3Array(0, 0, 0, 5, 0, 0, 10, 0, 0, 15, 0, 0, 20, 0, 0, 25, 0, 0, 0, 0, 5, 10, 0, 5, 15, 0, 5, 20, 0, 5, 25, 0, 5, 30, 0, 5, 0, 0, 10, 5, 0, 10, 10, 0, 10, 15, 0, 10, 25, 0, 10, 30, 0, 10, 35, 0, 10, 5, 0, 15, 10, 0, 15, 15, 0, 15, 20, 0, 15, 25, 0, 15, 30, 0, 15, 35, 0, 15, 10, 0, 20, 15, 0, 20, 20, 0, 20, 0, 0, 25, 5, 0, 25, 10, 0, 25, 15, 0, 25, 20, 0, 25, 0, 0, 30, 15, 0, 30, 20, 0, 30, 25, 0, 30, 0, 0, 35, 5, 0, 35, 10, 0, 35, 15, 0, 35, 20, 0, 35, 25, 0, 35, 30, 0, 35)
+
+[node name="@MeshInstance3D@209690" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209691" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209692" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.74, 0)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209693" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5, 0)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209694" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, -2.75, 2.5, 0)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209695" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.75, 2.5, 0)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209696" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 0, 2.5, -2.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209697" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -2.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209698" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209699" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.25, 0)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209700" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 4.74, 0)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209701" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 5, 0)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209702" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 5, 2.5, -2.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209703" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, -2.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209704" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209705" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 0)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209706" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 0)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209707" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 0)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209708" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 10, 2.5, -2.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209709" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, -2.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209710" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209711" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 0)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209712" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 0)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209713" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 0)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209714" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 15, 2.5, -2.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209715" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, -2.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209716" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209717" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 0)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209718" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 0)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209719" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 0)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209720" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 20, 2.5, -2.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209721" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, -2.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209722" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209723" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.25, 0)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209724" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 4.74, 0)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209725" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 5, 0)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209726" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 25, 2.5, -2.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209727" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, -2.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209728" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 30, 2.5, 0)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209729" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.5, 0)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209730" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209731" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 5)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209732" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.74, 5)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209733" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5, 5)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209734" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, -2.75, 2.5, 5)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209735" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.75, 2.5, 5)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209736" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 5, 2.5, 5)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209737" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 5)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209738" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 5)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209739" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 5)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209740" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 5)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209741" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 5)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209742" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 5)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209743" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 5)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209744" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 5)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209745" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 5)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209746" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 5)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209747" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 5)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209748" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 5)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209749" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 5)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209750" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 5)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209751" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.25, 5)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209752" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 4.74, 5)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209753" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 5, 5)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209754" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 5)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209755" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.25, 5)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209756" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 4.74, 5)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209757" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 5, 5)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209758" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 35, 2.5, 5)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209759" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 2.5, 5)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209760" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209761" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209762" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209763" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209764" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, -2.75, 2.5, 10)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209765" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.75, 2.5, 10)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209766" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209767" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209768" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209769" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209770" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209771" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209772" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209773" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209774" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209775" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209776" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209777" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209778" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 20, 2.5, 10)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209779" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, 10)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209780" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209781" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209782" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209783" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209784" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209785" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209786" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209787" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209788" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 10)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209789" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, -0.25, 10)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209790" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 35, 4.74, 10)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209791" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 35, 5, 10)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209792" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, 37.75, 2.5, 10)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209793" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 37.75, 2.5, 10)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209794" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 2.5, 15)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209795" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 15)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209796" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209797" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209798" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209799" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209800" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209801" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209802" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209803" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209804" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209805" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209806" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209807" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209808" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209809" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209810" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209811" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209812" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209813" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209814" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209815" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209816" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209817" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209818" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209819" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209820" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 30, 2.5, 17.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209821" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.5, 17.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209822" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 15)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209823" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, -0.25, 15)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209824" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 35, 4.74, 15)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209825" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 35, 5, 15)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209826" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, 37.75, 2.5, 15)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209827" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 37.75, 2.5, 15)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209828" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 35, 2.5, 17.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209829" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 2.5, 17.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209830" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 5, 2.5, 20)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209831" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 20)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209832" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 20)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209833" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 20)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209834" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 20)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209835" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 20)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209836" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 20)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209837" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 20)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209838" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 20)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209839" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 20)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209840" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 20)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209841" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 20)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209842" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 20)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209843" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 20)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209844" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 25, 2.5, 20)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209845" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 20)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209846" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209847" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 25)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209848" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.74, 25)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209849" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5, 25)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209850" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, -2.75, 2.5, 25)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209851" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.75, 2.5, 25)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209852" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 0, 2.5, 22.25)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209853" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 22.25)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209854" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 25)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209855" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.25, 25)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209856" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 4.74, 25)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209857" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 5, 25)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209858" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 25)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209859" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 25)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209860" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 25)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209861" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 25)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209862" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209863" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 25)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209864" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 25)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209865" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 25)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209866" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 25)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209867" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 25)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209868" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 25)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209869" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 25)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209870" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 25, 2.5, 25)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209871" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 25)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209872" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209873" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 30)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209874" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.74, 30)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209875" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5, 30)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209876" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, -2.75, 2.5, 30)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209877" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.75, 2.5, 30)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209878" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 5, 2.5, 30)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209879" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 30)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209880" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 10, 2.5, 30)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209881" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 30)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209882" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 30)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209883" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 30)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209884" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 30)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209885" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 30)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209886" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 30)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209887" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 30)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209888" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 30)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209889" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 30)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209890" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 30)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209891" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.25, 30)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209892" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 4.74, 30)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209893" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 5, 30)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209894" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 30, 2.5, 30)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209895" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.5, 30)
+shape = SubResource("BoxShape3D_n2v7r")
+
+[node name="@MeshInstance3D@209896" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209897" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209898" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209899" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209900" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, -2.75, 2.5, 35)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209901" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.75, 2.5, 35)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209902" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 0, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209903" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209904" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209905" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209906" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209907" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 5, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209908" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 5, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209909" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209910" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209911" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209912" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209913" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 10, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209914" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 10, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209915" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209916" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209917" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209918" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209919" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 15, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209920" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 15, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209921" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209922" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209923" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209924" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209925" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 20, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209926" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 20, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209927" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209928" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209929" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209930" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209931" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 25, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209932" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 25, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209933" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209934" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 35)
+material_override = ExtResource("2_575hg")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@CollisionShape3D@209935" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.25, 35)
+shape = SubResource("BoxShape3D_2cukq")
+
+[node name="@MeshInstance3D@209936" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 4.74, 35)
+material_override = ExtResource("3_6pt6e")
+mesh = SubResource("PlaneMesh_nasmn")
+
+[node name="@MeshInstance3D@209937" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 30, 5, 35)
+mesh = SubResource("BoxMesh_pjq04")
+
+[node name="@MeshInstance3D@209938" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-2.18557e-07, 0, -0.5, 0, 5, 0, 5, 0, -2.18557e-08, 32.75, 2.5, 35)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209939" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 32.75, 2.5, 35)
+shape = SubResource("BoxShape3D_hc3gq")
+
+[node name="@MeshInstance3D@209940" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 30, 2.5, 37.75)
+material_override = ExtResource("4_an61k")
+mesh = ExtResource("5_vbjiq")
+
+[node name="@CollisionShape3D@209941" type="CollisionShape3D" parent="NavigationRegion3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.5, 37.75)
+shape = SubResource("BoxShape3D_hc3gq")
 
 [node name="Dagger" parent="." instance=ExtResource("8_sb53c")]
 transform = Transform3D(-0.0736385, 0, 0.997285, 0, 1, 0, -0.997285, 0, -0.0736385, -1.72667, 1.11611, 0.597652)

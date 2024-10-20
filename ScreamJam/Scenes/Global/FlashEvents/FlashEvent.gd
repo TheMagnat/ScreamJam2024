@@ -21,7 +21,7 @@ var eventInProgress: bool = false
 var events: Array[Callable] = [spawnFarEntity]
 
 func _physics_process(delta: float) -> void:
-	if Global.inTutorial: return
+	if not Global.inGame: return
 	
 	elapsedTimeSinceLastEvent += delta
 	

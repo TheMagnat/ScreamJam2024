@@ -219,6 +219,7 @@ func spawn():
 
 func _ready():
 	Global.player = self
+	Global.inGame = true
 	GridEntityManager.player = self
 	
 	#It is safe to comment this line if your game doesn't start with the mouse captured
@@ -240,6 +241,9 @@ func _ready():
 	global_position.y = 0.0 # Only on first spawn to have a seemless transition with the tutorial
 	
 	$GridRestrictor.activate()
+
+func _exit_tree() -> void:
+	Global.inGame = false
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
