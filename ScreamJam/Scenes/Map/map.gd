@@ -291,6 +291,14 @@ func generateMapMesh():
 			currentCol = 0
 			currentRow += 1
 	
+	if Engine.is_editor_hint():
+		if playerSpawn:
+			var spawnMesh := MeshInstance3D.new()
+			spawnMesh.mesh = BoxMesh.new()
+			spawnMesh.scale = Vector3.ONE * 2.0
+			add_child(spawnMesh)
+			
+			spawnMesh.global_position = playerSpawn
 
 func loadMap(path: String) -> void:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://b5yqh34euaadp"]
 
-[ext_resource type="Script" path="res://Scenes/Enemies/Model/FaceFront.gd" id="1_c2na1"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Model/Eye.gd" id="1_c2na1"]
 [ext_resource type="Texture2D" uid="uid://jnj1w16s5ei2" path="res://Assets/Mobs/Eye/oeilfond.png" id="1_pma5n"]
 [ext_resource type="Texture2D" uid="uid://dw4wwnxs4lc25" path="res://Assets/Mobs/Eye/oeildevant.png" id="2_fr3pa"]
 [ext_resource type="Script" path="res://Scenes/Enemies/QuanticNode.gd" id="2_yytee"]

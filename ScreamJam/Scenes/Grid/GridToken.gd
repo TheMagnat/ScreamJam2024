@@ -19,5 +19,5 @@ var goalPosition: Vector2i = Vector2i.ZERO:
 var goalWorldPosition: Vector3 = Vector3.ZERO
 
 func setInitialPosition():
-	var temporary3iPosition: Vector3i = (map.playerSpawn / map.gridSpace).round()
+	var temporary3iPosition: Vector3i = (global_position / map.gridSpace).round()
 	goalPosition = Vector2i(temporary3iPosition.x, temporary3iPosition.z)
