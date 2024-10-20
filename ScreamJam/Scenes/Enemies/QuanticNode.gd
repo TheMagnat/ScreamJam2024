@@ -2,6 +2,8 @@ class_name QuanticNode extends Node3D
 
 
 @onready var sanityAttacker: SanityAttacker = $"../SanityAttacker"
+@onready var hypnotizeNode: HypnotizeNode = $"../HypnotizeNode"
+
 
 @export var observed: GeometryInstance3D
 @export var target: Character
@@ -50,6 +52,7 @@ func stopedWatching():
 	
 	if oneShot:
 		get_parent().queue_free()
+		hypnotizeNode.unlock()
 		return
 	
 	var pos: Vector3 = Global.map.getRandomPos()

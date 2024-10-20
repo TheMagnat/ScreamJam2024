@@ -32,7 +32,6 @@ func _ready() -> void:
 	
 	#TODO: Si on sauvegarde la progression, ici mettre à faux si on veut ne plus le mettre sur la grille au chargement
 	gridToken.map = map
-	activate()
 
 func onStepTimerTimeout():
 	EventBus.playerGridStep.emit()
