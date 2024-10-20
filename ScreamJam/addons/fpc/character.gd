@@ -162,21 +162,28 @@ func damageHealth(dmg: float, dot := false):
 		die()
 
 var dead := false
+var death_tween: Tween
 func die():
 	dead = true
 	set_physics_process(false)
-	set_process_input(false)
 	blink(true)
-	$GridRestrictor.deactivate()
 	
-	await get_tree().create_timer(2.0).timeout
-	spawn()
+	$PostProcess/Label.modulate.a = 0.0
+	death_tween = create_tween()
+	death_tween.tween_property($PostProcess/Label, "modulate:a", 1.0, 40.0)
 	
+	$RespawnTimer.start()
+
 
 func spawn():
-	var newPosition = map.availablePrisons[randi_range(0, map.availablePrisons.size() - 1)]
+	if death_tween: death_tween.kill()
+	death_tween = create_tween()
+	death_tween.tween_property($PostProcess/Label, "modulate:a", 0.0, 0.5)
+	
+	var newPosition := map.availableSpawns.pick_random()
 	global_position = newPosition
 	$GridToken.setInitialPosition()
+
 	sanity = SANITY_MAX
 	health = HEALTH_MAX
 	
@@ -187,7 +194,6 @@ func spawn():
 	enter_normal_state()
 	
 	set_physics_process(true)
-	set_process_input(true)
 	
 	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
 	blink(true)
@@ -213,14 +219,10 @@ func _ready():
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
 	check_controls()
-	spawn()
-	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
-	blink(true)
-	await get_tree().create_timer(0.5).timeout
-	#if not Debug.debug:
-	global_position = map.playerSpawn
-	blink(false)
 	
+	$PostProcess/Label.modulate.a = 0.0
+	spawn()
+		
 	$GridRestrictor.activate()
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
@@ -618,9 +620,13 @@ func blink(closing : bool):
 		closed_eyes = false
 
 func _input(event: InputEvent):
+	if !$RespawnTimer.is_stopped():
+		return
+	
 	if event.is_action_pressed("Blink"):
 		blink(true)
 	elif event.is_action_released("Blink"):
+		if dead: spawn()
 		blink(false)
 	
 	if event.is_action_pressed("debugSuicide"):

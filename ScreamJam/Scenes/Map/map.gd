@@ -23,8 +23,7 @@ const CellAvailabilityFilter := 15
 # Map data 
 var mapData : Array[CellType]
 var mapSize: Vector2i
-var playerSpawn: Vector3
-var availablePrisons: Array[Vector3]
+var availableSpawns: Array[Vector3]
 
 # Cache
 @onready var groundMesh := PlaneMesh.new()
@@ -215,7 +214,6 @@ enum CellType {
 	#spawns are available
 	MobSpawn = 4,
 	PlayerSpawn = 5,
-	Prison = 6,
 	Available = 16,
 }
 
@@ -286,12 +284,10 @@ func generateMapMesh():
 	for element in mapData:
 		var type = getType(element)
 		#TODO: simplifier la condition
-		if type == CellType.Normal or type == CellType.Hole or type == CellType.PlayerSpawn or type == CellType.MobSpawn or type == CellType.Prison:
+		if type == CellType.Normal or type == CellType.Hole or type == CellType.PlayerSpawn or type == CellType.MobSpawn:
 			createCell(currentCol, currentRow)
 			if type == CellType.PlayerSpawn:
-				playerSpawn = Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace)
-			if type == CellType.Prison:
-				availablePrisons.append(Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace))
+				availableSpawns.append(Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace))
 		elif type != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
 			createSceneFullWall(getMapPos(currentCol, currentRow))
 		
@@ -299,15 +295,7 @@ func generateMapMesh():
 		if currentCol == mapSize.x:
 			currentCol = 0
 			currentRow += 1
-	
-	if Engine.is_editor_hint():
-		if playerSpawn:
-			var spawnMesh := MeshInstance3D.new()
-			spawnMesh.mesh = BoxMesh.new()
-			spawnMesh.scale = Vector3.ONE * 2.0
-			add_child(spawnMesh)
-			
-			spawnMesh.global_position = playerSpawn
+
 
 func loadMap(path: String) -> void:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
@@ -338,7 +326,7 @@ func loadMap(path: String) -> void:
 	# Now concat every array together
 	for row in mapDataArray:
 		for element in row:
-			if(element == CellType.Normal || element == CellType.MobSpawn || element == CellType.PlayerSpawn || element == CellType.Prison):
+			if(element == CellType.Normal || element == CellType.MobSpawn || element == CellType.PlayerSpawn):
 				element += CellType.Available
 			mapData.append(element)
 		
