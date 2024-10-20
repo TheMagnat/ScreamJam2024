@@ -33,7 +33,7 @@ void fragment() {
 	vec2 id = floor(UV * factor) / factor;
 	
 	// Cool 1
-	vec3 menuBackground = texture(screen, vec2(UV.x + tan((id.y * 154.4147) + TIME) * 0.01 , UV.y + tan((id.x * 154.4147) + TIME) * 0.01 )).rgb;
+	vec3 menuBackground = texture(screen, vec2(UV.x + tan((id.y * 154.4147) + TIME) * 0.01 , UV.y + tan((id.x * 154.4147) + TIME) * 0.01 )).rgb * (1.0 - transition * 0.35);
 	
 	// Cool 2
 	//vec3 menuBackground = texture(screen, vec2(UV.x + cos((id.y * 154.4147) + TIME) * 0.01 , UV.y + sin((id.x * 154.4147) + TIME) * 0.01 )).rgb;
