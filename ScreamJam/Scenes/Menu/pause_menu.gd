@@ -47,11 +47,7 @@ func _create_controls():
 		
 		actionLabel.text = inputDictionnary[action]
 		
-		var events = InputMap.action_get_events(action)
-		if events.size() > 0:
-			inputLabel.text = events[0].as_text().trim_suffix(" (Physical)")
-		else:
-			inputLabel.text = ""
+		inputLabel.text = Global.get_action_key(action)
 		
 		button.pressed.connect(_on_input_button_pressed.bind(button, action))
 		controlsContainer.add_child(button)
