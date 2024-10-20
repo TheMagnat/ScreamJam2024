@@ -164,14 +164,26 @@ func damageHealth(dmg: float, dot := false):
 
 var dead := false
 var death_tween: Tween
+
+const DEATH_TEXTS := [
+	"Nightmares don't always end by waking up",
+	"Death is everyone's destination. What if it didn't exist?",
+	"Your soul escaped your body, not the maze",
+	"Fear emerges from the unknown",
+]
 func die():
 	dead = true
 	set_physics_process(false)
 	blink(true)
 	
 	$PostProcess/Label.modulate.a = 0.0
+	$PostProcess/RespawnInfo.modulate.a = 0.0
+	$PostProcess/Label.text = DEATH_TEXTS.pick_random()
+	$PostProcess/RespawnInfo.text = "\n\n\n\nPress %s to respawn" % Global.get_action_key("Blink")
+	
 	death_tween = create_tween()
 	death_tween.tween_property($PostProcess/Label, "modulate:a", 1.0, 40.0)
+	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 1.0, 100.0)
 	
 	$RespawnTimer.start()
 
@@ -180,6 +192,7 @@ func spawn():
 	if death_tween: death_tween.kill()
 	death_tween = create_tween()
 	death_tween.tween_property($PostProcess/Label, "modulate:a", 0.0, 0.5)
+	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 0.0, 0.5)
 	
 	var newPosition := map.availableSpawns.pick_random()
 	global_position = newPosition
