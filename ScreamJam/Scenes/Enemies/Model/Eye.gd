@@ -1,4 +1,4 @@
-extends Node3D
+class_name Eye extends Node3D
 
 
 @export var oneShot: bool = false

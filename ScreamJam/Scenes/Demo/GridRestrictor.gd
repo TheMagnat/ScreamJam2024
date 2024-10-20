@@ -61,7 +61,7 @@ func getFrontPosition() -> Vector2i:
 
 func _physics_process(delta: float) -> void:
 	if not gridToken.isFree:
-		if not inMovement or reachedGoal:
+		if (not inMovement or reachedGoal) and not character.locked:
 			var directionVector: Vector2 = Input.get_vector("Left", "Right", "Up", "Down")
 			if directionVector != Vector2.ZERO:
 				

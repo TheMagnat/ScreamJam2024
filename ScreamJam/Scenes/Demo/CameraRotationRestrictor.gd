@@ -25,6 +25,9 @@ func updateGoalRotation(newOffset: float):
 		updateHeadRotation()
 	
 func updateHeadRotation():
+	if character.locked:
+		return
+	
 	if rotationTween: rotationTween.kill()
 	rotationTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	#rotationTween.tween_property(head, "rotation:y", goalRotation, rotationTime)

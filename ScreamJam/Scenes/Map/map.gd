@@ -49,6 +49,9 @@ var ceilInstanceTransforms: Array[Transform3D]
 var fullCeilInstanceTransforms: Array[Transform3D]
 
 # Utility functions
+func isWorldPosAvailable(worldPosition: Vector3) -> bool:
+	return isAvailable(Vector2i(round(worldPosition.x / gridSpace), round(worldPosition.z / gridSpace)))
+
 func isAvailable(goal2dPosition: Vector2i):
 	#spawns are walkable
 	var cellType = getMapData(goal2dPosition.x, goal2dPosition.y)

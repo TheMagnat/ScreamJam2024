@@ -1,18 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://btrjj2on2u83k"]
+[gd_scene load_steps=4 format=3 uid="uid://btrjj2on2u83k"]
 
 [ext_resource type="Shader" path="res://Scenes/Global/FlashEvents/FlashEvent.gdshader" id="1_f8kkl"]
+[ext_resource type="Script" path="res://Scenes/Global/FlashEvents/FlashEvent.gd" id="1_x1jo2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_utsxg"]
 shader = ExtResource("1_f8kkl")
+shader_parameter/inverseScreen = 0.0
+shader_parameter/gridInverse = false
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/alpha = 0.0
 
 [node name="FlashEvent" type="Node"]
+script = ExtResource("1_x1jo2")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="ColorRect" parent="CanvasLayer"]
+[node name="EventScreen" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_utsxg")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
