@@ -47,11 +47,7 @@ func _create_controls():
 		
 		actionLabel.text = inputDictionnary[action]
 		
-		var events = InputMap.action_get_events(action)
-		if events.size() > 0:
-			inputLabel.text = events[0].as_text().trim_suffix(" (Physical)")
-		else:
-			inputLabel.text = ""
+		inputLabel.text = Global.get_action_key(action)
 		
 		button.pressed.connect(_on_input_button_pressed.bind(button, action))
 		controlsContainer.add_child(button)
@@ -103,3 +99,19 @@ func _on_input_button_pressed(button : Button, action : String):
 
 func _on_reset_button_pressed():
 	_create_controls()
+
+const FUN_MESSAGES := [
+	"This is a safe space",
+	"There are no horror elements in this menu",
+	"You've broken the immersion voluntarily",
+	"Don't worry, there's no screamer in this menu",
+	"Hey, you found the game menu, good job!",
+	"Remember, it's just a game"
+]
+func show_menu():
+	visible = !visible
+	get_tree().paused = visible
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if visible else Input.MOUSE_MODE_CAPTURED
+	if visible:
+		$FunMessage.text = FUN_MESSAGES.pick_random()
+		update_values()

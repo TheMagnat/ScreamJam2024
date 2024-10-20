@@ -34,12 +34,6 @@ func _exit_tree():
 	RenderingServer.global_shader_parameter_set("breathing", 1.0)
 	Global.inTutorial = false
 
-func get_event(action: String) -> String:
-	var events = InputMap.action_get_events(action)
-	if events.size() > 0:
-		return events[0].as_text().trim_suffix(" (Physical)")
-	return ""
-
 var step := -1
 const BLINK_STEP := 12
 const BLINK_INFO := ["If it gets too scary, press %s", "Blink"]
@@ -57,10 +51,10 @@ func next_step():
 	if state[1] is Array:
 		var arr := []
 		for action in state[1]:
-			arr.append(get_event(action))
+			arr.append(Global.get_action_key(action))
 		$CanvasLayer/Text.text = state[0] % arr
 	else:
-		$CanvasLayer/Text.text = state[0] % get_event(state[1])
+		$CanvasLayer/Text.text = state[0] % Global.get_action_key(state[1])
 	
 	if step > 0:
 		$validate.play()
@@ -100,10 +94,6 @@ func blink():
 	blink_step(blink_tween, 0.2)
 	blink_step(blink_tween, 0.4)
 	blink_step(blink_tween, 1.0)
-	
-	blink_tween.tween_callback(func():
-		Ambience.next_ambience()
-		Transition.start(get_tree().change_scene_to_packed.bind(nextScene), 0.5, Transition.Type.Alpha, Transition.Type.Alpha))
 
 func move_step(t: Tween, dir: Vector3):
 	t.tween_callback(func():
@@ -131,12 +121,27 @@ func move(a: float):
 	move_step(t, dir / 3.0)
 	t.tween_callback(func(): moving = false)
 
+func load_level():
+	Ambience.next_ambience()
+	Transition.start(get_tree().change_scene_to_packed.bind(nextScene), 0.25, Transition.Type.Alpha, Transition.Type.Alpha)
+
 func _input(event: InputEvent):
-	if closed_eyes || rotating || moving:
+	if rotating || moving:
 		return
 	
-	if event.is_action_pressed("Blink") and step >= BLINK_STEP:
-		blink()
+	if step >= BLINK_STEP:
+		if event.is_action_pressed("Blink") and !closed_eyes:
+			blink()
+		elif event.is_action_released("Blink") and closed_eyes:
+			print("heyho")
+			if blink_tween and blink_tween.is_running():
+				set_process_input(false)
+				await blink_tween.finished
+			
+			load_level()
+	
+	if closed_eyes:
+		return
 	
 	if event.is_action_pressed("RotateLeft") and check_step(0):
 		rotate_camera(PI/2.0)

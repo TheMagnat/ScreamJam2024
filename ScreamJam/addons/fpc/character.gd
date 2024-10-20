@@ -558,9 +558,9 @@ func _process(delta):
 	
 	var sanity01 := (1.0 - (sanity_display/SANITY_MAX))
 	
-	noise($noise1, -40.0, -10.0, 0.0, 0.4, sanity01)
-	noise($noise2, -40.0, -22.0, 0.2, 0.6, sanity01)
-	noise($noise3, -40.0, -25.0, 0.2, 1.0, sanity01)
+	noise($noise1, -70.0, -10.0, 0.0, 0.4, sanity01)
+	noise($noise2, -70.0, -22.0, 0.2, 0.6, sanity01)
+	noise($noise3, -70.0, -25.0, 0.0, 1.0, sanity01)
 	
 	var sanitySquare := sanity01 * sanity01
 	environment.camera_attributes.dof_blur_near_distance = 8.0 * sanitySquare
@@ -581,7 +581,7 @@ func _process(delta):
 	AudioServer.get_bus_effect(0, 4).cutoff_hz = 20500 - dmg01 * 19000.0
 	AudioServer.get_bus_effect(0, 3).drive = dmg01 * dmg01 * 0.3
 	
-	noise($tintinnus, -50.0, -22.0, 0.1, 1.0, dmg01)
+	noise($tintinnus, -70.0, -20.0, 0.1, 1.0, sqrt(dmg01))
 	$PostProcess/ColorRect.material.set_shader_parameter("damage", dmg01)
 	
 	Ambience.set_ambience(sanity01)

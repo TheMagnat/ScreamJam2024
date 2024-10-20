@@ -8,7 +8,7 @@ const MIN_DB := 60.0
 func set_ambience(scary01: float):
 	AudioServer.set_bus_volume_db(AMBIENCE_PEACEFUL, -40.0 * scary01)
 	$SpookyDookie.pitch_scale = 1.0 - scary01 * scary01 * 0.4
-	$SpookyDookie.volume_db = -80 + 60.0 * sqrt(clampf((scary01 - 0.3) * 3.0, 0.0, 1.0))
+	$SpookyDookie.volume_db = -80 + 60.0 * sqrt(clampf((scary01 - 0.15) * 2.75, 0.0, 1.0))
 
 func _ready():
 	set_ambience(0.0)

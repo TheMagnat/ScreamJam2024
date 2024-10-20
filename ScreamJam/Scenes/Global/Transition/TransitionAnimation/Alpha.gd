@@ -11,12 +11,14 @@ func _ready() -> void:
 var tween: Tween
 func playIn(duration: float) -> void:
 	if tween: tween.kill()
+	$ColorRect.modulate.a = 0.0
 	tween = create_tween()
 	tween.tween_property($ColorRect, "modulate:a", 1.0, duration)
 	tween.tween_callback(finished.emit)
 
 func playOut(duration: float) -> void:
 	if tween: tween.kill()
+	$ColorRect.modulate.a = 1.0
 	tween = create_tween()
 	tween.tween_property($ColorRect, "modulate:a", 0.0, duration)
 	tween.tween_callback(finished.emit)
