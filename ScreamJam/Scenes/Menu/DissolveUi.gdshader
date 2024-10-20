@@ -13,7 +13,7 @@ uniform vec4 frontColor : source_color;
 uniform vec4 backColor : source_color;
 
 void fragment() {
-	COLOR = frontColor;
+	COLOR.rgb = frontColor.rgb;
 	vec2 scroll =  mod(UV + vec2(TIME * scrollSpeed, 0.0), 1.0);
 	float alpha = log(UV.x + xTranslate) / dissolveFactor + texture(noise, scroll).r;
 	if(alpha < alphaThreshold + borderSize)
@@ -22,6 +22,6 @@ void fragment() {
 	}
 	if(alpha < alphaThreshold)
 	{
-		COLOR = backColor;
+		COLOR.rgb = backColor.rgb;
 	}
 }

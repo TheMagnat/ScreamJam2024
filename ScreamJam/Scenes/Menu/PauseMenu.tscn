@@ -1,10 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwnah50iuq62x"]
+[gd_scene load_steps=11 format=3 uid="uid://cwnah50iuq62x"]
 
 [ext_resource type="Script" path="res://Scenes/Menu/pause_menu.gd" id="1_bttxp"]
 [ext_resource type="Theme" uid="uid://bci64pmwpnu56" path="res://Scenes/Menu/PauseMenuTheme.tres" id="1_clyq6"]
-[ext_resource type="Material" uid="uid://c4da17pubpfnj" path="res://Scenes/Menu/PauseMenuPanelShaderMaterial.tres" id="3_rgiot"]
+[ext_resource type="Material" uid="uid://b156jt6pfgrv" path="res://Scenes/Menu/PauseMenuPanelShaderMaterial.tres" id="3_rgiot"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2ywvt"]
+font_size = 38
+font_color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n1mnj"]
+font_size = 38
+font_color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qjo5w"]
+font_size = 38
+font_color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v5huj"]
+font_size = 38
+font_color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[sub_resource type="Shader" id="Shader_srla2"]
+code = "shader_type canvas_item;
+
+void fragment() {
+	COLOR.a *= texture(TEXTURE, UV + cos(UV.y * 100.0 + TIME * 3.0 + UV.x * 100.0) * 0.002).a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8p25t"]
+shader = SubResource("Shader_srla2")
+
+[sub_resource type="LabelSettings" id="LabelSettings_1kfop"]
+font_size = 24
+font_color = Color(0.507972, 0.507972, 0.507972, 1)
 
 [node name="PauseMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,21 +46,20 @@ theme = ExtResource("1_clyq6")
 script = ExtResource("1_bttxp")
 
 [node name="Panel" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0.588235)
 material = ExtResource("3_rgiot")
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.15
-anchor_right = 0.7
-anchor_bottom = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 48
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 48
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 96
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 96
 
 [node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
@@ -39,6 +69,7 @@ columns = 2
 [node name="VolumeLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
 text = "Volume"
+label_settings = SubResource("LabelSettings_2ywvt")
 
 [node name="VolumeSlider" type="HSlider" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -51,6 +82,7 @@ ticks_on_borders = true
 layout_mode = 2
 mouse_filter = 1
 text = "Resolution"
+label_settings = SubResource("LabelSettings_n1mnj")
 
 [node name="ResolutionOptions" type="OptionButton" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -58,7 +90,8 @@ size_flags_horizontal = 3
 
 [node name="FullScreenLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
-text = "Full Screen"
+text = "Fullscreen"
+label_settings = SubResource("LabelSettings_qjo5w")
 
 [node name="FullScreenCheckBox" type="CheckBox" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -66,6 +99,7 @@ layout_mode = 2
 [node name="ControlsLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
 text = "Controls"
+label_settings = SubResource("LabelSettings_v5huj")
 
 [node name="Container" type="VBoxContainer" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -88,6 +122,17 @@ size_flags_vertical = 3
 [node name="ResetButton" type="Button" parent="Panel/MarginContainer/GridContainer/Container"]
 layout_mode = 2
 text = "Reset Keys"
+
+[node name="FunMessage" type="Label" parent="."]
+material = SubResource("ShaderMaterial_8p25t")
+layout_mode = 2
+offset_top = 584.0
+offset_right = 1152.0
+offset_bottom = 609.0
+text = "Test"
+label_settings = SubResource("LabelSettings_1kfop")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="value_changed" from="Panel/MarginContainer/GridContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="item_selected" from="Panel/MarginContainer/GridContainer/ResolutionOptions" to="." method="_on_resolution_options_item_selected"]
