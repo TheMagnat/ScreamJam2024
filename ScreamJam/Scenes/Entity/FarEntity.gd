@@ -1,7 +1,7 @@
 extends Node3D
 
 
-@export var minDistance: float = 8.0
+@export var minDistance: float = 8.5
 @onready var material: ShaderMaterial = $Sprite3D.material_override
 
 func _process(delta: float) -> void:
@@ -9,4 +9,4 @@ func _process(delta: float) -> void:
 	if distToPlayer < minDistance:
 		queue_free()
 	
-	material.set_shader_parameter("dist", clampf((distToPlayer - 8.0), 0.0, 1.0))
+	material.set_shader_parameter("dist", clampf((distToPlayer - 8.5), 0.0, 1.0))

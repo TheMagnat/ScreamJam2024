@@ -128,16 +128,16 @@ func spawnFarEntity():
 	
 	eventInProgress = true
 	
-	screenMaterial.set_shader_parameter("color", Vector3.ZERO)
-	screenMaterial.set_shader_parameter("alpha", 1.0)
-	await get_tree().create_timer(0.05).timeout
-	screenMaterial.set_shader_parameter("alpha", 0.0)
+	#screenMaterial.set_shader_parameter("color", Vector3.ZERO)
+	#screenMaterial.set_shader_parameter("alpha", 1.0)
+	#await get_tree().create_timer(0.05).timeout
+	#screenMaterial.set_shader_parameter("alpha", 0.0)
 	
 	eventInProgress = false
 	
 	# Create the Eye
-	var spawnPosition: Vector3 = getSpawnPosition(10, 0.2)
-	spawnPosition.y = randf_range(1.5, 2.5)
+	var spawnPosition: Vector3 = getSpawnPosition(12, 0.2)
+	spawnPosition.y = randf_range(1.5, 3.5)
 	
 	if not Global.map.isWorldPosAvailable(spawnPosition):
 		return

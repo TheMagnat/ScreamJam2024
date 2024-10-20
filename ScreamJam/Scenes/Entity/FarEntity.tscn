@@ -8,7 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u6sde"]
 render_priority = 0
 shader = ExtResource("2_bhw2l")
-shader_parameter/dist = null
+shader_parameter/dist = 1.0
 shader_parameter/tex = ExtResource("3_x3a7u")
 
 [node name="FarEntity" type="Node3D"]
