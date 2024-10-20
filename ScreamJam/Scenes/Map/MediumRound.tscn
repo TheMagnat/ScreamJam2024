@@ -56,7 +56,7 @@ shadow_normal_bias = 3.0
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 
 [node name="Map" parent="NavigationRegion3D" instance=ExtResource("1_bx3s3")]
-mapFilePath = "res://Scenes/Map/MapFile/medium_round.txt"
+mapFilePath = "res://Scenes/Map/MapFile/medium_round_symetry.txt"
 
 [node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("2_euk7i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)

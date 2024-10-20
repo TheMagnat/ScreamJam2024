@@ -1,9 +1,10 @@
-[gd_scene load_steps=48 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=52 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Shader" path="res://addons/fpc/character.gdshader" id="3_pevgd"]
 [ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
+[ext_resource type="FontFile" uid="uid://ctajkdefq88fg" path="res://Assets/Fonts/coldnightforalligators.ttf" id="4_4nvet"]
 [ext_resource type="AudioStream" uid="uid://pabnmo2kh8ri" path="res://Assets/SFX/steps/step_metal1.ogg" id="4_g3qfg"]
 [ext_resource type="AudioStream" uid="uid://cmjlxpdr2qe2d" path="res://Assets/SFX/steps/step_metal2.ogg" id="5_aiuo4"]
 [ext_resource type="AudioStream" uid="uid://cmcboj8010bun" path="res://Assets/SFX/steps/step_metal11.ogg" id="6_skq3o"]
@@ -383,6 +384,30 @@ shader_parameter/distortion = 0.0
 shader_parameter/blink = 0.0
 shader_parameter/damage = null
 
+[sub_resource type="Shader" id="Shader_vvegd"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	VERTEX.y += cos(TIME * 1000.0 + VERTEX.x) * 0.5;
+}
+
+void fragment() {
+	COLOR.a *= sqrt(max(0.0, 1.0 - UV.y - sin(TIME * 100.0 + UV.x * cos(TIME * 426.0) * 10.0) * 0.05));
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x7hrx"]
+shader = SubResource("Shader_vvegd")
+
+[sub_resource type="LabelSettings" id="LabelSettings_xsfrp"]
+font = ExtResource("4_4nvet")
+font_size = 32
+
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
@@ -488,6 +513,15 @@ offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 1
 
+[node name="Label" type="Label" parent="PostProcess"]
+material = SubResource("ShaderMaterial_x7hrx")
+offset_right = 1152.0
+offset_bottom = 648.0
+text = "Nightmares don't always end by waking up"
+label_settings = SubResource("LabelSettings_xsfrp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="InterfaceLayer" type="CanvasLayer" parent="."]
 layer = 101
 
@@ -548,3 +582,7 @@ autoplay = true
 stream = ExtResource("20_13moh")
 volume_db = -60.0
 autoplay = true
+
+[node name="RespawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

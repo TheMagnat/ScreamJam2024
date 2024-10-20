@@ -6,8 +6,6 @@
 
 class_name Character extends CharacterBody3D
 
-signal die
-
 ## The settings for the character's movement and feel.
 @export_category("Character")
 ## The speed that the character moves at without crouching or sprinting.
@@ -115,6 +113,8 @@ const HEALTH_RECOVER := 1.0
 var health := HEALTH_MAX
 
 func damageSanity(dmg: float, eyes_closed_factor := 1.0, under_zero_factor := 1.0):
+	if dead: return
+	
 	var oldSanityZ: float = minf(0.0, sanity)
 	sanity -= dmg * (eyes_closed_factor if closed_eyes else 1.0)
 	
@@ -130,6 +130,8 @@ var damageTween: Tween
 var lastTweenDelta: float = 0.0
 var lastRotDiff: Vector3
 func damageHealth(dmg: float, dot := false):
+	if dead: return
+	
 	health -= dmg
 	if !dot:
 		if damageTween:
@@ -157,7 +159,48 @@ func damageHealth(dmg: float, dot := false):
 		0.0, 1.0, 0.3)
 	
 	if health < 0.0:
-		die.emit()
+		die()
+
+var dead := false
+var death_tween: Tween
+func die():
+	dead = true
+	set_physics_process(false)
+	blink(true)
+	
+	$PostProcess/Label.modulate.a = 0.0
+	death_tween = create_tween()
+	death_tween.tween_property($PostProcess/Label, "modulate:a", 1.0, 40.0)
+	
+	$RespawnTimer.start()
+
+
+func spawn():
+	if death_tween: death_tween.kill()
+	death_tween = create_tween()
+	death_tween.tween_property($PostProcess/Label, "modulate:a", 0.0, 0.5)
+	
+	var newPosition := map.availableSpawns.pick_random()
+	global_position = newPosition
+	$GridToken.setInitialPosition()
+
+	sanity = SANITY_MAX
+	health = HEALTH_MAX
+	
+	HEADBOB_ANIMATION.play("RESET")
+	JUMP_ANIMATION.play("RESET")
+	CROUCH_ANIMATION.play("RESET")
+	
+	enter_normal_state()
+	
+	set_physics_process(true)
+	
+	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
+	blink(true)
+	
+	$GridRestrictor.activate()
+	
+	dead = false
 
 func _ready():
 	Global.player = self
@@ -175,21 +218,11 @@ func _ready():
 	
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
-	HEADBOB_ANIMATION.play("RESET")
-	JUMP_ANIMATION.play("RESET")
-	CROUCH_ANIMATION.play("RESET")
-	
-	enter_normal_state()
-	
 	check_controls()
 	
-	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
-	blink(true)
-	await get_tree().create_timer(0.5).timeout
-	if not Debug.debug:
-		global_position = map.playerSpawn
-	blink(false)
-	
+	$PostProcess/Label.modulate.a = 0.0
+	spawn()
+		
 	$GridRestrictor.activate()
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
@@ -587,10 +620,17 @@ func blink(closing : bool):
 		closed_eyes = false
 
 func _input(event: InputEvent):
+	if !$RespawnTimer.is_stopped():
+		return
+	
 	if event.is_action_pressed("Blink"):
 		blink(true)
 	elif event.is_action_released("Blink"):
+		if dead: spawn()
 		blink(false)
+	
+	if event.is_action_pressed("debugSuicide"):
+		suicide()
 	
 	if event.is_action_pressed("ui_end"): #debug
 		damageSanity(10.0)
@@ -610,3 +650,6 @@ func _unhandled_input(event : InputEvent):
 			# Where we're going, we don't need InputMap
 			if event.keycode == 4194338: # F7
 				$InterfaceLayer/UserInterface/DebugPanel.visible = !$InterfaceLayer/UserInterface/DebugPanel.visible
+
+func suicide():
+	die()
