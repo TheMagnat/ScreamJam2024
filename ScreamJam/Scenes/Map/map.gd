@@ -11,6 +11,8 @@ const DistoredWallMaterial := preload("res://Scenes/Map/WallAndDistHight.tres")
 const GroundMaterial := preload("res://Scenes/Map/Ground.tres")
 const CeilMaterial := preload("res://Scenes/Map/Ceil.tres")
 
+const CellAvailabilityFilter := 15
+
 # Map parameters
 @export var gridSpace: float = 1.0
 @export var thickness: float = 1.0
@@ -22,6 +24,7 @@ const CeilMaterial := preload("res://Scenes/Map/Ceil.tres")
 var mapData : Array[CellType]
 var mapSize: Vector2i
 var playerSpawn: Vector3
+var availablePrisons: Array[Vector3]
 
 # Cache
 @onready var groundMesh := PlaneMesh.new()
@@ -52,7 +55,7 @@ var fullCeilInstanceTransforms: Array[Transform3D]
 func isAvailable(goal2dPosition: Vector2i):
 	#spawns are walkable
 	var cellType = getMapData(goal2dPosition.x, goal2dPosition.y)
-	return cellType == CellType.Normal || cellType == CellType.Spawn
+	return cellType > CellType.Available
 
 
 func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
@@ -206,12 +209,14 @@ func createSceneFullWall(elementPosition: Vector3):
 #TODO: use this as a bitfield to flag walkable cells 
 enum CellType {
 	Empty = 0,
-	
 	Normal = 1,
 	Opening = 2,
 	Hole = 3,
 	#spawns are available
-	Spawn = 4
+	MobSpawn = 4,
+	PlayerSpawn = 5,
+	Prison = 6,
+	Available = 16,
 }
 
 func getMapData(x: int, y: int) -> CellType:
@@ -223,7 +228,7 @@ func getMapPos(x: int, y: int) -> Vector3:
 	return Vector3(x * gridSpace, 0.0, y * gridSpace)
 
 func drawWallCell(x: int, y: int, side: WallType) -> bool:
-	var currentCellValue: CellType = getMapData(x, y)
+	var currentCellValue: CellType = getType(getMapData(x, y))
 	if currentCellValue != CellType.Empty:
 		return false
 	var L := getMapData(x - 1, y) == CellType.Empty
@@ -279,11 +284,15 @@ func generateMapMesh():
 	var currentRow: int = 0
 	
 	for element in mapData:
-		if element == CellType.Normal or element == CellType.Hole or element == CellType.Spawn:
+		var type = getType(element)
+		#TODO: simplifier la condition
+		if type == CellType.Normal or type == CellType.Hole or type == CellType.PlayerSpawn or type == CellType.MobSpawn or type == CellType.Prison:
 			createCell(currentCol, currentRow)
-			if element == CellType.Spawn:
+			if type == CellType.PlayerSpawn:
 				playerSpawn = Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace)
-		elif element != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
+			if type == CellType.Prison:
+				availablePrisons.append(Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace))
+		elif type != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
 			createSceneFullWall(getMapPos(currentCol, currentRow))
 		
 		currentCol += 1
@@ -329,6 +338,8 @@ func loadMap(path: String) -> void:
 	# Now concat every array together
 	for row in mapDataArray:
 		for element in row:
+			if(element == CellType.Normal || element == CellType.MobSpawn || element == CellType.PlayerSpawn || element == CellType.Prison):
+				element += CellType.Available
 			mapData.append(element)
 		
 		for i in range(row.size(), rowLength):
@@ -336,3 +347,6 @@ func loadMap(path: String) -> void:
 	
 	mapSize.x = rowLength
 	mapSize.y = rowCount
+
+func getType(cell:CellType):
+	return cell & CellAvailabilityFilter

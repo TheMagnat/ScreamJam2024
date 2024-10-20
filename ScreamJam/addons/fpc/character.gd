@@ -171,9 +171,12 @@ func die():
 	
 	await get_tree().create_timer(2.0).timeout
 	spawn()
+	
 
 func spawn():
-	position = map.playerSpawn
+	var newPosition = map.availablePrisons[randi_range(0, map.availablePrisons.size() - 1)]
+	global_position = newPosition
+	$GridToken.setInitialPosition()
 	sanity = SANITY_MAX
 	health = HEALTH_MAX
 	
@@ -210,8 +213,15 @@ func _ready():
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
 	check_controls()
-	
 	spawn()
+	$PostProcess/ColorRect.material.set_shader_parameter("blink", 1.0)
+	blink(true)
+	await get_tree().create_timer(0.5).timeout
+	#if not Debug.debug:
+	global_position = map.playerSpawn
+	blink(false)
+	
+	$GridRestrictor.activate()
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -613,6 +623,9 @@ func _input(event: InputEvent):
 	elif event.is_action_released("Blink"):
 		blink(false)
 	
+	if event.is_action_pressed("debugSuicide"):
+		suicide()
+	
 	if event.is_action_pressed("ui_end"): #debug
 		damageSanity(10.0)
 		print(sanity)
@@ -631,3 +644,6 @@ func _unhandled_input(event : InputEvent):
 			# Where we're going, we don't need InputMap
 			if event.keycode == 4194338: # F7
 				$InterfaceLayer/UserInterface/DebugPanel.visible = !$InterfaceLayer/UserInterface/DebugPanel.visible
+
+func suicide():
+	die()
