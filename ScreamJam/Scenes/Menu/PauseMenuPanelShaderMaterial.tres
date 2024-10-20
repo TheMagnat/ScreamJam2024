@@ -20,4 +20,5 @@ shader_parameter/borderStrength = 0.106
 shader_parameter/xTranslate = 0.795
 shader_parameter/frontColor = null
 shader_parameter/backColor = Color(0.0313726, 0.0313726, 0.0313726, 1)
+shader_parameter/transition = 0.0
 shader_parameter/noise = SubResource("NoiseTexture2D_v1j14")

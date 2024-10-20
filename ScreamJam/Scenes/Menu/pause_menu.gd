@@ -108,10 +108,19 @@ const FUN_MESSAGES := [
 	"Hey, you found the game menu, good job!",
 	"Remember, it's just a game"
 ]
+
+var menuTransitionTween: Tween
 func show_menu():
 	visible = !visible
 	get_tree().paused = visible
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if visible else Input.MOUSE_MODE_CAPTURED
+	
 	if visible:
 		$FunMessage.text = FUN_MESSAGES.pick_random()
 		update_values()
+	
+	$Panel.material.set_shader_parameter("transition", 0.0)
+	
+	if menuTransitionTween: menuTransitionTween.kill()
+	menuTransitionTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	menuTransitionTween.tween_property($Panel, "material:shader_parameter/transition", 1.0 if visible else 0.0, 3.0)
