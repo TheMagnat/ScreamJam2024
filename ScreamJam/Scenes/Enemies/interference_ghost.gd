@@ -4,7 +4,7 @@ extends Node3D
 @export var DPS_SANITY := 150.0
 @export var DPS_HEALTH := 150.0
 @export var DAMAGE_SANITY_DISTANCE := 9.0
-@export var DAMAGE_HEALTH_DISTANCE := 4.0
+@export var DAMAGE_HEALTH_DISTANCE := 0.5
 
 var player: Character
 
@@ -29,7 +29,7 @@ func _physics_process(delta: float):
 	var dir := global_position.direction_to(player.position) * MOVE_SPEED * delta
 	global_position += Vector3(dir.x, 0.0, dir.z)
 	
-	player.damageSanity(damage(delta, DAMAGE_SANITY_DISTANCE, DPS_SANITY), 0.25)
+	player.damageSanity(damage(delta, DAMAGE_SANITY_DISTANCE, DPS_SANITY), 0.25, 0.5)
 	player.damageHealth(damage(delta, DAMAGE_HEALTH_DISTANCE, DPS_HEALTH), true)
 
 func _process(delta:float):
