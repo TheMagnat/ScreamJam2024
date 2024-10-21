@@ -1,7 +1,7 @@
 extends Node
 
 # Best explored zone
-var playerBestZone: int
+var playerBestZone: int = 0.0
 signal playerBestZoneChanged(int)
 
 # Blow part
