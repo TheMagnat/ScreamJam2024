@@ -20,8 +20,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 DebugCam="*res://addons/debug_camera/scripts/DebugCamAutoload.gd"
-Debug="*res://Scenes/Global/Debug.gd"
-GuiAutoload="*res://Scenes/Global/gui_autoload.gd"
 Transition="*res://Scenes/Global/Transition/Transition.tscn"
 EventBus="*res://Scenes/Global/EventBus.gd"
 GridEntityManager="*res://Scenes/Demo/MobDemo/GridEntityManager.gd"
@@ -30,6 +28,7 @@ RayHelper="*res://Scenes/Global/RayHelper.gd"
 Global="*res://Scenes/Global/Global.gd"
 FlashEvent="*res://Scenes/Global/FlashEvent.tscn"
 GlobalZoneHandler="*res://Scenes/ZoneHandler/GlobalZoneHandler.tscn"
+PauseMenu="*res://Scenes/Menu/PauseMenu.tscn"
 
 [display]
 

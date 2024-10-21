@@ -1,4 +1,18 @@
-extends Control
+extends CanvasLayer
+
+const RESOLUTIONS = {
+	"2560x1440": Vector2i(2560,1440),
+	"1920x1080": Vector2i(1920,1080),
+	"1366x768": Vector2i(1366,768),
+	"1280x720": Vector2i(1280,720),
+	"1920x1200" : Vector2i(1920,1200),
+	"1680x1050" : Vector2i(1680,1050),
+	"1440x900" : Vector2i(1440,900),
+	"1280x800" : Vector2i(1280,800),
+	"1024x768" : Vector2i(1024,768),
+	"800x600" : Vector2i(800,600),
+	"640x480" : Vector2i(640,480),
+}
 
 @onready var resolutionOptions = $Panel/MarginContainer/GridContainer/ResolutionOptions
 
@@ -30,9 +44,19 @@ const VOLUME_LIMIT = -40
 func _ready():
 	_add_resolutions()
 	_create_controls()
+	
+	enable(true)
+	hide()
+
+func enable(enabled: bool):
+	set_process_input(enabled)
+	process_mode = ProcessMode.PROCESS_MODE_ALWAYS if enabled else ProcessMode.PROCESS_MODE_DISABLED
+	
+	if !enabled and visible:
+		show_menu()
 
 func _add_resolutions():
-	for i in GuiAutoload.resolutions:
+	for i in RESOLUTIONS:
 		resolutionOptions.add_item(i)
 
 func _create_controls():
@@ -65,15 +89,15 @@ func _input(event : InputEvent):
 			isRemapping = false
 			actionRemapping = null
 			buttonRemapping = null
-			
-			accept_event()
+	elif event.is_action_pressed("Pause"):
+		show_menu()
 
 func _update_controls(button : Button, event : InputEvent):
 	button.find_child("InputLabel").text = event.as_text().trim_suffix(" (Physical)")
 
 func update_values():
 	var windows_size = str(get_window().size.x, "x", get_window().size.y)
-	var resIndex = GuiAutoload.resolutions.keys().find(windows_size)
+	var resIndex = RESOLUTIONS.keys().find(windows_size)
 	resolutionOptions.select(resIndex)
 
 func _on_volume_slider_value_changed(value: float):
@@ -85,7 +109,7 @@ func _on_volume_slider_value_changed(value: float):
 
 func _on_resolution_options_item_selected(index: int):
 	var key = resolutionOptions.get_item_text(index)
-	get_window().set_size(GuiAutoload.resolutions[key])
+	get_window().set_size(RESOLUTIONS[key])
 
 func _on_full_screen_check_box_toggled(toggled_on: bool):
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN if toggled_on else DisplayServer.WINDOW_MODE_WINDOWED)

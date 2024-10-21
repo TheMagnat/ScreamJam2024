@@ -30,7 +30,7 @@ const TEXTS := [
 ]
 
 func _ready():
-	GuiAutoload.set_menu(false)
+	PauseMenu.enable(false)
 	
 	LABEL_TEMPLATE.modulate.a = 0.0
 	$VBoxContainer/HBoxContainer/Label.queue_free()
@@ -52,6 +52,9 @@ func _ready():
 	
 	$VBoxContainer/Buttons/PlayAgain.pressed.connect(play_again)
 	$VBoxContainer/Buttons/Quit.pressed.connect(quit)
+
+func _exit_tree():
+	PauseMenu.enable(true)
 
 func play_again():
 	Transition.start(get_tree().change_scene_to_file.bind("res://Scenes/Tutorial/tutorial.tscn"), 1.0, Transition.Type.Alpha, Transition.Type.Alpha)

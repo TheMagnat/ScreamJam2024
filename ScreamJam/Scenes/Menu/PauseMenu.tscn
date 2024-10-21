@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwnah50iuq62x"]
+[gd_scene load_steps=10 format=3 uid="uid://cwnah50iuq62x"]
 
 [ext_resource type="Script" path="res://Scenes/Menu/pause_menu.gd" id="1_bttxp"]
-[ext_resource type="Theme" uid="uid://bci64pmwpnu56" path="res://Scenes/Menu/PauseMenuTheme.tres" id="1_clyq6"]
 [ext_resource type="Material" uid="uid://b156jt6pfgrv" path="res://Scenes/Menu/PauseMenuPanelShaderMaterial.tres" id="3_rgiot"]
 [ext_resource type="Shader" path="res://Scenes/Menu/PauseText.gdshader" id="4_jbo6j"]
 
@@ -29,22 +28,14 @@ shader_parameter/deform = 0.002
 font_size = 24
 font_color = Color(0.507972, 0.507972, 0.507972, 1)
 
-[node name="PauseMenu" type="Control"]
+[node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("1_clyq6")
+layer = 120
 script = ExtResource("1_bttxp")
 
 [node name="Panel" type="PanelContainer" parent="."]
 self_modulate = Color(1, 1, 1, 0.588235)
 material = ExtResource("3_rgiot")
-layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -122,7 +113,6 @@ text = "Reset Keys"
 
 [node name="FunMessage" type="Label" parent="."]
 material = SubResource("ShaderMaterial_8p25t")
-layout_mode = 2
 offset_top = 584.0
 offset_right = 1152.0
 offset_bottom = 609.0
