@@ -16,6 +16,8 @@ var resolutions = {
 	"640x480" : Vector2i(640,480),
 }
 
+@onready var Menu = $PauseMenu
+
 func _ready():
 	layer = 120
 	process_mode = ProcessMode.PROCESS_MODE_ALWAYS
@@ -23,6 +25,12 @@ func _ready():
 	add_child(pauseMenuScene)
 	pauseMenuScene.hide()
 
+func set_menu(enabled: bool):
+	set_process_input(enabled)
+	
+	if !enabled and Menu.visible:
+		Menu.show_menu()
+
 func _input(_event):
 	if Input.is_action_just_pressed("Pause"):
-		get_node("PauseMenu").show_menu()
+		Menu.show_menu()

@@ -9,13 +9,13 @@ extends Control
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	GuiAutoload.set_process_input(false)
+	GuiAutoload.set_menu(false)
 	
 	animationPlayer.play("SplashGlitchIn")
 	animationPlayer.animation_finished.connect(animationFinished)
 
 func _exit_tree():
-	GuiAutoload.set_process_input(true)
+	GuiAutoload.set_menu(true)
 
 func animationFinished(event):
 	get_tree().create_timer(splashDuration).timeout.connect(startOutAnimation)
