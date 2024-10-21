@@ -9,6 +9,9 @@ var rightHandTool: Node3D = null
 @onready var leftHand: Marker3D = $"../Head/LeftHandPosition"
 var leftHandTool: Node3D = null
 
+func _ready():
+	indicator.modulate.a = 0.0
+
 func tryLoot() -> bool:
 	if nearestLoot:
 		if nearestLoot is Weapon:
@@ -57,8 +60,18 @@ func take(loot: Loot, left: bool):
 
 var nearestLoot: Loot = null
 
+var indicator_shown := false
+var indicator_tween: Tween
+func show_indicator(b: bool):
+	if b == indicator_shown: return
+	
+	indicator_shown = b
+	if indicator_tween: indicator_tween.kill()
+	indicator_tween = create_tween()
+	indicator_tween.tween_property(indicator, "modulate:a", 1.0 if b else 0.0, 0.5)
+
 @onready var indicator: Label = $Label
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var bestBody: Node3D = null
 	var bestBodyDist: float = INF
 	for body in frontArea.get_overlapping_bodies():
@@ -69,9 +82,9 @@ func _process(delta: float) -> void:
 				bestBody = body
 	
 	if bestBody:
-		indicator.show()
+		show_indicator(true)
 		nearestLoot = bestBody
-		indicator.global_position = get_viewport().get_camera_3d().unproject_position(bestBody.global_position)
+		indicator.global_position = get_viewport().get_camera_3d().unproject_position(bestBody.global_position) - Vector2(indicator.size.x * 0.5, 0.0)
 	else:
-		indicator.hide()
+		show_indicator(false)
 		nearestLoot = null

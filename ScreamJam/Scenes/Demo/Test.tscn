@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=37 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_kl7dy"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridEntityManager.gd" id="7_dmy4d"]
 [ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="7_wwkf4"]
 [ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="9_373d5"]
+[ext_resource type="Shader" path="res://Scenes/Menu/PauseText.gdshader" id="10_3ib1l"]
 [ext_resource type="PackedScene" uid="uid://d06t6b7e04vba" path="res://Scenes/PlayerTools/TorchDrop.tscn" id="13_nudwx"]
 [ext_resource type="PackedScene" uid="uid://2hoedglenkg0" path="res://Scenes/Entity/DarkCube.tscn" id="14_t4dd1"]
 [ext_resource type="PackedScene" uid="uid://dwomyfeulccpb" path="res://Scenes/ZoneHandler/ZoneTrigger.tscn" id="15_88dqo"]
@@ -98,6 +99,13 @@ shader = ExtResource("2_4hhr2")
 shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_n5p6o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3m20t"]
+shader = ExtResource("10_3ib1l")
+shader_parameter/deform = 0.004
+
+[sub_resource type="LabelSettings" id="LabelSettings_klgfg"]
+font_size = 24
 
 [node name="Node3D" type="Node3D"]
 
@@ -2123,7 +2131,7 @@ attackComponent = NodePath("../AttackComponent")
 script = ExtResource("5_ccfrp")
 
 [node name="Label" type="Label" parent="Character/LootComponent"]
-visible = false
+material = SubResource("ShaderMaterial_3m20t")
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -2135,7 +2143,8 @@ offset_right = 20.0
 offset_bottom = -35.52
 grow_horizontal = 2
 grow_vertical = 0
-text = "Take"
+text = "Press MOUSE1 to pickup"
+label_settings = SubResource("LabelSettings_klgfg")
 
 [node name="AttackComponent" type="Node3D" parent="Character"]
 script = ExtResource("6_t6siv")
