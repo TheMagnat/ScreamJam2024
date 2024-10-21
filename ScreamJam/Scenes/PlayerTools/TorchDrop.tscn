@@ -24,12 +24,13 @@ shape = SubResource("BoxShape3D_twbx6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283, 0)
 cast_shadow = 0
 pixel_size = 0.001
-billboard = 2
 shaded = true
+alpha_cut = 1
+alpha_scissor_threshold = 0.1
 texture = ExtResource("3_snof7")
 
 [node name="Flame" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.280494, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.280494, 0.00482732)
 material_override = ExtResource("4_nllij")
 pixel_size = 0.001
 billboard = 1
