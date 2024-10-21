@@ -83,8 +83,8 @@ func _ready() -> void:
 
 func generateMap() -> void:
 	groundMesh.size = Vector2(gridSpace, gridSpace)
-	groundMesh.subdivide_depth = 16.0
-	groundMesh.subdivide_width = 16.0
+	groundMesh.subdivide_depth = 16
+	groundMesh.subdivide_width = 16
 	groundMesh.custom_aabb = AABB(Vector3(-gridSpace / 2.0, 0.0, -gridSpace / 2.0), Vector3(gridSpace, 3.0, gridSpace))
 	
 	

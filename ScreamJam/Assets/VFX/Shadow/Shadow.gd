@@ -48,11 +48,11 @@ func _ready() -> void:
 	if autoUvScaler: updateScaler()
 	updateTexture()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if autoUvScaler: updateScaler()
 
 func updateTexture() -> void:
-	var aspectRatio = material.get_shader_parameter("aspectRatio")
+	#var aspectRatio = material.get_shader_parameter("aspectRatio")
 	
 	#noiseTexture.width *= aspectRatio.x
 	noiseTexture.height = noiseHeight

@@ -58,5 +58,5 @@ func attack():
 	
 	
 	
-func attackFinished(event):
+func attackFinished(_event):
 	inAttackAnimation = false

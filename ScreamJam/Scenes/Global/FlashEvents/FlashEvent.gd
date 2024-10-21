@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 		#print("Proba: ", currentProbability, " my rand: ", randValue)
 
 func fireEvent():
-	var randValue: float = randf()
+	#var randValue: float = randf()
 	events.pick_random().call()
 
 
@@ -80,7 +80,7 @@ func distortY():
 func inversedGrid():
 	pass
 
-func getSpawnPosition(dist: float, angle: float) -> Vector3:
+func getSpawnPosition(dist: float, _angle: float) -> Vector3:
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	var spawnDirection: Vector3 = -camera.global_transform.basis.z
 	spawnDirection.y = 0.0

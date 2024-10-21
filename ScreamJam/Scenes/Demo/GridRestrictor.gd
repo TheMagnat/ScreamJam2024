@@ -59,7 +59,7 @@ func deactivate():
 func getFrontPosition() -> Vector2i:
 	return gridToken.goalPosition + Vector2i(Vector2(0, -1.0).rotated(2 * PI - cameraRotationRestrictor.goalRotation ).round())
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not gridToken.isFree:
 		if (not inMovement or reachedGoal) and not character.locked:
 			var directionVector: Vector2 = Input.get_vector("Left", "Right", "Up", "Down")

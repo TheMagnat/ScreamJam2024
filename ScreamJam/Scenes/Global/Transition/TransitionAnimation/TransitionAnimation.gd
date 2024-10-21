@@ -4,11 +4,11 @@ signal finished
 
 @export var animationName: String
 
-func setParameters(parameters: Array) -> void:
+func setParameters(_parameters: Array) -> void:
 	pass
 
-func playIn(duration: float) -> void:
+func playIn(_duration: float) -> void:
 	pass
 	
-func playOut(duration: float) -> void:
+func playOut(_duration: float) -> void:
 	pass
