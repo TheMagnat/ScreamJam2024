@@ -10,6 +10,7 @@ extends Control
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	PauseMenu.enable(false)
+	Ambience.stop_ambience()
 	
 	animationPlayer.play("SplashGlitchIn")
 	animationPlayer.animation_finished.connect(animationFinished)

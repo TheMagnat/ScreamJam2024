@@ -12,6 +12,7 @@ func _ready() -> void:
 	RenderingServer.global_shader_parameter_set("wall_distort", 0.0)
 	RenderingServer.global_shader_parameter_set("breathing", 0.0)
 	$CanvasLayer/Tutorial.hide()
+	Ambience.stop_ambience()
 	
 	var t := create_tween()
 	t.tween_callback($intro.play)

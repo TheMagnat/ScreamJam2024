@@ -31,6 +31,8 @@ const TEXTS := [
 
 func _ready():
 	PauseMenu.enable(false)
+	Ambience.start_ambience()
+	Ambience.stop_ambience()
 	
 	LABEL_TEMPLATE.modulate.a = 0.0
 	$VBoxContainer/HBoxContainer/Label.queue_free()
