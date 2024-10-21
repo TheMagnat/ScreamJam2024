@@ -95,7 +95,7 @@ func getSpawnPosition(dist: float, angle: float) -> Vector3:
 
 ## Cool - Should be low proba
 func spawnEye():
-	if !Global.player or Global.player.locked:
+	if Global.player.locked:
 		return
 	
 	eventInProgress = true
@@ -121,7 +121,7 @@ func spawnEye():
 	newEye.global_position = spawnPosition
 
 func spawnFarEntity():
-	if !Global.player or Global.player.locked:
+	if Global.player.locked:
 		return
 	
 	eventInProgress = true
