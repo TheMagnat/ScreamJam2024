@@ -104,7 +104,7 @@ func move(a: float):
 	var dir : Vector3 = Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * $MapHolder/Map.gridSpace
 	var expectedPos : Vector3 = ($Camera3D.position + dir)/$MapHolder/Map.gridSpace
 	
-	if !$MapHolder/Map.isAvailable(Vector2i(expectedPos.x + signf(expectedPos.x) * 0.1, expectedPos.z + signf(expectedPos.z) * 0.1)):
+	if !$MapHolder/Map.isAvailable(Vector2i(int(roundf(expectedPos.x)), int(roundf(expectedPos.z)))):
 		return
 	
 	moving = true

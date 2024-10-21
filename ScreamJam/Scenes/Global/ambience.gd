@@ -51,5 +51,5 @@ func stop_ambience():
 		current_ambience = null
 	
 	if next_ambience_timer and next_ambience_timer.time_left > 0.0:
-		next_ambience_timer.queue_free()
+		next_ambience_timer.timeout.disconnect(start_ambience)
 		next_ambience_timer = null
