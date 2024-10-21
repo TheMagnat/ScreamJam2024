@@ -1,6 +1,7 @@
-[gd_scene load_steps=52 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=54 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="Script" path="res://addons/fpc/BodyShadow.gd" id="2_5o4fy"]
 [ext_resource type="Shader" path="res://addons/fpc/character.gdshader" id="3_pevgd"]
 [ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
@@ -114,6 +115,10 @@ _data = {
 "RESET": SubResource("Animation_j8cx7"),
 "crouch": SubResource("Animation_5ec5e")
 }
+
+[sub_resource type="SphereMesh" id="SphereMesh_2oomd"]
+radius = 0.41
+height = 1.295
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f85ux"]
 size = Vector3(2, 2, 5.03491)
@@ -454,6 +459,13 @@ libraries = {
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
+[node name="BodyShadow" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+cast_shadow = 3
+mesh = SubResource("SphereMesh_2oomd")
+skeleton = NodePath("../..")
+script = ExtResource("2_5o4fy")
+
 [node name="FrontRangeArea" type="Area3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9034)
 collision_layer = 0
@@ -467,7 +479,7 @@ shape = SubResource("BoxShape3D_f85ux")
 transform = Transform3D(0.14436, 0, -0.989524, 0, 1, 0, 0.989525, 0, 0.14436, 0.379, -0.367, -0.462)
 
 [node name="LeftHandPosition" type="Marker3D" parent="Head"]
-transform = Transform3D(0.520607, 7.38794e-09, 0.853795, -0.0909057, 0.994316, 0.0554302, -0.848943, -0.106472, 0.517648, -0.531637, -0.476176, -0.569411)
+transform = Transform3D(0.374066, -0.029785, 0.926923, -0.150478, 0.984291, 0.0923546, -0.915112, -0.174029, 0.363707, -0.510882, -0.484746, -0.543471)
 
 [node name="Camera" type="Camera3D" parent="Head"]
 far = 30.0

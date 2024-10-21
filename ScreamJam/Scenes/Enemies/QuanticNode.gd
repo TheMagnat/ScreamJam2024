@@ -19,7 +19,7 @@ func _ready() -> void:
 	target = Global.player
 	
 	foundTimer = Timer.new()
-	foundTimer.wait_time = 10.0
+	foundTimer.wait_time = 1.0
 	foundTimer.one_shot = true
 	foundTimer.timeout.connect(foundTimeOut)
 	add_child(foundTimer)
@@ -56,7 +56,7 @@ func stopedWatching():
 		return
 	
 	var pos: Vector3 = Global.map.getRandomPos()
-	while get_viewport().get_camera_3d().is_position_in_frustum(pos):
+	while get_viewport().get_camera_3d().is_position_in_frustum(pos) or pos.distance_to(target.global_position) < 3.0:
 		pos = Global.map.getRandomPos()
 	
 	# Random vertical

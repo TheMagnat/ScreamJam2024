@@ -1,13 +1,108 @@
-[gd_scene load_steps=7 format=3 uid="uid://prjptwmbf5os"]
+[gd_scene load_steps=12 format=3 uid="uid://prjptwmbf5os"]
 
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridMob.gd" id="1_lcm6q"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridHandler.gd" id="2_nli8t"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="3_gsfjl"]
 [ext_resource type="Script" path="res://Scenes/Enemies/PlayerDetector.gd" id="4_ijdes"]
+[ext_resource type="Texture2D" uid="uid://biie4tip1d5ul" path="res://Assets/Mobs/Squeletton/squelette.png" id="5_1ibmk"]
+[ext_resource type="Script" path="res://Scenes/Enemies/GridMobModel.gd" id="6_wdn7i"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lprpi"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_n3rnr"]
+[sub_resource type="Shader" id="Shader_8qlmt"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, depth_prepass_alpha;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_disable;
+uniform float alpha_scissor_threshold : hint_range(0.0, 1.0, 0.001);
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform float hit: hint_range(0.0, 1.0) = 0.0;
+uniform float death: hint_range(0.0, 1.0) = 0.0;
+
+uniform sampler2D noise;
+global uniform float sanity;
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+	UV.x += sin(sin((death + hit) * PI) * 20.0) * 0.01;
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+	
+	vec2 centerUv = UV * 2.0 - 1.0;
+	
+	float noiseValue = texture(noise, UV * 10.0 + vec2(0.0, 1.0) * TIME * 0.5).r;
+	base_uv += noiseValue * 0.01 * (1.0 + sanity * 10.0);
+	base_uv -= normalize(centerUv) * sin(hit * PI) * 0.05;
+	
+	
+	
+	//base_uv += (1.0 - sin(hit * PI));
+	
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	ALPHA *= albedo.a * albedo_tex.a;
+	//ALPHA_SCISSOR_THRESHOLD = alpha_scissor_threshold;
+	
+	//float noiseValue2 = texture(noise, UV * 2.0 + vec2(0.0, 1.0) * TIME * 3.0).r;
+	//ALPHA -= 3.0 * noiseValue2 * sin(hit * PI);
+	
+	ALPHA *= 1.0 - death;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fv21i"]
+frequency = 0.0026
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7fxpa"]
+seamless = true
+noise = SubResource("FastNoiseLite_fv21i")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xrqmh"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_8qlmt")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scissor_threshold = 0.2
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/hit = 0.0
+shader_parameter/death = 0.0
+shader_parameter/texture_albedo = ExtResource("5_1ibmk")
+shader_parameter/noise = SubResource("NoiseTexture2D_7fxpa")
 
 [node name="GridMob" type="StaticBody3D" groups=["ClassicEntity"]]
 collision_layer = 4
@@ -20,10 +115,6 @@ shape = SubResource("CapsuleShape3D_lprpi")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_n3rnr")
-
 [node name="GridHandler" type="Node" parent="."]
 script = ExtResource("2_nli8t")
 
@@ -33,3 +124,28 @@ script = ExtResource("3_gsfjl")
 [node name="PlayerDetector" type="Node3D" parent="." node_paths=PackedStringArray("nodeToUpdate")]
 script = ExtResource("4_ijdes")
 nodeToUpdate = NodePath("../GridHandler")
+
+[node name="MobModel" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7674, 0)
+material_override = SubResource("ShaderMaterial_xrqmh")
+pixel_size = 0.003
+shaded = true
+double_sided = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.2
+texture = ExtResource("5_1ibmk")
+script = ExtResource("6_wdn7i")
+
+[node name="LeftEye" type="OmniLight3D" parent="MobModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.497, 0.531605, 0)
+light_energy = 2.0
+light_size = 0.02
+omni_range = 0.5
+omni_attenuation = 1.202
+
+[node name="RightEye" type="OmniLight3D" parent="MobModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.160281, 0.531603, 0)
+light_energy = 2.0
+light_size = 0.02
+omni_range = 0.5
+omni_attenuation = 1.202

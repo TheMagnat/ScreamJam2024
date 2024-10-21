@@ -7,12 +7,17 @@ class_name ClassicEntity extends Node3D
 @export var sanityDmg: float = 20.0
 @export var health: float = 30.0:
 	set(value):
+		if dead: return
 		print("Mob took damages: ", health - value)
-		onDmg(health - value)
 		health = value
 		if health <= 0:
 			print("LOL MOB DEAD")
+			dead = true
 			onDeath()
+		else:
+			onDmg(health - value)
+
+var dead: bool = false
 
 var dmgTween: Tween
 func onDmg(dmgValue: float):

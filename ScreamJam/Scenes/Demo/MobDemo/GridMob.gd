@@ -20,10 +20,15 @@ func _ready() -> void:
 	
 	GridEntityManager.newEntity(self)
 
-
+@onready var mobModel: GridModel = $MobModel
 func onDeath() -> void:
 	GridEntityManager.entityDied(self)
-	queue_free()
+	gridHandler.process_mode = Node.PROCESS_MODE_DISABLED
+	mobModel.die()
+
+func onDmg(dmgs: float):
+	mobModel.takeHit()
+	
 
 func step():
 	gridHandler.step()

@@ -36,7 +36,7 @@ script = ExtResource("1_bttxp")
 [node name="Panel" type="PanelContainer" parent="."]
 self_modulate = Color(1, 1, 1, 0.588235)
 material = ExtResource("3_rgiot")
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2

@@ -4,6 +4,7 @@ class_name LightSource extends Node3D
 var isOn: bool = true
 
 @export var omniLight: OmniLight3D
+@export var flame: Sprite3D
 
 var noise := FastNoiseLite.new()
 @onready var originalEnergy: float = omniLight.light_energy
@@ -31,3 +32,6 @@ func blowTorch():
 	blowTween = create_tween().set_ease(Tween.EASE_OUT_IN).set_trans(Tween.TRANS_BOUNCE)
 	blowTween.tween_property(omniLight, "light_energy", 0.0, 1.5)
 	blowTween.tween_property(self, "isOn", false, 0.0)
+	
+	var blownTwoTween = create_tween().set_ease(Tween.EASE_OUT_IN).set_trans(Tween.TRANS_SINE)
+	blownTwoTween.tween_property(flame.material_override, "shader_parameter/isOn", 0.0, 1.75)
