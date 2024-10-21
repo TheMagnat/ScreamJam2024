@@ -1,5 +1,5 @@
 @tool
-class_name Map extends Node3D
+class_name Map extends StaticBody3D
 
 const CubeMesh := preload("res://Assets/SimpleCube.obj")
 #const DistoredWallMaterial := preload("res://Scenes/Map/DistortedWall.tres")
@@ -140,7 +140,7 @@ func createCellWall(elementPosition: Vector3, side: WallType):
 	newWallMeshInstance.scale = Vector3(gridSpace, gridSpace, thickness)
 	newWallMeshInstance.material_override = DistoredWallMaterial
 	add_child(newWallMeshInstance)
-	newWallMeshInstance.owner = get_parent().get_parent()
+	newWallMeshInstance.owner = self
 	
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
@@ -149,7 +149,7 @@ func createCellWall(elementPosition: Vector3, side: WallType):
 	newCollisionShape.rotation = rot
 	
 	add_child(newCollisionShape)
-	newCollisionShape.owner = get_parent().get_parent()
+	newCollisionShape.owner = self
 
 func createSceneFullWall(elementPosition: Vector3):
 	var positionOffset := Vector3(0.0, gridSpace / 2.0, 0.0)
@@ -161,7 +161,7 @@ func createSceneFullWall(elementPosition: Vector3):
 	newWallMesh.scale = Vector3(gridSpace, gridSpace, gridSpace)
 	
 	add_child(newWallMesh)
-	newWallMesh.owner = get_parent().get_parent()
+	newWallMesh.owner = self
 	
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
@@ -169,7 +169,7 @@ func createSceneFullWall(elementPosition: Vector3):
 	newCollisionShape.position = elementPosition + positionOffset
 	
 	add_child(newCollisionShape)
-	newCollisionShape.owner = get_parent().get_parent()
+	newCollisionShape.owner = self
 
 enum CellType {
 	Empty = 0,
@@ -214,7 +214,7 @@ func createCell(x: int, y: int):
 	newGroundMeshInstance.position = elementPosition
 	newGroundMeshInstance.material_override = GroundMaterial
 	add_child(newGroundMeshInstance)
-	newGroundMeshInstance.owner = get_parent().get_parent()
+	newGroundMeshInstance.owner = self
 	
 	# Create collision Shape
 	var newCollisionShape := CollisionShape3D.new()
@@ -222,7 +222,7 @@ func createCell(x: int, y: int):
 	newCollisionShape.position = elementPosition - Vector3(0.0, thickness / 2.0, 0.0)
 	
 	add_child(newCollisionShape)
-	newCollisionShape.owner = get_parent().get_parent()
+	newCollisionShape.owner = self
 	
 	if ceil:
 		# Create ceil Mesh
@@ -234,14 +234,14 @@ func createCell(x: int, y: int):
 		newCeilMeshInstance.rotation = Vector3(PI, 0.0, 0.0)
 		newCeilMeshInstance.material_override = CeilMaterial
 		add_child(newCeilMeshInstance)
-		newCeilMeshInstance.owner = get_parent().get_parent()
+		newCeilMeshInstance.owner = self
 		
 		var newFullCeilMeshInstance := MeshInstance3D.new()
 		newFullCeilMeshInstance.mesh = ceilMesh
 		newFullCeilMeshInstance.position = ceilPosition
 		newFullCeilMeshInstance.rotation = Vector3(PI, 0.0, 0.0)
 		add_child(newFullCeilMeshInstance)
-		newFullCeilMeshInstance.owner = get_parent().get_parent()
+		newFullCeilMeshInstance.owner = self
 		
 		# Create collision Shape
 		#var newCeilShape := CollisionShape3D.new()

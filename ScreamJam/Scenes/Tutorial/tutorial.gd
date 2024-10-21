@@ -101,10 +101,10 @@ func move_step(t: Tween, dir: Vector3):
 
 var moving := false
 func move(a: float):
-	var dir : Vector3 = Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * $MapHolder/Map.gridSpace
-	var expectedPos : Vector3 = ($Camera3D.position + dir)/$MapHolder/Map.gridSpace
+	var dir : Vector3 = Vector3(-sin($Camera3D.rotation.y + a), 0.0, -cos($Camera3D.rotation.y + a)) * $MapHolder/TutorialMap.gridSpace
+	var expectedPos : Vector3 = ($Camera3D.position + dir)/$MapHolder/TutorialMap.gridSpace
 	
-	if !$MapHolder/Map.isAvailable(Vector2i(int(roundf(expectedPos.x)), int(roundf(expectedPos.z)))):
+	if !$MapHolder/TutorialMap.isAvailable(Vector2i(int(roundf(expectedPos.x)), int(roundf(expectedPos.z)))):
 		return
 	
 	moving = true

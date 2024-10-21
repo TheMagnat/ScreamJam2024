@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=4 uid="uid://dla7e8n5xwb8p"]
 
-[ext_resource type="PackedScene" uid="uid://bn6kqsd0ifw51" path="res://Scenes/Map/map.tscn" id="1_2nps0"]
+[ext_resource type="PackedScene" uid="uid://dtr0i11vgkia1" path="res://Scenes/Map/FullMap/DemoHoleMap.tscn" id="1_5xh7a"]
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/DaggerDrop.tscn" id="2_4sh3e"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_y0sav"]
 [ext_resource type="Script" path="res://Scenes/Player/ActionComponent.gd" id="4_x0ck7"]
@@ -82,18 +82,17 @@ camera_attributes = SubResource("CameraAttributesPractical_bwaw0")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_dqf6q")
 
-[node name="Map" parent="NavigationRegion3D" instance=ExtResource("1_2nps0")]
-mapFilePath = "res://Scenes/Map/MapFile/HoleTest.txt"
+[node name="DemoHoleMap" parent="NavigationRegion3D" instance=ExtResource("1_5xh7a")]
 
-[node name="Hole" type="StaticBody3D" parent="NavigationRegion3D/Map"]
+[node name="Hole" type="StaticBody3D" parent="NavigationRegion3D/DemoHoleMap"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5, 0, 10)
 
-[node name="HoleMesh" type="MeshInstance3D" parent="NavigationRegion3D/Map/Hole"]
+[node name="HoleMesh" type="MeshInstance3D" parent="NavigationRegion3D/DemoHoleMap/Hole"]
 material_override = ExtResource("11_wwysf")
 mesh = SubResource("ArrayMesh_0fybf")
 skeleton = NodePath("../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Map/Hole"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DemoHoleMap/Hole"]
 shape = SubResource("ConcavePolygonShape3D_ibknx")
 
 [node name="Dagger" parent="." instance=ExtResource("2_4sh3e")]
@@ -104,7 +103,7 @@ transform = Transform3D(-0.0736385, 0, 0.997285, 0, 1, 0, -0.997285, 0, -0.07363
 
 [node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("3_y0sav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.838799, 0)
-map = NodePath("../NavigationRegion3D/Map")
+map = NodePath("../NavigationRegion3D/DemoHoleMap")
 environment = NodePath("../WorldEnvironment")
 
 [node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]
