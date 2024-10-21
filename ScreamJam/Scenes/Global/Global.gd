@@ -4,6 +4,7 @@ extends Node
 var player: Character
 var map: Map
 var inGame: bool = false
+var debug := true
 
 
 func get_action_key(action: String) -> String:

@@ -107,14 +107,14 @@ func _physics_process(delta: float) -> void:
 			character.handled_sprint = true
 			#character.handle_movement(delta, Vector2(directionToGoal.x, directionToGoal.z))
 			
-			if Debug.debug:
+			if Global.debug:
 				debugPanel.add_property("Direction", directionToGoal, 7)
 				debugPanel.add_property("Distance to Goal", gridToken.goalWorldPosition.distance_to(positionNoY), 8)
 				
 			#if gridToken.goalWorldPosition.distance_to(positionNoY) < 0.1:
 				#reachedGoal = true
 				
-	if Debug.debug:
+	if Global.debug:
 		debugPanel.add_property("InMovement", inMovement, 4)
 		debugPanel.add_property("Current Position", character.position, 5)
 		debugPanel.add_property("Goal Position", gridToken.goalWorldPosition, 6)
