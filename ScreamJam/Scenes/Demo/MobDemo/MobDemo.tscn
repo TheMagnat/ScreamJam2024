@@ -18,21 +18,44 @@
 [ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="12_qsvwo"]
 [ext_resource type="PackedScene" uid="uid://d06t6b7e04vba" path="res://Scenes/PlayerTools/TorchDrop.tscn" id="13_kb1tu"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bvl1m"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_745sf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_qtopx"]
-sky_material = SubResource("ProceduralSkyMaterial_bvl1m")
+[sub_resource type="Sky" id="Sky_pu2v2"]
+sky_material = SubResource("ProceduralSkyMaterial_745sf")
 
-[sub_resource type="Environment" id="Environment_5624g"]
+[sub_resource type="Environment" id="Environment_smt6r"]
 background_mode = 2
-sky = SubResource("Sky_qtopx")
+sky = SubResource("Sky_pu2v2")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.08
 tonemap_mode = 2
-ssil_enabled = true
+tonemap_exposure = 2.0
+ssao_enabled = true
 glow_enabled = true
+glow_intensity = 2.0
+glow_blend_mode = 1
+fog_mode = 1
+fog_light_color = Color(0, 0, 1, 1)
+fog_light_energy = 16.0
+fog_sun_scatter = 1.0
+fog_density = 1.0
+fog_aerial_perspective = 1.0
+fog_height = 1024.0
+fog_depth_begin = 3.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.305
+volumetric_fog_length = 42.0
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_beql3"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_y5hfd"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 0.01
+dof_blur_near_transition = -1.0
+dof_blur_amount = 0.2
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_dqf6q"]
 vertices = PackedVector3Array(28, 5.5, -2, 28, 5.5, 2.25, 32, 5.5, 2.25, 32, 5.5, -2, -1.75, 0.5, 3.5, 2, 0.5, 3.75, 2.25, 0.5, 2, -1.75, 0.5, -1.75, 6.5, 0.5, 2, 6.75, 0.5, -1.75, 8.25, 0.5, 2.25, 17.25, 0.5, 7, 18.75, 0.5, 7, 18.5, 0.5, -1.75, 8.25, 0.5, 7.5, 17, 0.5, 7.75, 23, 0.5, 7, 23.25, 0.5, 7.5, 27.5, 0.5, 3.25, 27, 0.5, 3, 27, 0.5, -1.75, 3, 5.5, 3, 3, 5.5, 7.25, 7.25, 5.5, 7.25, 7.25, 5.5, 3, 33, 5.5, 3, 33, 5.5, 7.25, 37, 5.5, 7.25, 37, 5.5, 3, 23.25, 0.5, 12.75, 22.25, 0.5, 13.25, 22.5, 0.5, 17, 32.25, 0.5, 8.25, 32, 0.5, 3.25, 37, 0.5, 17, 37, 0.5, 8.25, 2.5, 0.5, 12, 2.75, 0.5, 8.25, 2, 0.5, 8, -1.75, 0.5, 12, 3.25, 0.5, 12.25, 7.75, 0.5, 8.25, 8.25, 0.5, 17.5, 17, 0.5, 13, 8, 0.5, 17, 3.25, 0.5, 17, 17.5, 0.5, 13.25, 18, 5.5, 8, 18, 5.5, 12.25, 22.25, 5.5, 12.25, 22.25, 5.5, 8, -2, 5.5, 13, -2, 5.5, 17, 2.25, 5.5, 17, 2.25, 5.5, 13, 7.75, 0.5, 23.25, 6.25, 0.5, 23.25, 6.5, 0.5, 27, 22, 0.5, 17.25, 8.25, 0.5, 22.75, 13, 0.5, 27, 13.25, 0.5, 27.75, 22, 0.5, 27.5, 3, 5.5, 18, 3, 5.5, 22.25, 7.25, 5.5, 22.25, 7.25, 5.5, 18, 23, 5.5, 18, 23, 5.5, 27.25, 27, 5.5, 27.25, 27, 5.5, 18, -1.75, 0.5, 28.5, 2, 0.5, 28.75, 2.25, 0.5, 27, -1.75, 0.5, 23.25, 12.75, 0.5, 33.25, 11.25, 0.5, 33.25, 11.5, 0.5, 37, 13.25, 0.5, 32.75, 32, 0.5, 37, 32, 0.5, 33.25, 27, 0.5, 33, 22.25, 0.5, 28.25, 27, 0.5, 28.25, 3, 5.5, 28, 3, 5.5, 32.25, 12.25, 5.5, 32.25, 12.25, 5.5, 28, 28, 5.5, 28, 28, 5.5, 32.25, 32, 5.5, 32.25, 32, 5.5, 28, 3.5, 0.5, 37, 3.75, 0.5, 33.25, 2, 0.5, 33, -1.75, 0.5, 37)
@@ -59,13 +82,9 @@ size = Vector3(5, 5, 5)
 
 [node name="MobDemo" type="Node3D"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-shadow_enabled = true
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_5624g")
-camera_attributes = SubResource("CameraAttributesPractical_beql3")
+environment = SubResource("Environment_smt6r")
+camera_attributes = SubResource("CameraAttributesPractical_y5hfd")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_dqf6q")
@@ -1254,6 +1273,7 @@ script = ExtResource("3_b7dkc")
 [node name="GridRestrictor" type="Node" parent="Character" node_paths=PackedStringArray("gridToken")]
 script = ExtResource("4_5tjqd")
 gridToken = NodePath("../GridToken")
+rotateCameraOnMove = true
 
 [node name="GridMob" parent="." node_paths=PackedStringArray("map") instance=ExtResource("7_x7mii")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3784, 0, 0)
@@ -1273,4 +1293,4 @@ transform = Transform3D(-0.910763, 0, -0.41293, 0, 1, 0, 0.41293, 0, -0.910763, 
 transform = Transform3D(0.831091, 0, 0.556136, 0, 1, 0, -0.556136, 0, 0.831091, 6.37936, 1.92654, 14.2016)
 
 [node name="Torch" parent="." instance=ExtResource("13_kb1tu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.159165, 0.803746, -1.67067)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.159165, 0.803746, 11.0524)
