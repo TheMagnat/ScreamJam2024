@@ -309,10 +309,10 @@ func loadMap(path: String) -> void:
 	for row in mapDataArray:
 		for element in row:
 			if(element == CellType.Normal || element == CellType.MobSpawn || element == CellType.SpawnPointZ1 || element == CellType.SpawnPointZ2 || element == CellType.SpawnPointZ3):
-				element ^ CellType.AvailableFlag
-				element ^ CellType.DrawableFlag
+				element ^= CellType.AvailableFlag
+				element ^= CellType.DrawableFlag
 			if(element == CellType.Hole):
-				element ^ CellType.DrawableFlag
+				element ^= CellType.DrawableFlag
 			mapData.append(element)
 		
 		for i in range(row.size(), rowLength):
