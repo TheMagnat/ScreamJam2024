@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Menu/pause_menu.gd" id="1_bttxp"]
 [ext_resource type="Theme" uid="uid://bci64pmwpnu56" path="res://Scenes/Menu/PauseMenuTheme.tres" id="1_clyq6"]
 [ext_resource type="Material" uid="uid://b156jt6pfgrv" path="res://Scenes/Menu/PauseMenuPanelShaderMaterial.tres" id="3_rgiot"]
+[ext_resource type="Shader" path="res://Scenes/Menu/PauseText.gdshader" id="4_jbo6j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2ywvt"]
 font_size = 38
@@ -20,15 +21,9 @@ font_color = Color(0.588235, 0.588235, 0.588235, 1)
 font_size = 38
 font_color = Color(0.588235, 0.588235, 0.588235, 1)
 
-[sub_resource type="Shader" id="Shader_srla2"]
-code = "shader_type canvas_item;
-
-void fragment() {
-	COLOR.a *= texture(TEXTURE, UV + cos(UV.y * 100.0 + TIME * 3.0 + UV.x * 100.0) * 0.002).a;
-}"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8p25t"]
-shader = SubResource("Shader_srla2")
+shader = ExtResource("4_jbo6j")
+shader_parameter/deform = 0.002
 
 [sub_resource type="LabelSettings" id="LabelSettings_1kfop"]
 font_size = 24
