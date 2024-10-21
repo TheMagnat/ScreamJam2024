@@ -7,6 +7,6 @@ class_name Eye extends Node3D
 func _ready() -> void:
 	quanticNode.oneShot = oneShot
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	global_rotation.y = get_viewport().get_camera_3d().global_rotation.y
 	

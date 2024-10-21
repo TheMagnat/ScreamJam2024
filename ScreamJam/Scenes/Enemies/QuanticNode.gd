@@ -31,8 +31,7 @@ func foundTimeOut():
 	stopedWatching()
 
 var isWatching: bool = false
-func _process(delta: float) -> void:
-	
+func _process(_delta: float) -> void:
 	if target.sanity <= 0.0 and isWatching:
 		return
 	

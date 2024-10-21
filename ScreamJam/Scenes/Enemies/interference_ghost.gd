@@ -32,7 +32,7 @@ func _physics_process(delta: float):
 	player.damageSanity(damage(delta, DAMAGE_SANITY_DISTANCE, DPS_SANITY), 0.25, 0.5)
 	player.damageHealth(damage(delta, DAMAGE_HEALTH_DISTANCE, DPS_HEALTH), true)
 
-func _process(delta:float):
+func _process(_delta:float):
 	if player == null:
 		return
 	

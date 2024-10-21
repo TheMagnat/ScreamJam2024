@@ -5,14 +5,14 @@ class_name HypnotizeNode extends Node3D
 @onready var player: Character = Global.player
 
 var locked: bool = false
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if quanticNode.isWatching:
 		if not locked:
 			lock()
 	elif locked:
 		unlock()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if locked:
 		player.HEAD.global_transform = player.HEAD.global_transform.interpolate_with(player.HEAD.global_transform.looking_at(global_position), 0.01)
 

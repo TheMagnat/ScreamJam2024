@@ -20,7 +20,7 @@ class_name ClassicEntity extends Node3D
 var dead: bool = false
 
 var dmgTween: Tween
-func onDmg(dmgValue: float):
+func onDmg(_dmgValue: float):
 	if dmgTween: dmgTween.kill()
 	
 	dmgTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
