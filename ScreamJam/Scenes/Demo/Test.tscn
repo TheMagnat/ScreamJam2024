@@ -117,7 +117,7 @@ navigation_mesh = SubResource("NavigationMesh_gxk6b")
 
 [node name="Map" parent="NavigationRegion3D" instance=ExtResource("1_kl7dy")]
 mapFilePath = "res://Scenes/Map/MapFile/map.txt"
-availableSpawns = Array[Vector3]([Vector3(0, 1, 0)])
+availableSpawns = [Vector3(0, 1, 0)]
 availablePos = PackedVector3Array(0, 0, 0, 5, 0, 0, 10, 0, 0, 15, 0, 0, 20, 0, 0, 25, 0, 0, 0, 0, 5, 10, 0, 5, 20, 0, 5, 0, 0, 10, 5, 0, 10, 10, 0, 10, 15, 0, 10, 20, 0, 10, 35, 0, 10, 40, 0, 10, 45, 0, 10, 5, 0, 15, 15, 0, 15, 35, 0, 15, 40, 0, 15, 45, 0, 15, 5, 0, 20, 15, 0, 20, 35, 0, 20, 40, 0, 20, 5, 0, 25, 15, 0, 25, 35, 0, 25, 40, 0, 25, 5, 0, 30, 10, 0, 30, 15, 0, 30, 35, 0, 30, 0, 0, 35, 10, 0, 35, 35, 0, 35, 40, 0, 35, 0, 0, 40, 10, 0, 40, 40, 0, 40, 0, 0, 45, 10, 0, 45, 40, 0, 45, 0, 0, 50, 5, 0, 50, 10, 0, 50, 15, 0, 50, 20, 0, 50, 25, 0, 50, 30, 0, 50, 35, 0, 50, 40, 0, 50, 0, 0, 55, 10, 0, 55, 0, 0, 60, 10, 0, 60, 10, 0, 65, 10, 0, 70, 10, 0, 75, 10, 0, 80, 10, 0, 85, 5, 0, 90, 10, 0, 90, 15, 0, 90, 20, 0, 90)
 
 [node name="@MeshInstance3D@194968" type="MeshInstance3D" parent="NavigationRegion3D/Map"]
