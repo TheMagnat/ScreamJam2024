@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-var pauseMenuPath = "res://Scenes/Menu/PauseMenu.tscn"
-
 var resolutions = {
 	"2560x1440": Vector2i(2560,1440),
 	"1920x1080": Vector2i(1920,1080),
@@ -16,14 +14,13 @@ var resolutions = {
 	"640x480" : Vector2i(640,480),
 }
 
-@onready var Menu = $PauseMenu
+@onready var Menu = preload("res://Scenes/Menu/PauseMenu.tscn").instantiate()
 
 func _ready():
 	layer = 120
 	process_mode = ProcessMode.PROCESS_MODE_ALWAYS
-	var pauseMenuScene = load(pauseMenuPath).instantiate()
-	add_child(pauseMenuScene)
-	pauseMenuScene.hide()
+	add_child(Menu)
+	Menu.hide()
 
 func set_menu(enabled: bool):
 	set_process_input(enabled)
