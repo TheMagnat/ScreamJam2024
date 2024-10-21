@@ -194,7 +194,7 @@ func spawn():
 	death_tween.tween_property($PostProcess/Label, "modulate:a", 0.0, 0.5)
 	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 0.0, 0.5)
 	
-	var newPosition := map.availableSpawns.pick_random()
+	var newPosition = map.availableSpawns[GlobalZoneHandler.playerBestZone].pick_random()
 	global_position = newPosition
 	$GridToken.setInitialPosition()
 
