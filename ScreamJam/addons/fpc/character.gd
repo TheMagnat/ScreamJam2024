@@ -587,7 +587,7 @@ func _process(delta):
 	RenderingServer.global_shader_parameter_set("wall_distort", sqrt(sanity01))
 	RenderingServer.global_shader_parameter_set("sanity", sanity01)
 	
-	if Debug.debug:
+	if Global.debug:
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("Sanity", sanity, 4)
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("sanity_display", sanity_display, 5)
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("Health", health, 6)
