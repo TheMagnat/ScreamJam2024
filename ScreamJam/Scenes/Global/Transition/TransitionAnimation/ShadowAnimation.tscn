@@ -56,5 +56,6 @@ script = ExtResource("1_1tqmx")
 
 [node name="Shadow" parent="." instance=ExtResource("2_sayru")]
 layout_mode = 0
+mouse_filter = 2
 timeScale = 0.5
 SCALE_FACTOR = 2.5

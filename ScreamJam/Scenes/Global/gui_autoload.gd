@@ -18,12 +18,13 @@ var resolutions = {
 
 func _ready():
 	layer = 120
-	process_mode = ProcessMode.PROCESS_MODE_ALWAYS
 	add_child(Menu)
+	set_menu(true)
 	Menu.hide()
 
 func set_menu(enabled: bool):
 	set_process_input(enabled)
+	process_mode = ProcessMode.PROCESS_MODE_ALWAYS if enabled else ProcessMode.PROCESS_MODE_DISABLED
 	
 	if !enabled and Menu.visible:
 		Menu.show_menu()
