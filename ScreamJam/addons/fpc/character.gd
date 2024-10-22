@@ -170,6 +170,7 @@ func damageHealth(dmg: float, dot := false):
 var dead := false
 var death_tween: Tween
 
+var textId := 0
 const DEATH_TEXTS := [
 	"Nightmares don't always end by waking up",
 	"Death is everyone's destination. What if it didn't exist?",
@@ -183,8 +184,10 @@ func die():
 	
 	$PostProcess/Label.modulate.a = 0.0
 	$PostProcess/RespawnInfo.modulate.a = 0.0
-	$PostProcess/Label.text = DEATH_TEXTS.pick_random()
+	$PostProcess/Label.text = DEATH_TEXTS[textId]
 	$PostProcess/RespawnInfo.text = "\n\n\n\nPress %s to respawn" % Global.get_action_key("Blink")
+	
+	textId = (textId + 1) % DEATH_TEXTS.size()
 	
 	death_tween = create_tween()
 	death_tween.tween_property($PostProcess/Label, "modulate:a", 1.0, 40.0)
