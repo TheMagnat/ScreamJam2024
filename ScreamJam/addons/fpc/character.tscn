@@ -393,7 +393,7 @@ shader_parameter/damage = null
 code = "shader_type canvas_item;
 
 void vertex() {
-	VERTEX.y += cos(TIME * 1000.0 + VERTEX.x) * 0.5 + cos(TIME * 1.0 + VERTEX.x * 0.025) * 4.0;
+	VERTEX.y += cos(TIME * 1000.0 + VERTEX.x) * 1.0;
 }
 
 void fragment() {
