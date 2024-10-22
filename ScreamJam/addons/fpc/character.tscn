@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=68 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://addons/fpc/BodyShadow.gd" id="2_5o4fy"]
@@ -20,9 +20,14 @@
 [ext_resource type="AudioStream" uid="uid://bdxxaiuuiwrtm" path="res://Assets/SFX/sword/whoosh7.ogg" id="9_6at8m"]
 [ext_resource type="AudioStream" uid="uid://bcubc48ms1ral" path="res://Assets/SFX/steps/step_metal5.ogg" id="9_pa8pd"]
 [ext_resource type="AudioStream" uid="uid://cpb4pj767wos0" path="res://Assets/SFX/steps/step_metal6.ogg" id="10_kevp7"]
+[ext_resource type="AudioStream" uid="uid://qd4ppmstt71y" path="res://Assets/SFX/hit/flesh_hit1.ogg" id="10_ok4f1"]
+[ext_resource type="AudioStream" uid="uid://dnssph22d8qqg" path="res://Assets/SFX/hit/flesh_hit2.ogg" id="11_2rk8j"]
 [ext_resource type="AudioStream" uid="uid://c07pd1o735evd" path="res://Assets/SFX/steps/step_metal7.ogg" id="11_qlqt4"]
+[ext_resource type="AudioStream" uid="uid://uu3ovjojqhyp" path="res://Assets/SFX/hit/flesh_hit3.ogg" id="12_f0ajl"]
 [ext_resource type="AudioStream" uid="uid://bnkiomk5thbrg" path="res://Assets/SFX/steps/step_metal8.ogg" id="12_xtn5i"]
+[ext_resource type="AudioStream" uid="uid://dymprelngos7m" path="res://Assets/SFX/hit/flesh_hit4.ogg" id="13_jjv4w"]
 [ext_resource type="AudioStream" uid="uid://dim1vrsgtrfqm" path="res://Assets/SFX/steps/step_metal9.ogg" id="13_ktixa"]
+[ext_resource type="AudioStream" uid="uid://drm1udh7udke" path="res://Assets/SFX/hit/flesh_hit5.ogg" id="14_65yd6"]
 [ext_resource type="AudioStream" uid="uid://dcr0c1gfhke6w" path="res://Assets/SFX/steps/step_metal10.ogg" id="14_vrhjc"]
 [ext_resource type="AudioStream" uid="uid://8klkxr62rddd" path="res://Assets/SFX/noise/noise1.ogg" id="16_jncaw"]
 [ext_resource type="AudioStream" uid="uid://c28hepeugpk6c" path="res://Assets/SFX/noise/noise2.ogg" id="17_a5d4c"]
@@ -400,7 +405,7 @@ _data = {
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_awbk1"]
-random_pitch = 1.2
+random_pitch = 1.1
 streams_count = 7
 stream_0/stream = ExtResource("3_1dnrx")
 stream_1/stream = ExtResource("4_50jn7")
@@ -409,6 +414,15 @@ stream_3/stream = ExtResource("6_b0il5")
 stream_4/stream = ExtResource("7_u0mxh")
 stream_5/stream = ExtResource("8_4i3oi")
 stream_6/stream = ExtResource("9_6at8m")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f00qe"]
+random_pitch = 1.1
+streams_count = 5
+stream_0/stream = ExtResource("10_ok4f1")
+stream_1/stream = ExtResource("11_2rk8j")
+stream_2/stream = ExtResource("12_f0ajl")
+stream_3/stream = ExtResource("13_jjv4w")
+stream_4/stream = ExtResource("14_65yd6")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
@@ -536,7 +550,12 @@ speed_scale = 4.0
 [node name="whoosh" type="AudioStreamPlayer" parent="Head"]
 stream = SubResource("AudioStreamRandomizer_awbk1")
 volume_db = -2.0
-pitch_scale = 0.87
+pitch_scale = 0.9
+
+[node name="hit" type="AudioStreamPlayer" parent="Head"]
+stream = SubResource("AudioStreamRandomizer_f00qe")
+volume_db = -6.0
+pitch_scale = 0.9
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
