@@ -1,55 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://df0kghg6xdjku"]
+[gd_scene load_steps=3 format=3 uid="uid://df0kghg6xdjku"]
 
 [ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="1_o5hqr"]
-[ext_resource type="Texture2D" uid="uid://cqnvm2f8qg64i" path="res://Assets/Torch/bas_torche.png" id="2_kxkse"]
-[ext_resource type="Texture2D" uid="uid://w17bcuc78wb0" path="res://Assets/Torch/haut_torche.png" id="3_3n1ac"]
-[ext_resource type="Shader" path="res://Scenes/PlayerTools/TorchFlameShader.gdshader" id="3_x6fuy"]
+[ext_resource type="PackedScene" uid="uid://crmbhrwcs0mpd" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="2_4uvot"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5txwc"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oo7bb"]
-seamless = true
-noise = SubResource("FastNoiseLite_5txwc")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sj3c"]
-resource_local_to_scene = true
-render_priority = 1
-shader = ExtResource("3_x6fuy")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = null
-shader_parameter/specular = 0.0
-shader_parameter/metallic = 1.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/billboard = false
-shader_parameter/isOn = 1.0
-shader_parameter/texture_albedo = ExtResource("3_3n1ac")
-shader_parameter/noise = SubResource("NoiseTexture2D_oo7bb")
-
-[node name="Torch" type="Node3D" node_paths=PackedStringArray("omniLight", "flame") groups=["Tool"]]
+[node name="Torch" type="Node3D" node_paths=PackedStringArray("omniLight", "torch") groups=["Tool"]]
 script = ExtResource("1_o5hqr")
 omniLight = NodePath("OmniLight3D")
-flame = NodePath("Flame")
+torch = NodePath("TorchSprite")
 crazyColor = Color(0.141176, 0.168627, 1, 1)
 
-[node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283, 0)
-cast_shadow = 0
-pixel_size = 0.001
-shaded = true
-alpha_cut = 1
-texture = ExtResource("2_kxkse")
-
-[node name="Flame" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.277611, 0.0151806)
-material_override = SubResource("ShaderMaterial_0sj3c")
-pixel_size = 0.001
-render_priority = 1
-texture = ExtResource("3_3n1ac")
+[node name="TorchSprite" parent="." instance=ExtResource("2_4uvot")]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.0181624)

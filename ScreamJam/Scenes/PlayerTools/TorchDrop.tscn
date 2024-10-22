@@ -1,11 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://d06t6b7e04vba"]
+[gd_scene load_steps=6 format=3 uid="uid://d06t6b7e04vba"]
 
 [ext_resource type="Script" path="res://Scenes/PlayerTools/Loot.gd" id="1_hnrth"]
 [ext_resource type="PackedScene" uid="uid://df0kghg6xdjku" path="res://Scenes/PlayerTools/TorchTool.tscn" id="2_12c6o"]
-[ext_resource type="Texture2D" uid="uid://cqnvm2f8qg64i" path="res://Assets/Torch/bas_torche.png" id="3_snof7"]
+[ext_resource type="PackedScene" uid="uid://crmbhrwcs0mpd" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="3_if3hn"]
 [ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="4_c0c48"]
-[ext_resource type="Material" uid="uid://0wdtndviqay5" path="res://Scenes/PlayerTools/TorchFlame.tres" id="4_nllij"]
-[ext_resource type="Texture2D" uid="uid://w17bcuc78wb0" path="res://Assets/Torch/haut_torche.png" id="5_hh4qe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_twbx6"]
 size = Vector3(1, 1.29591, 0.0650635)
@@ -20,24 +18,9 @@ toolScene = ExtResource("2_12c6o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.304268, -0.0354614)
 shape = SubResource("BoxShape3D_twbx6")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283, 0)
-cast_shadow = 0
-pixel_size = 0.001
-shaded = true
-alpha_cut = 1
-alpha_scissor_threshold = 0.1
-texture = ExtResource("3_snof7")
+[node name="TorchSprite" parent="." instance=ExtResource("3_if3hn")]
 
-[node name="Flame" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.280494, 0.00482732)
-material_override = ExtResource("4_nllij")
-pixel_size = 0.001
-billboard = 1
-render_priority = 1
-texture = ExtResource("5_hh4qe")
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="." node_paths=PackedStringArray("omniLight", "flame")]
+[node name="OmniLight3D2" type="OmniLight3D" parent="." node_paths=PackedStringArray("omniLight", "torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.964706, 0.603922, 0.329412, 1)
 light_energy = 1.5
@@ -50,5 +33,5 @@ shadow_blur = 2.0
 omni_range = 15.0
 script = ExtResource("4_c0c48")
 omniLight = NodePath(".")
-flame = NodePath("../Flame")
+torch = NodePath("../TorchSprite")
 crazyColor = Color(0.141176, 0.168627, 1, 1)

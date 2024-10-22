@@ -4,7 +4,7 @@ class_name LightSource extends Node3D
 var isOn: bool = true
 
 @export var omniLight: OmniLight3D
-@export var flame: Sprite3D
+@export var torch: TorchSprite
 
 @onready var originalColor: Color = omniLight.light_color
 @export var crazyColor: Color
@@ -39,5 +39,4 @@ func blowTorch():
 	blowTween.tween_property(omniLight, "light_energy", 0.0, 1.5)
 	blowTween.tween_property(self, "isOn", false, 0.0)
 	
-	var blownTwoTween = create_tween().set_ease(Tween.EASE_OUT_IN).set_trans(Tween.TRANS_SINE)
-	blownTwoTween.tween_property(flame.material_override, "shader_parameter/isOn", 0.0, 1.75)
+	torch.blow()

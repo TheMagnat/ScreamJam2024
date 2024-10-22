@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://crmbhrwcs0mpd"]
+
+[ext_resource type="Texture2D" uid="uid://cqnvm2f8qg64i" path="res://Assets/Torch/bas_torche.png" id="1_qyjf8"]
+[ext_resource type="Script" path="res://Scenes/PlayerTools/torch_sprite.gd" id="2_ow1jn"]
+[ext_resource type="Material" uid="uid://0wdtndviqay5" path="res://Scenes/PlayerTools/TorchFlame.tres" id="2_uwmle"]
+[ext_resource type="Texture2D" uid="uid://w17bcuc78wb0" path="res://Assets/Torch/haut_torche.png" id="3_emjs4"]
+[ext_resource type="AudioStream" uid="uid://cplylsett1qus" path="res://Assets/SFX/fire/torch_fire.ogg" id="4_250xe"]
+
+[node name="TorchSprite" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283, 0)
+cast_shadow = 0
+pixel_size = 0.001
+shaded = true
+alpha_cut = 1
+alpha_scissor_threshold = 0.1
+texture = ExtResource("1_qyjf8")
+script = ExtResource("2_ow1jn")
+
+[node name="Flame" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00250599, 0.00482732)
+material_override = ExtResource("2_uwmle")
+pixel_size = 0.001
+billboard = 1
+render_priority = 1
+texture = ExtResource("3_emjs4")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_250xe")
+volume_db = 10.0
+unit_size = 29.58
+max_db = 2.0
+pitch_scale = 0.8
+autoplay = true
+max_distance = 20.0
+bus = &"RoomReverb"
