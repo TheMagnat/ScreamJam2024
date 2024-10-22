@@ -113,6 +113,11 @@ const HEALTH_MAX := 100.0
 const HEALTH_RECOVER := 1.0
 var health := HEALTH_MAX
 
+var hypnotized := false
+func set_hypnotized(h: bool):
+	hypnotized = h
+	locked = h
+
 func damageSanity(dmg: float, eyes_closed_factor := 1.0, under_zero_factor := 1.0):
 	if dead: return
 	
@@ -621,16 +626,16 @@ func blink(closing : bool):
 	
 	blink_tween = create_tween()
 	blink_tween.set_ease(Tween.EASE_OUT)
-	blink_tween.set_trans(Tween.TRANS_QUART)
+	blink_tween.set_trans(Tween.TRANS_SINE)
 	
-	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, 0.5)
-	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 20050.0, 0.5)
-	
-	fast_blink_tween.tween_interval(0.20)
+	var time := 0.25 + (1.0 - sanity / SANITY_MAX) * 5.0 if closing and hypnotized else 0.25
+	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, time)
+	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 20050.0, time)
+	fast_blink_tween.tween_interval(time * 0.9)
 	
 	if closing:
 		fast_blink_tween.tween_callback(func(): closed_eyes = true)
-		fast_blink_tween.parallel().tween_interval(0.05)
+		fast_blink_tween.parallel().tween_interval(time * 0.05)
 		fast_blink_tween.tween_callback(func():
 			if shouldOpen:
 				shouldOpen = false

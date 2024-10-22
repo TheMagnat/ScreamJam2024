@@ -19,12 +19,12 @@ func _process(_delta: float) -> void:
 var originalRot: Vector3
 func lock():
 	locked = true
-	player.locked = true
+	player.set_hypnotized(true)
 	originalRot = player.HEAD.rotation
 
 func unlock():
 	locked = false
-	player.locked = false
+	player.set_hypnotized(false)
 	
 	if player.lockedCamera:
 		player.HEAD.rotation = originalRot
