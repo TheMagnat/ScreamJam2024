@@ -157,6 +157,8 @@ func damageHealth(dmg: float, dot := false):
 		HEAD.rotation += newRotDiff
 		lastRotDiff -= newRotDiff
 		
+		$Head/hit.play()
+		
 		lastTweenDelta = 0.0
 		damageTween.tween_method(func(delta: float):
 			var deltaDiff: float = delta - lastTweenDelta

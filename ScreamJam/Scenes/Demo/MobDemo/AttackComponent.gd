@@ -16,7 +16,7 @@ func _ready() -> void:
 
 var inAttackAnimation: bool = false
 func tryAttack() -> bool:
-	if not inAttackAnimation:
+	if not inAttackAnimation and not Global.player.dead:
 		attack()
 		return true
 	
