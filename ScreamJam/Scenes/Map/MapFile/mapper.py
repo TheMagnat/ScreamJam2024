@@ -1,13 +1,32 @@
-import argparse
+import argparse, math
 from PIL import Image, ImageDraw, ImageFont
 
-def is_black(color, tolerance):
-    return color[0] <= tolerance and color[1] <= tolerance and color[2] <= tolerance
+max_distance = math.sqrt(255 ** 2 * 3)
 
-def map_from_image(image_path, output_path, tolerance = 50):
+celltype_dictionary = {
+    '0': 'black',
+    '1': 'white',
+    '2': (237, 28, 36),
+    '3': (163, 73, 164),
+    '6': (255, 201, 14),
+    '7': (181, 230, 29),
+    '8': (112, 146, 190),
+    '9': (255, 174, 201),
+}
+
+def color_distance(c1, c2):
+    return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
+
+def get_celltype(color, tolerance):
+    for color in celltype_dictionary:
+        if(color_distance(color, color[celltype_dictionary]) <= (tolerance / 100.0) * max_distance):
+            return color
+    return 0
+
+def map_from_image(image_path, output_path, tolerance = 8):
     img = Image.open(image_path)
     img = img.convert('RGB')
-
+    
     case_size = 16
     width, height = img.size
 
@@ -25,10 +44,7 @@ def map_from_image(image_path, output_path, tolerance = 50):
             box = img.crop((x * case_size, y * case_size, (x + 1) * case_size, (y + 1) * case_size))
             avg_color = box.resize((1, 1)).getpixel((0, 0))
 
-            if is_black(avg_color, tolerance):
-                row.append('0')
-            else:
-                row.append('1')
+            row.append(get_celltype(avg_color, tolerance))
 
         grid.append(' '.join(row))
 
@@ -68,7 +84,10 @@ def draw_from_txt(input_path, output_path, coordinates = False):
         for x in range(max_cases):
             x_pos = x * case_size + (x + 1) + offset
             y_pos = y * case_size + (y + 1) + offset
-            color = 'black' if grid[y][x] == '0' else 'white'
+            color = 'black'
+            if grid[y][x] in celltype_dictionary:
+                color = celltype_dictionary[grid[y][x]]
+            
             draw.rectangle([x_pos, y_pos, x_pos + case_size, y_pos + case_size], fill=color)
 
     for y in range(len(grid) + 1):
