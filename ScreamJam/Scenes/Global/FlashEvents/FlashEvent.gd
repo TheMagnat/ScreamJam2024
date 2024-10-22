@@ -18,7 +18,7 @@ var eventInProgress: bool = false
 
 # Possible events
 #var events: Array[Callable] = [colorFlash.bind(Vector3.ZERO)]
-var events: Array[Callable] = [spawnFarEntity, spawnFarSound]
+var events: Array[Callable] = [spawnFarEntity, spawnFarSound, spawnCrawlingBug]
 
 func _physics_process(delta: float) -> void:
 	if not Global.inGame: return
@@ -141,9 +141,27 @@ func spawnFarSound():
 	
 	eventInProgress = true
 	
-	#screenMaterial.set_shader_parameter("color", Vector3.ZERO)
-	#screenMaterial.set_shader_parameter("alpha", 1.0)
-	#await get_tree().create_timer(0.05).timeout
-	#screenMaterial.set_shader_parameter("alpha", 0.0)
-	
 	var voice = spawnEntity(preload("res://Scenes/Entity/VoiceEntity.tscn"), randf_range(1.0, 40.0), 0.0, 0.0)
+
+func spawnCrawlingBug():
+	# Create the Eye
+	var spawnPosition: Vector3 = getSpawnPosition(4 + randf() * 4.0, 0.5)
+	spawnPosition.y = 0.0
+	
+	#if not Global.map.isWorldPosAvailable(spawnPosition):
+		#return
+	
+	var dir: Vector3 = Global.player.global_position.direction_to(spawnPosition)
+	var perpendicular := Vector3.UP.cross(dir)
+	
+	var newFarEntity: BugEntity = preload("res://Scenes/Entity/BugEntity.tscn").instantiate()
+	Global.map.add_child(newFarEntity)
+	
+	const separation: float = 3.0
+	var speed: float = 8.0 + randf() * 4.0
+	
+	var inverse: bool = randi() % 2 == 0
+	if inverse:
+		newFarEntity.startCrawling(spawnPosition - perpendicular * separation, spawnPosition + perpendicular * separation * 3.0, speed, inverse)
+	else:
+		newFarEntity.startCrawling(spawnPosition + perpendicular * separation, spawnPosition - perpendicular * separation * 3.0, speed, inverse)

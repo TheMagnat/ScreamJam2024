@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://ongeb61tahf0"]
+[gd_scene load_steps=16 format=3 uid="uid://ongeb61tahf0"]
 
 [ext_resource type="Script" path="res://Scenes/Entity/FarEntity.gd" id="1_sgojp"]
 [ext_resource type="Shader" path="res://Scenes/Entity/FarEntity.gdshader" id="2_bhw2l"]
-[ext_resource type="Texture2D" uid="uid://4x6rhn23vblp" path="res://icon.svg" id="2_u10x4"]
 [ext_resource type="Texture2D" uid="uid://dmj8w66g3x3gq" path="res://Assets/VFX/Eyes/eye1.png" id="5_y60do"]
 [ext_resource type="Texture2D" uid="uid://dex7vu3nchmw8" path="res://Assets/VFX/Eyes/eye2.png" id="6_gxv2y"]
 [ext_resource type="Texture2D" uid="uid://brgn7ehefvxmx" path="res://Assets/VFX/Eyes/eye3.png" id="7_6ap7s"]
@@ -63,11 +62,6 @@ animations = [{
 script = ExtResource("1_sgojp")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-visible = false
-material_override = SubResource("ShaderMaterial_u6sde")
-texture = ExtResource("2_u10x4")
-
-[node name="Sprite3D2" type="Sprite3D" parent="."]
 material_override = SubResource("ShaderMaterial_u6sde")
 pixel_size = 0.0007
 texture = ExtResource("5_y60do")
