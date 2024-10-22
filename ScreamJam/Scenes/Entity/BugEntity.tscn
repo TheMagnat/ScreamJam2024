@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c01u6stq8tax"]
+[gd_scene load_steps=5 format=3 uid="uid://yvnituqvr1wn"]
 
 [ext_resource type="Script" path="res://Scenes/Entity/BugEntity.gd" id="1_c6ym0"]
 [ext_resource type="Texture2D" uid="uid://ceakdae0jhft5" path="res://Assets/VFX/WeirdBug.png" id="2_hkukg"]
@@ -80,9 +80,10 @@ script = ExtResource("1_c6ym0")
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0658124, 0)
 material_override = SubResource("ShaderMaterial_psjsd")
+cast_shadow = 0
 pixel_size = 0.0003
 billboard = 2
 shaded = true
-alpha_cut = 1
+alpha_cut = 2
 alpha_scissor_threshold = 0.1
 texture = ExtResource("2_hkukg")

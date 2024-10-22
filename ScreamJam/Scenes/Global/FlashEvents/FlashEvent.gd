@@ -154,14 +154,19 @@ func spawnCrawlingBug():
 	var dir: Vector3 = Global.player.global_position.direction_to(spawnPosition)
 	var perpendicular := Vector3.UP.cross(dir)
 	
-	var newFarEntity: BugEntity = preload("res://Scenes/Entity/BugEntity.tscn").instantiate()
-	Global.map.add_child(newFarEntity)
-	
-	const separation: float = 3.0
-	var speed: float = 8.0 + randf() * 4.0
-	
-	var inverse: bool = randi() % 2 == 0
-	if inverse:
-		newFarEntity.startCrawling(spawnPosition - perpendicular * separation, spawnPosition + perpendicular * separation * 3.0, speed, inverse)
-	else:
-		newFarEntity.startCrawling(spawnPosition + perpendicular * separation, spawnPosition - perpendicular * separation * 3.0, speed, inverse)
+	for i in randi_range(1, 3):
+		var newFarEntity: BugEntity = preload("res://Scenes/Entity/BugEntity.tscn").instantiate()
+		Global.map.add_child(newFarEntity)
+		
+		const separation: float = 3.0
+		var speed: float = randf_range(8.0, 12.0)
+		
+		var side1 := perpendicular * separation * 2.0
+		var side2 := perpendicular * separation * 12.0
+		side2.y -= 0.1
+		
+		var inverse: bool = randi() % 2 == 0
+		if inverse:
+			newFarEntity.startCrawling(spawnPosition - side1, spawnPosition + side2, speed, inverse)
+		else:
+			newFarEntity.startCrawling(spawnPosition + side1, spawnPosition - side2, speed, inverse)
