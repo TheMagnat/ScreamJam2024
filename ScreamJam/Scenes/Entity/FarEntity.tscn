@@ -1,19 +1,83 @@
-[gd_scene load_steps=6 format=3 uid="uid://ongeb61tahf0"]
+[gd_scene load_steps=17 format=3 uid="uid://ongeb61tahf0"]
 
 [ext_resource type="Script" path="res://Scenes/Entity/FarEntity.gd" id="1_sgojp"]
 [ext_resource type="Shader" path="res://Scenes/Entity/FarEntity.gdshader" id="2_bhw2l"]
 [ext_resource type="Texture2D" uid="uid://4x6rhn23vblp" path="res://icon.svg" id="2_u10x4"]
-[ext_resource type="Texture2D" uid="uid://bf430tlmnu0po" path="res://Assets/VFX/eyesInDark.png" id="3_x3a7u"]
+[ext_resource type="Texture2D" uid="uid://dmj8w66g3x3gq" path="res://Assets/VFX/Eyes/eye1.png" id="5_y60do"]
+[ext_resource type="Texture2D" uid="uid://dex7vu3nchmw8" path="res://Assets/VFX/Eyes/eye2.png" id="6_gxv2y"]
+[ext_resource type="Texture2D" uid="uid://brgn7ehefvxmx" path="res://Assets/VFX/Eyes/eye3.png" id="7_6ap7s"]
+[ext_resource type="Texture2D" uid="uid://h7mxr1q7m4gs" path="res://Assets/VFX/Eyes/eye4.png" id="8_wjhck"]
+[ext_resource type="Texture2D" uid="uid://d11dbmosyngmh" path="res://Assets/VFX/Eyes/eye5.png" id="9_hoxfe"]
+[ext_resource type="Texture2D" uid="uid://dv27hfpu6qod8" path="res://Assets/VFX/Eyes/eye6.png" id="10_57fjn"]
+[ext_resource type="Texture2D" uid="uid://j54cov2l2cqr" path="res://Assets/VFX/Eyes/eye7.png" id="11_iwr75"]
+[ext_resource type="Texture2D" uid="uid://cq8evrxp5w41i" path="res://Assets/VFX/Eyes/eye8.png" id="12_q322a"]
+[ext_resource type="Texture2D" uid="uid://4vliy8c10wfg" path="res://Assets/VFX/Eyes/eye9.png" id="13_60krj"]
+[ext_resource type="Script" path="res://Scenes/Entity/EyeBlinker.gd" id="13_nsd63"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ch7eg"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u6sde"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_bhw2l")
 shader_parameter/dist = 1.0
-shader_parameter/tex = ExtResource("3_x3a7u")
+shader_parameter/tex = SubResource("ViewportTexture_ch7eg")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vihp6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_y60do")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gxv2y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6ap7s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wjhck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_hoxfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_57fjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_iwr75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_q322a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_60krj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
 
 [node name="FarEntity" type="Node3D"]
 script = ExtResource("1_sgojp")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+visible = false
 material_override = SubResource("ShaderMaterial_u6sde")
 texture = ExtResource("2_u10x4")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+material_override = SubResource("ShaderMaterial_u6sde")
+pixel_size = 0.0007
+texture = ExtResource("5_y60do")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewport"]
+position = Vector2(256, 256)
+rotation = 1.5708
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_vihp6")
+script = ExtResource("13_nsd63")
