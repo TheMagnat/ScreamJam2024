@@ -86,7 +86,6 @@ streams_count = 1
 stream_0/stream = ExtResource("8_icokj")
 
 [node name="Eye" type="Node3D"]
-transform = Transform3D(0.831091, 0, 0.556136, 0, 1, 0, -0.556136, 0, 0.831091, 0, 0, 0)
 script = ExtResource("1_c2na1")
 
 [node name="QuanticNode" type="Node3D" parent="." node_paths=PackedStringArray("observed")]
