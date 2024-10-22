@@ -51,3 +51,4 @@ omni_range = 15.0
 script = ExtResource("4_c0c48")
 omniLight = NodePath(".")
 flame = NodePath("../Flame")
+crazyColor = Color(0.141176, 0.168627, 1, 1)

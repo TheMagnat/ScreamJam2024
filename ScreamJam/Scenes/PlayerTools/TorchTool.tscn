@@ -34,6 +34,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_oo7bb")
 script = ExtResource("1_o5hqr")
 omniLight = NodePath("OmniLight3D")
 flame = NodePath("Flame")
+crazyColor = Color(0.141176, 0.168627, 1, 1)
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.283, 0)

@@ -19,7 +19,7 @@ func _ready() -> void:
 	target = Global.player
 	
 	foundTimer = Timer.new()
-	foundTimer.wait_time = 1.0
+	foundTimer.wait_time = 10.0
 	foundTimer.one_shot = true
 	foundTimer.timeout.connect(foundTimeOut)
 	add_child(foundTimer)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=29 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://ccdirfdhffypp" path="res://Scenes/Map/FullMap/TestMap.tscn" id="1_sqrn0"]
 [ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://d06t6b7e04vba" path="res://Scenes/PlayerTools/TorchDrop.tscn" id="13_nudwx"]
 [ext_resource type="PackedScene" uid="uid://2hoedglenkg0" path="res://Scenes/Entity/DarkCube.tscn" id="14_t4dd1"]
 [ext_resource type="PackedScene" uid="uid://dwomyfeulccpb" path="res://Scenes/ZoneHandler/ZoneTrigger.tscn" id="15_88dqo"]
+[ext_resource type="PackedScene" uid="uid://kcila1rx4ao8" path="res://Scenes/PlayerTools/TorchNormal.tscn" id="17_mo1gy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -170,3 +171,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 80)
 [node name="ZoneTrigger" parent="." instance=ExtResource("15_88dqo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 85)
 zoneNumber = 2
+
+[node name="TorchNormal" parent="." instance=ExtResource("17_mo1gy")]
+transform = Transform3D(0.0243101, 0, -0.999704, 0, 1, 0, 0.999704, 0, 0.0243101, 7.5, 2.54936, 14.4521)

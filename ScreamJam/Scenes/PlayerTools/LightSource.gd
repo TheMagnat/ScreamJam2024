@@ -6,6 +6,9 @@ var isOn: bool = true
 @export var omniLight: OmniLight3D
 @export var flame: Sprite3D
 
+@onready var originalColor: Color = omniLight.light_color
+@export var crazyColor: Color
+
 var noise := FastNoiseLite.new()
 @onready var originalEnergy: float = omniLight.light_energy
 @export var energyRange: float = 0.5
@@ -25,6 +28,9 @@ func _process(delta: float) -> void:
 	
 	omniLight.light_energy = (sampled_noise * energyRange) + originalEnergy 
 	t += (sampled_noise + 1) * 0.5 * delta
+	
+	omniLight.light_color = lerp(originalColor, crazyColor, Global.sanity)
+
 
 var blowTween: Tween
 func blowTorch():

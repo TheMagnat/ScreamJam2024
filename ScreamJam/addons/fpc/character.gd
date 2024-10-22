@@ -585,7 +585,9 @@ func _process(delta):
 	AudioServer.get_bus_effect(0, 1).ceiling_db = -12.0 * sqrt(sanity01)
 	RenderingServer.global_shader_parameter_set("player_pos", position)
 	RenderingServer.global_shader_parameter_set("wall_distort", sqrt(sanity01))
+	
 	RenderingServer.global_shader_parameter_set("sanity", sanity01)
+	Global.sanity = sanity01
 	
 	if Global.debug:
 		$InterfaceLayer/UserInterface/DebugPanel.add_property("Sanity", sanity, 4)
