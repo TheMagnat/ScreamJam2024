@@ -18,7 +18,7 @@ var eventInProgress: bool = false
 
 # Possible events
 #var events: Array[Callable] = [colorFlash.bind(Vector3.ZERO)]
-var events: Array[Callable] = [spawnFarEntity]
+var events: Array[Callable] = [spawnFarEntity, spawnFarSound]
 
 func _physics_process(delta: float) -> void:
 	if not Global.inGame: return
@@ -93,9 +93,23 @@ func getSpawnPosition(dist: float, _angle: float) -> Vector3:
 	
 	return spawnPosition
 
+func spawnEntity(scene, dist: float, height: float, angle: float):
+	eventInProgress = false
+	
+	var spawnPosition: Vector3 = getSpawnPosition(dist, angle)
+	spawnPosition.y = height
+	
+	if not Global.map.isWorldPosAvailable(spawnPosition):
+		return
+	
+	var instance = scene.instantiate()	
+	Global.map.add_child(instance)
+	instance.global_position = spawnPosition
+	return instance
+
 ## Cool - Should be low proba
 func spawnEye():
-	if Global.player.locked:
+	if !Global.player or Global.player.locked:
 		return
 	
 	eventInProgress = true
@@ -104,24 +118,12 @@ func spawnEye():
 	screenMaterial.set_shader_parameter("alpha", 1.0)
 	await get_tree().create_timer(0.05).timeout
 	screenMaterial.set_shader_parameter("alpha", 0.0)
-	
-	eventInProgress = false
-	
-	# Create the Eye
-	var spawnPosition: Vector3 = getSpawnPosition(randf_range(4.5, 5.0), 0.4)
-	spawnPosition.y = randf_range(1.5, 2.5)
-	
-	if not Global.map.isWorldPosAvailable(spawnPosition):
-		return
-	
-	var newEye: Eye = preload("res://Scenes/Enemies/Model/Eye.tscn").instantiate()
-	newEye.oneShot = true
-	
-	Global.map.add_child(newEye)
-	newEye.global_position = spawnPosition
+		
+	var eye = spawnEntity(preload("res://Scenes/Enemies/Model/Eye.tscn"), randf_range(4.5, 5.0), randf_range(1.5, 2.5), 0.4)
+	eye.one_shot = true
 
 func spawnFarEntity():
-	if Global.player.locked:
+	if!Global.player or  Global.player.locked:
 		return
 	
 	eventInProgress = true
@@ -131,16 +133,17 @@ func spawnFarEntity():
 	#await get_tree().create_timer(0.05).timeout
 	#screenMaterial.set_shader_parameter("alpha", 0.0)
 	
-	eventInProgress = false
-	
-	# Create the Eye
-	var spawnPosition: Vector3 = getSpawnPosition(12, 0.2)
-	spawnPosition.y = randf_range(1.5, 3.5)
-	
-	if not Global.map.isWorldPosAvailable(spawnPosition):
+	spawnEntity(preload("res://Scenes/Entity/FarEntity.tscn"), 12, randf_range(1.5, 3.5), 0.2)
+
+func spawnFarSound():
+	if !Global.player or Global.player.locked:
 		return
 	
-	var newFarEntity = preload("res://Scenes/Entity/FarEntity.tscn").instantiate()
+	eventInProgress = true
 	
-	Global.map.add_child(newFarEntity)
-	newFarEntity.global_position = spawnPosition
+	#screenMaterial.set_shader_parameter("color", Vector3.ZERO)
+	#screenMaterial.set_shader_parameter("alpha", 1.0)
+	#await get_tree().create_timer(0.05).timeout
+	#screenMaterial.set_shader_parameter("alpha", 0.0)
+	
+	var voice = spawnEntity(preload("res://Scenes/Entity/VoiceEntity.tscn"), randf_range(1.0, 40.0), 0.0, 0.0)
