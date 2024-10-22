@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b5yqh34euaadp"]
+[gd_scene load_steps=12 format=3 uid="uid://b5yqh34euaadp"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/Model/Eye.gd" id="1_c2na1"]
 [ext_resource type="Texture2D" uid="uid://jnj1w16s5ei2" path="res://Assets/Mobs/Eye/oeilfond.png" id="1_pma5n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scenes/Enemies/SanityAttacker.gd" id="3_nhb25"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Model/SanityRotator.gd" id="4_3qeja"]
 [ext_resource type="Script" path="res://Scenes/Enemies/HypnotizeNode.gd" id="7_1f7uy"]
+[ext_resource type="AudioStream" uid="uid://brjncdu7wnoa4" path="res://Assets/SFX/enemies/mouth_sound_loop.ogg" id="8_icokj"]
 
 [sub_resource type="Shader" id="Shader_ewxwc"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
@@ -79,6 +80,11 @@ shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/texture_albedo = ExtResource("2_fr3pa")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_scxvl"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("8_icokj")
+
 [node name="Eye" type="Node3D"]
 transform = Transform3D(0.831091, 0, 0.556136, 0, 1, 0, -0.556136, 0, 0.831091, 0, 0, 0)
 script = ExtResource("1_c2na1")
@@ -112,6 +118,13 @@ script = ExtResource("4_3qeja")
 
 [node name="HypnotizeNode" type="Node3D" parent="."]
 script = ExtResource("7_1f7uy")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_scxvl")
+pitch_scale = 0.5
+autoplay = true
+max_distance = 18.0
+bus = &"RoomReverb"
 
 [connection signal="screen_entered" from="QuanticNode/VisibleOnScreenNotifier3D" to="QuanticNode" method="_on_visible_on_screen_notifier_3d_screen_entered"]
 [connection signal="screen_exited" from="QuanticNode/VisibleOnScreenNotifier3D" to="QuanticNode" method="_on_visible_on_screen_notifier_3d_screen_exited"]
