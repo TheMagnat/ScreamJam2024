@@ -1,16 +1,23 @@
-[gd_scene load_steps=54 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=62 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://addons/fpc/BodyShadow.gd" id="2_5o4fy"]
+[ext_resource type="AudioStream" uid="uid://dq3aior5yn3x0" path="res://Assets/SFX/sword/whoosh1.ogg" id="3_1dnrx"]
 [ext_resource type="Shader" path="res://addons/fpc/character.gdshader" id="3_pevgd"]
 [ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="FontFile" uid="uid://ctajkdefq88fg" path="res://Assets/Fonts/coldnightforalligators.ttf" id="4_4nvet"]
+[ext_resource type="AudioStream" uid="uid://cs7vhv4wjtyfr" path="res://Assets/SFX/sword/whoosh2.ogg" id="4_50jn7"]
 [ext_resource type="AudioStream" uid="uid://pabnmo2kh8ri" path="res://Assets/SFX/steps/step_metal1.ogg" id="4_g3qfg"]
+[ext_resource type="AudioStream" uid="uid://bx6j5bfv7ybrd" path="res://Assets/SFX/sword/whoosh3.ogg" id="5_5vydc"]
 [ext_resource type="AudioStream" uid="uid://cmjlxpdr2qe2d" path="res://Assets/SFX/steps/step_metal2.ogg" id="5_aiuo4"]
+[ext_resource type="AudioStream" uid="uid://c537rbwn4qc1b" path="res://Assets/SFX/sword/whoosh4.ogg" id="6_b0il5"]
 [ext_resource type="AudioStream" uid="uid://cmcboj8010bun" path="res://Assets/SFX/steps/step_metal11.ogg" id="6_skq3o"]
 [ext_resource type="AudioStream" uid="uid://dr5mpt25jwcpq" path="res://Assets/SFX/steps/step_metal3.ogg" id="7_obbav"]
+[ext_resource type="AudioStream" uid="uid://dr7ebeempfolc" path="res://Assets/SFX/sword/whoosh5.ogg" id="7_u0mxh"]
+[ext_resource type="AudioStream" uid="uid://uget1lugiga6" path="res://Assets/SFX/sword/whoosh6.ogg" id="8_4i3oi"]
 [ext_resource type="AudioStream" uid="uid://b8hfsi7earnbp" path="res://Assets/SFX/steps/step_metal4.ogg" id="8_ijfov"]
+[ext_resource type="AudioStream" uid="uid://bdxxaiuuiwrtm" path="res://Assets/SFX/sword/whoosh7.ogg" id="9_6at8m"]
 [ext_resource type="AudioStream" uid="uid://bcubc48ms1ral" path="res://Assets/SFX/steps/step_metal5.ogg" id="9_pa8pd"]
 [ext_resource type="AudioStream" uid="uid://cpb4pj767wos0" path="res://Assets/SFX/steps/step_metal6.ogg" id="10_kevp7"]
 [ext_resource type="AudioStream" uid="uid://c07pd1o735evd" path="res://Assets/SFX/steps/step_metal7.ogg" id="11_qlqt4"]
@@ -150,6 +157,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(0, -1.65119, 0), Vector3(-0.965167, -1.56731, 0.719076), Vector3(-1.5708, 0.959931, 0), Vector3(-1.5708, 0.959931, 0), Vector3(0, 0, 0), Vector3(0, -1.65119, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../whoosh:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_5628p"]
@@ -380,6 +399,17 @@ _data = {
 "land_right": SubResource("Animation_vsknp")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_awbk1"]
+random_pitch = 1.2
+streams_count = 7
+stream_0/stream = ExtResource("3_1dnrx")
+stream_1/stream = ExtResource("4_50jn7")
+stream_2/stream = ExtResource("5_5vydc")
+stream_3/stream = ExtResource("6_b0il5")
+stream_4/stream = ExtResource("7_u0mxh")
+stream_5/stream = ExtResource("8_4i3oi")
+stream_6/stream = ExtResource("9_6at8m")
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o2y5p"]
@@ -502,6 +532,11 @@ libraries = {
 "": SubResource("AnimationLibrary_qeg5r")
 }
 speed_scale = 4.0
+
+[node name="whoosh" type="AudioStreamPlayer" parent="Head"]
+stream = SubResource("AudioStreamRandomizer_awbk1")
+volume_db = -2.0
+pitch_scale = 0.87
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
