@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://till76t5e16h"]
+
+[ext_resource type="Texture2D" uid="uid://whj1un85hstj" path="res://Assets/Torch/torche2.png" id="3_hpb6r"]
+[ext_resource type="Script" path="res://Scenes/PlayerTools/ForceFront.gd" id="3_s67nj"]
+[ext_resource type="PackedScene" uid="uid://yw4r5ypd28vr" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="4_2ormc"]
+[ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="5_arjuk"]
+
+[node name="Torch2" type="Node3D"]
+
+[node name="Holder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.249577, 0)
+script = ExtResource("3_s67nj")
+
+[node name="TorchSprite" parent="Holder" instance=ExtResource("4_2ormc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
+texture = ExtResource("3_hpb6r")
+
+[node name="Light" type="OmniLight3D" parent="Holder" node_paths=PackedStringArray("omniLight", "torch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475332, 0)
+light_color = Color(0.964706, 0.603922, 0.329412, 1)
+light_energy = 1.5
+light_volumetric_fog_energy = 0.05
+light_size = 0.2
+light_specular = 0.0
+shadow_enabled = true
+shadow_blur = 2.0
+omni_range = 15.0
+script = ExtResource("5_arjuk")
+omniLight = NodePath(".")
+torch = NodePath("../TorchSprite")
+crazyColor = Color(0.141176, 0.168627, 1, 1)
+canBeBlown = false

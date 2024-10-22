@@ -13,8 +13,12 @@ var noise := FastNoiseLite.new()
 @onready var originalEnergy: float = omniLight.light_energy
 @export var energyRange: float = 0.5
 
+@export var canBeBlown: bool = true
+
 func _ready() -> void:
-	GlobalZoneHandler.blow.connect(blowTorch)
+	if canBeBlown:
+		GlobalZoneHandler.blow.connect(blowTorch)
+	
 	noise.seed = randi()
 
 var t: float

@@ -9,15 +9,6 @@ class_name GridEntity extends ClassicEntity
 @onready var gridHandler: GridHandler = $GridHandler
 
 func _ready() -> void:
-	#DEBUG
-	#RenderingServer.set_debug_generate_wireframes(true)
-	#get_viewport().debug_draw = 4
-	
-	# EventBus.playerGridStep.connect(step)
-	
-	# TODO: retirer et rendre dynamique
-	gridHandler.target = $"../Character"
-	
 	GridEntityManager.newEntity(self)
 
 @onready var mobModel: GridModel = $MobModel

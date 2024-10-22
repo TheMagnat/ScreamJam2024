@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://kcila1rx4ao8"]
+[gd_scene load_steps=7 format=3 uid="uid://kcila1rx4ao8"]
 
 [ext_resource type="Script" path="res://Scenes/PlayerTools/TorchNormal.gd" id="1_0prmr"]
-[ext_resource type="PackedScene" uid="uid://crmbhrwcs0mpd" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="4_roj76"]
+[ext_resource type="PackedScene" uid="uid://yw4r5ypd28vr" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="4_roj76"]
 [ext_resource type="Script" path="res://Scenes/PlayerTools/ForceFront.gd" id="4_rrkad"]
+[ext_resource type="Texture2D" uid="uid://whj1un85hstj" path="res://Assets/Torch/torche2.png" id="5_1cq4f"]
 [ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="6_1oxsm"]
 [ext_resource type="Texture2D" uid="uid://wm871jxw3i2r" path="res://Assets/Torch/SOCLE.png" id="7_0y5qc"]
 
-[node name="Torch" type="Node3D"]
+[node name="Torch2" type="Node3D"]
 script = ExtResource("1_0prmr")
 
 [node name="Socle" type="Sprite3D" parent="."]
@@ -23,6 +24,7 @@ script = ExtResource("4_rrkad")
 
 [node name="TorchSprite" parent="Holder" instance=ExtResource("4_roj76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0.035)
+texture = ExtResource("5_1cq4f")
 
 [node name="Light" type="OmniLight3D" parent="Holder" node_paths=PackedStringArray("omniLight", "torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475332, 0.0486663)

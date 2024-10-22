@@ -28,7 +28,7 @@ uniform float isOn: hint_range(0.0, 1.0) = 1.0;
 
 void vertex() {
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
-	
+
 	if (billboard) {
 		// Billboard Mode: Y-Billboard
 		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(
@@ -43,11 +43,11 @@ void vertex() {
 void fragment() {
 	vec2 base_uv = UV;
 	float t = TIME * 0.3;
-	
+
 	float noiseValue = texture(noise, UV + vec2(0.0, 1.0) * t).r;
 	base_uv += noiseValue * 0.5 * ((UV.y - 0.4) * 2.0);
 	base_uv = clamp(base_uv, 0.0, 1.0);
-	
+
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 
@@ -59,12 +59,12 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 	ALPHA *= albedo.a * albedo_tex.a * noiseValue * 0.85;
-	
+
 	//ALPHA = step(noiseValue, ALPHA);
-	
+
 	ALPHA -= step(0.5, (noiseValue + 0.5) * (1.0 - isOn));
-	
+
 	ALPHA = clamp(ALPHA, 0.0, 1.0);
-	
+
 	//ALBEDO = vec3(base_uv, 0.0);
 }

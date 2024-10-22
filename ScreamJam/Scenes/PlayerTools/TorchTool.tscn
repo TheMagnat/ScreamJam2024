@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://df0kghg6xdjku"]
 
 [ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="1_o5hqr"]
-[ext_resource type="PackedScene" uid="uid://crmbhrwcs0mpd" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="2_4uvot"]
+[ext_resource type="PackedScene" uid="uid://yw4r5ypd28vr" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="2_4uvot"]
 
 [node name="Torch" type="Node3D" node_paths=PackedStringArray("omniLight", "torch") groups=["Tool"]]
 script = ExtResource("1_o5hqr")
