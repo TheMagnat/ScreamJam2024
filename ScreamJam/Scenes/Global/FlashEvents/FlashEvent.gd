@@ -133,7 +133,7 @@ func spawnFarEntity():
 	#await get_tree().create_timer(0.05).timeout
 	#screenMaterial.set_shader_parameter("alpha", 0.0)
 	
-	spawnEntity(preload("res://Scenes/Entity/FarEntity.tscn"), 12, randf_range(1.5, 3.5), 0.2)
+	spawnEntity(preload("res://Scenes/Entity/FarEntity.tscn"), 13, randf_range(1.5, 3.5), 0.2)
 
 func spawnFarSound():
 	if !Global.player or Global.player.locked:

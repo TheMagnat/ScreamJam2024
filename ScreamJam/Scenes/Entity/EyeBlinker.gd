@@ -12,6 +12,9 @@ func _ready() -> void:
 	add_child(blinkTimer)
 	
 	blinkTimer.start(2.0 + randf() * 8.0)
+	
+	onBlink = true
+	blinkFinish()
 
 var onBlink: bool = false
 func blink() -> void:
