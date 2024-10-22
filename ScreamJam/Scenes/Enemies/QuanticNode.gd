@@ -32,9 +32,6 @@ func foundTimeOut():
 
 var isWatching: bool = false
 func _process(_delta: float) -> void:
-	if target.sanity <= 0.0 and isWatching:
-		return
-	
 	if not target.closed_eyes:
 		if isInFrustum and (isWatching or global_position.distance_to(target.global_position) < distMax):
 			if not RayHelper.castRay(global_position, target.global_position + headOffset, 0b01):
@@ -48,7 +45,6 @@ func _process(_delta: float) -> void:
 	isWatching = false
 
 func stopedWatching():
-	
 	if oneShot:
 		get_parent().queue_free()
 		hypnotizeNode.unlock()
