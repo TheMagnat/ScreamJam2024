@@ -1,6 +1,6 @@
 class_name SanityAttacker extends Node3D
 
-@export var goalDmgs: float = 50.0
+@export var goalDmgs: float = 20.0
 @export var sanityDmgPerSec: float = 20.0
 @onready var quanticNode: QuanticNode = $"../QuanticNode"
 

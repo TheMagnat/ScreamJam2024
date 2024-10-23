@@ -6,14 +6,24 @@ extends Node3D
 @export var DAMAGE_SANITY_DISTANCE := 9.0
 @export var DAMAGE_HEALTH_DISTANCE := 0.5
 
+@export var zoneToStart: int = 0
+
 var player: Character
 
+var initialPosition: Vector3
+
 func _ready():
+	initialPosition = global_position
+	EventBus.playerRespawned.connect(reset)
+	
 	$Detection.body_entered.connect(follow)
 	$Detection.body_exited.connect(unfollow)
 	
 	set_physics_process(true)
 	set_process(true)
+
+func reset():
+	global_position = initialPosition
 
 func follow(body): if body is Character: player = body
 func unfollow(body): if body is Character: player = null
@@ -33,7 +43,7 @@ func _physics_process(delta: float):
 	player.damageHealth(damage(delta, DAMAGE_HEALTH_DISTANCE, DPS_HEALTH), true)
 
 func _process(_delta:float):
-	if player == null:
+	if player == null or zoneToStart > GlobalZoneHandler.playerBestZone:
 		return
 	
 	var dist := maxf(0.0, 1.0 - global_position.distance_to(player.position) * 0.05)

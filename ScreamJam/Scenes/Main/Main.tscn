@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://crlsuhpbcnmek"]
+[gd_scene load_steps=33 format=3 uid="uid://crlsuhpbcnmek"]
 
 [ext_resource type="PackedScene" uid="uid://dyit772y5r5xc" path="res://Scenes/Map/FullMap/MainMap.tscn" id="1_jbkiu"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_1isk2"]
@@ -25,17 +25,18 @@
 [ext_resource type="PackedScene" uid="uid://r1wyue15c8ri" path="res://Scenes/PlayerTools/InverseTorch.tscn" id="22_207s8"]
 [ext_resource type="PackedScene" uid="uid://bwwcmu2dhv6cc" path="res://Scenes/MapStaticNode/WallSpawner.tscn" id="23_emt7p"]
 [ext_resource type="PackedScene" uid="uid://btdr51lyhxi7b" path="res://Scenes/Enemies/NoGridSpawner.tscn" id="24_hbxuf"]
+[ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="26_07gv3"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_q0l77"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_31bh4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_6qkqn"]
-sky_material = SubResource("ProceduralSkyMaterial_q0l77")
+[sub_resource type="Sky" id="Sky_8iiqc"]
+sky_material = SubResource("ProceduralSkyMaterial_31bh4")
 
-[sub_resource type="Environment" id="Environment_x1gcu"]
+[sub_resource type="Environment" id="Environment_bens6"]
 background_mode = 2
-sky = SubResource("Sky_6qkqn")
+sky = SubResource("Sky_8iiqc")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.08
@@ -50,7 +51,7 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.305
 volumetric_fog_length = 32.0
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1vq0a"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_effd8"]
 dof_blur_far_enabled = true
 dof_blur_far_distance = 6.0
 dof_blur_near_enabled = true
@@ -70,8 +71,8 @@ size = Vector3(15, 10, 15)
 [node name="MainScene" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_x1gcu")
-camera_attributes = SubResource("CameraAttributesPractical_1vq0a")
+environment = SubResource("Environment_bens6")
+camera_attributes = SubResource("CameraAttributesPractical_effd8")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_dqf6q")
@@ -783,3 +784,27 @@ sceneToSpawn = ExtResource("15_jn3qt")
 [node name="GridNoGridSpawner18" parent="NoGridMobs/GridMobs" instance=ExtResource("24_hbxuf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 0, 95)
 sceneToSpawn = ExtResource("15_jn3qt")
+
+[node name="Interference" type="Node3D" parent="."]
+
+[node name="InterferenceGhost_Zone3_0" parent="Interference" instance=ExtResource("26_07gv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 205)
+zoneToStart = 3
+
+[node name="InterferenceGhost_Zone3_1" parent="Interference" instance=ExtResource("26_07gv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160, 0, 150)
+zoneToStart = 3
+
+[node name="InterferenceGhost_Zone3_2" parent="Interference" instance=ExtResource("26_07gv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 0, 279)
+zoneToStart = 3
+
+[node name="InterferenceGhost_Zone0_0" parent="Interference" instance=ExtResource("26_07gv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 23)
+
+[node name="InterferenceGhost_Zone0_1" parent="Interference" instance=ExtResource("26_07gv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 156, 0, 20)
+
+[node name="InterferenceGhost_Zone2_1" parent="Interference" instance=ExtResource("26_07gv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, 0, 64)
+zoneToStart = 2

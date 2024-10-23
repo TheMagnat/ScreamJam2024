@@ -17,8 +17,8 @@ const probabilityCurbeSteepness: float = 0.1
 var eventInProgress: bool = false
 
 # Possible events
-#var events: Array[Callable] = [colorFlash.bind(Vector3.ZERO)]
 var events: Array[Callable] = [spawnFarEntity, spawnFarSound, spawnCrawlingBug]
+var eventsLowProba: Array[Callable] = [spawnEye]
 
 func _physics_process(delta: float) -> void:
 	if not Global.inGame: return
@@ -40,7 +40,10 @@ func _physics_process(delta: float) -> void:
 
 func fireEvent():
 	#var randValue: float = randf()
-	events.pick_random().call()
+	if randf() < 0.95:
+		events.pick_random().call()
+	else:
+		eventsLowProba.pick_random().call()
 
 
 ## Animations ##
@@ -100,7 +103,7 @@ func spawnEntity(scene, dist: float, height: float, angle: float):
 	spawnPosition.y = height
 	
 	if not Global.map.isWorldPosAvailable(spawnPosition):
-		return
+		return null
 	
 	var instance = scene.instantiate()
 	Global.map.add_child(instance)
@@ -120,7 +123,8 @@ func spawnEye():
 	screenMaterial.set_shader_parameter("alpha", 0.0)
 		
 	var eye = spawnEntity(preload("res://Scenes/Enemies/Model/Eye.tscn"), randf_range(4.5, 5.0), randf_range(1.5, 2.5), 0.4)
-	eye.one_shot = true
+	if eye:
+		eye.one_shot = true
 
 func spawnFarEntity():
 	if!Global.player or  Global.player.locked:

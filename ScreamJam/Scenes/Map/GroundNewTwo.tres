@@ -35,6 +35,7 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sanityFactor = 3.0
 shader_parameter/texture_normal = ExtResource("3_w4hk5")
 shader_parameter/texture_ambient_occlusion = ExtResource("1_w282f")
 shader_parameter/texture_heightmap = ExtResource("2_8w6so")
