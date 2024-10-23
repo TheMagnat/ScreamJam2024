@@ -1,9 +1,6 @@
 class_name GridEntity extends ClassicEntity
 
 
-@export var map: Map
-
-
 # Cache
 @onready var gridToken: GridToken = $GridToken
 @onready var gridHandler: GridHandler = $GridHandler

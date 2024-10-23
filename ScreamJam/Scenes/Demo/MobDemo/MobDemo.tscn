@@ -74,9 +74,8 @@ transform = Transform3D(-0.0736385, 0, 0.997285, 0, 1, 0, -0.997285, 0, -0.07363
 [node name="Dagger2" parent="." instance=ExtResource("8_sb53c")]
 transform = Transform3D(-0.0736385, 0, 0.997285, 0, 1, 0, -0.997285, 0, -0.0736385, -1.72667, 1.11611, 7.10323)
 
-[node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("2_fpi3d")]
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("2_fpi3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.838799, 0)
-map = NodePath("../NavigationRegion3D/MobDemoMap")
 environment = NodePath("../WorldEnvironment")
 
 [node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]
@@ -116,13 +115,11 @@ script = ExtResource("4_5tjqd")
 gridToken = NodePath("../GridToken")
 rotateCameraOnMove = true
 
-[node name="GridMob" parent="." node_paths=PackedStringArray("map") instance=ExtResource("7_x7mii")]
+[node name="GridMob" parent="." instance=ExtResource("7_x7mii")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3784, 0, 0)
-map = NodePath("../NavigationRegion3D/MobDemoMap")
 
-[node name="GridMob2" parent="." node_paths=PackedStringArray("map") instance=ExtResource("7_x7mii")]
+[node name="GridMob2" parent="." instance=ExtResource("7_x7mii")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7486, 0, 15.2782)
-map = NodePath("../NavigationRegion3D/MobDemoMap")
 
 [node name="FreeMob" parent="." instance=ExtResource("8_xwjyf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.387, 0, 16.384)

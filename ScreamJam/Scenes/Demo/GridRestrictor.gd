@@ -1,9 +1,8 @@
 class_name GridRestrictor extends Node
 
 @onready var character: Character = $".."
-@onready var map: Map = get_parent().map
 
-@onready var gridSpace: float = map.gridSpace
+@onready var gridSpace: float = Global.map.gridSpace
 
 @onready var cameraRotationRestrictor: CameraRotationRestrictor = $"../CameraRotationRestrictor"
 
@@ -29,9 +28,6 @@ func _ready() -> void:
 	timeToStep.wait_time = stepDelay
 	timeToStep.timeout.connect(onStepTimerTimeout)
 	add_child(timeToStep)
-	
-	#TODO: Si on sauvegarde la progression, ici mettre à faux si on veut ne plus le mettre sur la grille au chargement
-	gridToken.map = map
 
 func onStepTimerTimeout():
 	EventBus.playerGridStep.emit()
@@ -50,13 +46,14 @@ func activate():
 	timeToStep.stop()
 
 func deactivate():
+	gridToken.isFree = true
+	
 	cameraRotationRestrictor.deactivate()
 	
 	character.immobile = false
 	character.handled = false
 	
 	timeToStep.start()
-	
 
 func getFrontPosition() -> Vector2i:
 	return gridToken.goalPosition + Vector2i(Vector2(0, -1.0).rotated(2 * PI - cameraRotationRestrictor.goalRotation ).round())
@@ -77,7 +74,7 @@ func _physics_process(_delta: float) -> void:
 				
 				var goal2dPosition = gridToken.goalPosition + Vector2i(directionVector.round())
 				
-				if map.isAvailable( goal2dPosition ) and GridEntityManager.isAvailable( goal2dPosition ):
+				if Global.map.isAvailable( goal2dPosition ) and GridEntityManager.isAvailable( goal2dPosition ):
 					if rotateCameraOnMove and cameraRotationRestrictor.lockCamera:
 						cameraRotationRestrictor.goalRotation = - PI / 2.0 - directionVector.angle()
 						cameraRotationRestrictor.updateHeadRotation()
@@ -121,7 +118,7 @@ func _physics_process(_delta: float) -> void:
 		debugPanel.add_property("Current Position", character.position, 5)
 		debugPanel.add_property("Goal Position", gridToken.goalWorldPosition, 6)
 		debugPanel.add_property("Current Grid Pos", gridToken.goalPosition, 5)
-		debugPanel.add_property("Goal Grid Pos", (gridToken.goalWorldPosition / map.gridSpace).round(), 6)
+		debugPanel.add_property("Goal Grid Pos", (gridToken.goalWorldPosition / Global.map.gridSpace).round(), 6)
 		
 		
 		

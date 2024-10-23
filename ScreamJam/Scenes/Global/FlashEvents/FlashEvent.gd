@@ -102,7 +102,7 @@ func spawnEntity(scene, dist: float, height: float, angle: float):
 	if not Global.map.isWorldPosAvailable(spawnPosition):
 		return
 	
-	var instance = scene.instantiate()	
+	var instance = scene.instantiate()
 	Global.map.add_child(instance)
 	instance.global_position = spawnPosition
 	return instance

@@ -1,7 +1,9 @@
-[gd_scene load_steps=32 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=34 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://ccdirfdhffypp" path="res://Scenes/Map/FullMap/TestMap.tscn" id="1_sqrn0"]
 [ext_resource type="Shader" path="res://Scenes/Demo/NoGridPowerShader.gdshader" id="2_4hhr2"]
+[ext_resource type="PackedScene" uid="uid://btdr51lyhxi7b" path="res://Scenes/Enemies/NoGridSpawner.tscn" id="2_jab5l"]
+[ext_resource type="PackedScene" uid="uid://prjptwmbf5os" path="res://Scenes/Enemies/GridMob.tscn" id="3_vugiy"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_wdy7h"]
 [ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="4_g5fn0"]
 [ext_resource type="Script" path="res://Scenes/Player/ActionComponent.gd" id="4_sf7w2"]
@@ -94,17 +96,20 @@ navigation_mesh = SubResource("NavigationMesh_gxk6b")
 
 [node name="TestMap" parent="NavigationRegion3D" instance=ExtResource("1_sqrn0")]
 
+[node name="NoGridSpawner" parent="NavigationRegion3D" instance=ExtResource("2_jab5l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 80)
+sceneToSpawn = ExtResource("3_vugiy")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3.41283, 0)
 material_override = SubResource("ShaderMaterial_jrr3h")
 mesh = SubResource("SphereMesh_n5p6o")
 
-[node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("3_wdy7h")]
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_wdy7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 2)
 base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
-map = NodePath("../NavigationRegion3D/TestMap")
 environment = NodePath("../WorldEnvironment")
 
 [node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]

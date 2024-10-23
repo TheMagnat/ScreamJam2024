@@ -14,9 +14,6 @@ var lastTargetGoalWorldPosition: Vector3
 
 @onready var navigationAgent: NavigationAgent3D = $"../NavigationAgent3D"
 
-# TODO: set dynamiquement
-@onready var map: Map = get_parent().map
-
 ## Parameters ##
 @export var stepToMove: int = 2
 @onready var currentStepCounter: int = stepToMove
@@ -32,7 +29,6 @@ var lastTargetGoalWorldPosition: Vector3
 var initialPosition: Vector3
 var stopIdle: bool = false
 func _ready() -> void:
-	gridToken.map = map
 	initialPosition = parent.global_position
 	reset()
 	
@@ -65,7 +61,7 @@ func step() -> void:
 
 
 func walkRandomDirection() -> void:
-	var neighbors: Array[Vector2i] = map.getNeighbors(gridToken.goalPosition)
+	var neighbors: Array[Vector2i] = Global.map.getNeighbors(gridToken.goalPosition)
 	
 	var trueNeighbors: Array[Vector2i]
 	for neighbor in neighbors:
@@ -83,7 +79,7 @@ func updateTargetKnownPosition() -> void:
 	if targetGridToken.isFree:
 		lastTargetGoalWorldPosition = target.global_position
 		
-		var temporary3iPosition: Vector3i = (lastTargetGoalWorldPosition / map.gridSpace).round()
+		var temporary3iPosition: Vector3i = (lastTargetGoalWorldPosition / Global.map.gridSpace).round()
 		lastTargetGoalPosition = Vector2i(temporary3iPosition.x, temporary3iPosition.z)
 		
 	else:
@@ -116,7 +112,7 @@ func walkToLastTarget():
 		newGoalPosition.y += directionToTest.y
 		
 		# If the cell exist...
-		if map.isAvailable( newGoalPosition ):
+		if Global.map.isAvailable( newGoalPosition ):
 			# ...And if the player is on it, attack
 			if target and lastTargetGoalPosition == newGoalPosition:
 				parent.attack(target, gridToken.goalWorldPosition)

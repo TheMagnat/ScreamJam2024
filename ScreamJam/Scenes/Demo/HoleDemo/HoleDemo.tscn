@@ -76,9 +76,8 @@ transform = Transform3D(-0.0736385, 0, 0.997285, 0, 1, 0, -0.997285, 0, -0.07363
 [node name="Dagger2" parent="." instance=ExtResource("2_4sh3e")]
 transform = Transform3D(-0.0736385, 0, 0.997285, 0, 1, 0, -0.997285, 0, -0.0736385, -1.72667, 1.11611, 7.10323)
 
-[node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("3_y0sav")]
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_y0sav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.838799, 0)
-map = NodePath("../NavigationRegion3D/DemoHoleMap")
 environment = NodePath("../WorldEnvironment")
 
 [node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]

@@ -81,7 +81,6 @@ class_name Character extends CharacterBody3D
 @export var handled: bool = false
 @export var handled_input := Vector2.ZERO
 @export var handled_sprint: bool = false
-@export var map: Map
 @export var locked: bool = false # When true NOT ANY MOVE can be done
 
 @export var environment: WorldEnvironment
@@ -204,10 +203,8 @@ func spawn():
 	death_tween.tween_property($PostProcess/Label, "modulate:a", 0.0, 0.5)
 	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 0.0, 0.5)
 	
-	var newPosition = map.availableSpawns[GlobalZoneHandler.playerBestZone].pick_random()
-	if not Global.debug:
-		global_position = newPosition
-	
+	var newPosition = Global.map.availableSpawns[GlobalZoneHandler.playerBestZone].pick_random()
+	#if not Global.debug:
 	global_position = newPosition
 	if has_node("GridToken"):
 		$GridToken.setInitialPosition()

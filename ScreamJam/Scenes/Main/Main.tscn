@@ -255,12 +255,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 102.5)
 [node name="Torch3" parent="NavigationRegion3D" instance=ExtResource("20_4q56o")]
 transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 180, 2, 92.5)
 
-[node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("3_1isk2")]
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_1isk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.151, 1, 135.47)
 base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
-map = NodePath("../NavigationRegion3D/MainMap")
 environment = NodePath("../WorldEnvironment")
 
 [node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]
@@ -301,173 +300,131 @@ rotateCameraOnMove = true
 
 [node name="GridMobs" type="Node3D" parent="."]
 
-[node name="GridMob" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 70, 0, 45)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob2" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob2" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 15)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob3" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob3" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 25)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob4" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob4" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 115, 0, 45)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob5" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob5" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 155, 0, 40)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob6" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob6" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 165, 0, 45)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob7" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob7" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 185, 0, 55)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob8" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob8" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 95, 0, 15)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob9" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob9" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 145, 0, 90)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob10" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob10" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 145, 0, 115)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob11" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob11" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 125, 0, 85)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob12" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob12" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120, 0, 110)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob14" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob14" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 85, 0, 115)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob15" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob15" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 55, 0, 125)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob16" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob16" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0, 65)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob17" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob17" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, 85)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob18" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob18" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 85)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob19" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob19" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 55, 0, 115)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob20" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob20" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 25, 0, 115)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob21" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob21" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.70985, 0, 205.686)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob22" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob22" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 15, 0, 205)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob23" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob23" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 50, 0, 205)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob24" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob24" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 70, 0, 205)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob25" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob25" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, 215)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob26" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob26" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 215)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob27" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob27" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0, 235)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob28" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob28" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 50, 0, 245)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob29" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob29" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 75, 0, 245)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob30" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob30" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 0, 230)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob31" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob31" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 105, 0, 205)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob32" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob32" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, 0, 195)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob33" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob33" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 115, 0, 185)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob34" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob34" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 145, 0, 185)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob35" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob35" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 145, 0, 175)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob36" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob36" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 170, 0, 180)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob37" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob37" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 165, 0, 195)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob38" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob38" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 40, 0, 245)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob39" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob39" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 65, 0, 175)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob40" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob40" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 85, 0, 150)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob41" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob41" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 0, 151)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob42" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob42" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 195, 0, 165)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
-[node name="GridMob43" parent="GridMobs" node_paths=PackedStringArray("map") instance=ExtResource("15_jn3qt")]
+[node name="GridMob43" parent="GridMobs" instance=ExtResource("15_jn3qt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 185, 0, 135)
-map = NodePath("../../NavigationRegion3D/MainMap")
 
 [node name="FreeMobs" type="Node3D" parent="."]
 

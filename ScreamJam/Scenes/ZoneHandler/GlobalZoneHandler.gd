@@ -13,7 +13,6 @@ func _ready() -> void:
 	EventBus.playerEnteredZone.connect(playerEnteredZone)
 
 func playerEnteredZone(zoneId: int):
-	
 	if zoneId > playerBestZone:
 		playerBestZone = zoneId
 		playerBestZoneChanged.emit(playerBestZone)
