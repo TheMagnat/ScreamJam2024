@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://cao8lcrq6yql8"]
+[gd_scene load_steps=15 format=3 uid="uid://cao8lcrq6yql8"]
 
 [ext_resource type="Script" path="res://Scenes/Tutorial/tutorial_end.gd" id="1_i4xw5"]
+[ext_resource type="PackedScene" uid="uid://b2i4b260m40sw" path="res://GlobalEnvironment.tscn" id="2_00q24"]
 [ext_resource type="PackedScene" uid="uid://cj43m3khjkjyp" path="res://Scenes/Map/FullMap/TutorialMap.tscn" id="3_jneby"]
 [ext_resource type="PackedScene" uid="uid://s32ljyhnwxak" path="res://Scenes/MapStaticNode/Hole.tscn" id="3_udxxm"]
 [ext_resource type="AudioStream" uid="uid://b56fxo13lrmgd" path="res://Assets/SFX/tutorial/8bit_intro2.ogg" id="4_svs8x"]
@@ -9,38 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://nis7xan2np8n" path="res://Assets/SFX/tutorial/8bit_action.ogg" id="6_kvrnp"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="7_4220s"]
 [ext_resource type="AudioStream" uid="uid://dn2ljmbfi1oif" path="res://Assets/SFX/tutorial/8bit_eye.ogg" id="7_b006m"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_syl7h"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_eaeg2"]
-sky_material = SubResource("ProceduralSkyMaterial_syl7h")
-
-[sub_resource type="Environment" id="Environment_6rmev"]
-background_mode = 2
-sky = SubResource("Sky_eaeg2")
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.08
-tonemap_mode = 2
-tonemap_exposure = 2.0
-ssao_enabled = true
-ssil_enabled = true
-glow_enabled = true
-glow_intensity = 2.0
-fog_depth_begin = 3.5
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.305
-volumetric_fog_length = 32.0
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1qwlh"]
-dof_blur_far_enabled = true
-dof_blur_far_distance = 6.0
-dof_blur_near_enabled = true
-dof_blur_near_distance = 0.01
-dof_blur_near_transition = -1.0
-dof_blur_amount = 0.2
 
 [sub_resource type="LabelSettings" id="LabelSettings_8fo8y"]
 font_size = 96
@@ -81,9 +50,7 @@ shader_parameter/blink = null
 [node name="TutorialEnd" type="Node3D"]
 script = ExtResource("1_i4xw5")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_6rmev")
-camera_attributes = SubResource("CameraAttributesPractical_1qwlh")
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_00q24")]
 
 [node name="MapHolder" type="Node3D" parent="."]
 
