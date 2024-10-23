@@ -19,7 +19,7 @@ void vertex() {
 	vec2 uv = vec2(world_position.x + world_position.y, world_position.z) * 0.25;
 	float noiseValue = texture(noise, uv + time).r;
 
-	VERTEX += NORMAL * noiseValue * (0.1 + sanity * sanityFactor);
+	VERTEX += NORMAL * noiseValue * (0.1 + pow(sanity, 1.25) * sanityFactor);
 
 	float randValue = texture(noise, vec2(world_position.x, world_position.z + world_position.y) + time).r;
 

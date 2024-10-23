@@ -42,6 +42,8 @@ var buttonRemapping
 const VOLUME_LIMIT = -40
 
 func _ready():
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	
 	_add_resolutions()
 	_create_controls()
 	

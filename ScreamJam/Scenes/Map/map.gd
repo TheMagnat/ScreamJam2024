@@ -22,8 +22,8 @@ const CellTypeFilter := 0b1111
 
 
 # Map data 
-var mapData : Array[CellType]
-var mapSize: Vector2i
+@export var mapData: PackedInt32Array
+@export var mapSize: Vector2i
 @export var availableSpawns : Array[Array]
 
 # Cache
@@ -108,10 +108,10 @@ func generateMap() -> void:
 	wallShape.size = Vector3(gridSpace, gridSpace, thickness)
 	fullWallShape.size = Vector3(gridSpace, gridSpace, gridSpace)
 	
-	loadMap(mapFilePath)
-	
 	if cached:
 		return
+	
+	loadMap(mapFilePath)
 	
 	for child in get_children():
 		child.free()

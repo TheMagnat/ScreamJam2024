@@ -17,15 +17,15 @@ const probabilityCurbeSteepness: float = 0.1
 var eventInProgress: bool = false
 
 # Possible events
-var events: Array[Callable] = [spawnFarEntity, spawnFarSound, spawnCrawlingBug]
+var events: Array[Callable] = [spawnFarEntity, spawnFarSound, spawnCrawlingBug, closeEye]
 var eventsLowProba: Array[Callable] = [spawnEye]
 
 func _physics_process(delta: float) -> void:
-	if not Global.inGame: return
+	if not Global.inGame or eventInProgress: return
 	
 	elapsedTimeSinceLastEvent += delta
 	
-	if Engine.get_physics_frames() % 10 or eventInProgress:
+	if Engine.get_physics_frames() % 10:
 		return
 	
 	var currentProbability: float = probabilityMax - (probabilityMax - probabilityMin) * exp(-probabilityCurbeSteepness * elapsedTimeSinceLastEvent)
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 
 func fireEvent():
 	#var randValue: float = randf()
-	if randf() < 0.95:
+	if randf() < 0.96:
 		events.pick_random().call()
 	else:
 		eventsLowProba.pick_random().call()
@@ -110,6 +110,15 @@ func spawnEntity(scene, dist: float, height: float, angle: float):
 	instance.global_position = spawnPosition
 	return instance
 
+func closeEye():
+	Global.player.blink(true)
+	Global.player.shouldOpen = true
+	Global.player.eyeJustClosed.connect(onEyeFinishedClosing)
+
+func onEyeFinishedClosing():
+	Global.player.eyeJustClosed.disconnect(onEyeFinishedClosing)
+	eventInProgress = false
+
 ## Cool - Should be low proba
 func spawnEye():
 	if !Global.player or Global.player.locked:
@@ -117,14 +126,23 @@ func spawnEye():
 	
 	eventInProgress = true
 	
-	screenMaterial.set_shader_parameter("color", Vector3.ZERO)
-	screenMaterial.set_shader_parameter("alpha", 1.0)
-	await get_tree().create_timer(0.05).timeout
-	screenMaterial.set_shader_parameter("alpha", 0.0)
-		
-	var eye = spawnEntity(preload("res://Scenes/Enemies/Model/Eye.tscn"), randf_range(4.5, 5.0), randf_range(1.5, 2.5), 0.4)
+	Global.player.blink(true)
+	Global.player.shouldOpen = true
+	Global.player.eyeJustClosed.connect(onEyeFinishedClosingSpawnEye)
+	
+	#eventInProgress = true
+	#
+	#screenMaterial.set_shader_parameter("color", Vector3.ZERO)
+	#screenMaterial.set_shader_parameter("alpha", 1.0)
+	#await get_tree().create_timer(0.05).timeout
+	#screenMaterial.set_shader_parameter("alpha", 0.0)
+
+func onEyeFinishedClosingSpawnEye():
+	eventInProgress = false
+	Global.player.eyeJustClosed.disconnect(onEyeFinishedClosingSpawnEye)
+	var eye: Eye = spawnEntity(preload("res://Scenes/Enemies/Model/Eye.tscn"), randf_range(4.5, 5.0), randf_range(1.5, 2.5), 0.4)
 	if eye:
-		eye.one_shot = true
+		eye.quanticNode.oneShot = true
 
 func spawnFarEntity():
 	if!Global.player or  Global.player.locked:

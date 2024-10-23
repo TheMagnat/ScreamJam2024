@@ -83,6 +83,7 @@ label_settings = SubResource("LabelSettings_qjo5w")
 
 [node name="FullScreenCheckBox" type="CheckBox" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
+button_pressed = true
 
 [node name="ControlsLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2

@@ -315,7 +315,7 @@ offset_right = 20.0
 offset_bottom = -35.52
 grow_horizontal = 2
 grow_vertical = 0
-text = "Take"
+text = "Press MOUSE1 to pickup"
 
 [node name="AttackComponent" type="Node3D" parent="Character"]
 script = ExtResource("6_tj5ah")

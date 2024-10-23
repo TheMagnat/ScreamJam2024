@@ -634,6 +634,7 @@ var closed_eyes := false
 var shouldOpen := false
 var blink_tween: Tween
 var fast_blink_tween: Tween
+signal eyeJustClosed
 func blink(closing : bool):
 	if not closing and (fast_blink_tween and fast_blink_tween.is_running()):
 		shouldOpen = true
@@ -660,6 +661,7 @@ func blink(closing : bool):
 		fast_blink_tween.parallel().tween_interval(time * 0.05)
 		fast_blink_tween.tween_callback(func():
 			if shouldOpen:
+				eyeJustClosed.emit()
 				shouldOpen = false
 				blink.call_deferred(false)
 		)
