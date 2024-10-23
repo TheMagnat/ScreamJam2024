@@ -107,7 +107,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 var mouseInput : Vector2 = Vector2(0,0)
 
 const SANITY_MAX := 100.0
-const SANITY_RECOVER := 5.0
+const SANITY_RECOVER := 2.0
 var sanity := SANITY_MAX
 
 const HEALTH_MAX := 100.0
@@ -355,7 +355,8 @@ func _physics_process(delta):
 				1:
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
-	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > 0.0 else (1.0 - sanity * 0.25))) * delta)
+	const SANITY_FACTOR := 0.7
+	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > SANITY_FACTOR else (1.0 + sqrt(4.0 * (SANITY_FACTOR - sanity/SANITY_MAX))))) * delta)
 	health = minf(HEALTH_MAX, health + HEALTH_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
