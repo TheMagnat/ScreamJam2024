@@ -1,10 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://bmcknkhmj376d"]
+[gd_scene load_steps=20 format=3 uid="uid://bmcknkhmj376d"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeMob.gd" id="1_gca65"]
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeHandler.gd" id="2_4oayo"]
 [ext_resource type="Texture2D" uid="uid://cqrry0h137jex" path="res://Assets/Mobs/Ghost/truc.png" id="4_aayb5"]
 [ext_resource type="Script" path="res://Scenes/Enemies/PlayerDetector.gd" id="4_c8bju"]
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeModel.gd" id="5_1tmvr"]
+[ext_resource type="AudioStream" uid="uid://cvatsk218d7ow" path="res://Assets/SFX/enemies/ghost_die1.ogg" id="6_q8g7k"]
+[ext_resource type="AudioStream" uid="uid://ckeqbpnv8ic8r" path="res://Assets/SFX/enemies/ghost_die2.ogg" id="7_bs0x8"]
+[ext_resource type="AudioStream" uid="uid://cc4klx3wmtpjh" path="res://Assets/SFX/enemies/ghost_die3.ogg" id="8_nckfj"]
+[ext_resource type="AudioStream" uid="uid://b1sp42h1sqyog" path="res://Assets/SFX/enemies/ghost_die4.ogg" id="9_8cuvm"]
+[ext_resource type="AudioStream" uid="uid://fd2taprlplef" path="res://Assets/SFX/enemies/ghost_die5.ogg" id="10_ydxik"]
+[ext_resource type="AudioStream" uid="uid://bjtjpvusvlk0q" path="res://Assets/SFX/enemies/ghost_die6.ogg" id="11_ahg1f"]
+[ext_resource type="AudioStream" uid="uid://dfty8rx3ghyml" path="res://Assets/SFX/enemies/ghost_die7.ogg" id="12_l1eqn"]
+[ext_resource type="AudioStream" uid="uid://dc2vnggqatevn" path="res://Assets/SFX/enemies/ghost_die8.ogg" id="13_oymdp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqylk"]
 
@@ -69,6 +77,18 @@ shader_parameter/dist = 0.0
 shader_parameter/texture_albedo = ExtResource("4_aayb5")
 shader_parameter/noise = SubResource("NoiseTexture2D_jn1pi")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gil6g"]
+random_pitch = 1.5
+streams_count = 8
+stream_0/stream = ExtResource("6_q8g7k")
+stream_1/stream = ExtResource("7_bs0x8")
+stream_2/stream = ExtResource("8_nckfj")
+stream_3/stream = ExtResource("9_8cuvm")
+stream_4/stream = ExtResource("10_ydxik")
+stream_5/stream = ExtResource("11_ahg1f")
+stream_6/stream = ExtResource("12_l1eqn")
+stream_7/stream = ExtResource("13_oymdp")
+
 [node name="FreeMob" type="CharacterBody3D" groups=["ClassicEntity"]]
 collision_layer = 5
 collision_mask = 0
@@ -110,6 +130,14 @@ shaded = true
 alpha_cut = 1
 alpha_scissor_threshold = 0.2
 texture = ExtResource("4_aayb5")
+
+[node name="die" type="AudioStreamPlayer3D" parent="Model"]
+stream = SubResource("AudioStreamRandomizer_gil6g")
+volume_db = -5.0
+unit_size = 5.0
+max_db = -5.0
+pitch_scale = 0.79
+bus = &"RoomReverb"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.403031)
