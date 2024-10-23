@@ -432,6 +432,7 @@ shader = ExtResource("3_pevgd")
 shader_parameter/distortion = 0.0
 shader_parameter/blink = 0.0
 shader_parameter/damage = null
+shader_parameter/tookPower = 0.0
 
 [sub_resource type="Shader" id="Shader_vvegd"]
 code = "shader_type canvas_item;
@@ -603,7 +604,6 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="DebugPanel" type="PanelContainer" parent="InterfaceLayer/UserInterface"]
-visible = false
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0

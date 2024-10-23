@@ -4,6 +4,7 @@ uniform sampler2D viewport : hint_screen_texture, repeat_disable, filter_linear;
 uniform float distortion : hint_range(0.0, 0.6, 0.001);
 uniform float blink : hint_range(0.0, 1.0, 0.001);
 uniform float damage : hint_range(0.0, 1.0, 0.001);
+uniform float tookPower : hint_range(0.0, 1.0, 0.001);
 
 float crt(vec2 uv, float offset) {
 	return 0.95 + (cos(uv.x * 1200.0 + offset) * 0.25 + cos(uv.y * 1000.0 + offset)) * 0.05;
@@ -15,7 +16,8 @@ vec4 distort(vec2 CENTER, float zoom, float distort) {
 }
 
 void fragment() {
-	float real_distort = (distortion + damage * 0.1);
+	float tookPowerReal = sin(tookPower * PI);
+	float real_distort = (tookPowerReal * 2.0 + distortion + damage * 0.1);
 	float LENS_DISTORT = real_distort * 0.9;
 	float ZOOM = 1.0 - real_distort;
 
@@ -47,4 +49,6 @@ void fragment() {
 	COLOR.r *= crt(UV + sin(TIME * 41.0) * dFact, 0.0);
 	COLOR.g *= crt(UV + cos(TIME * 0.005), 1.0);
 	COLOR.b *= crt(UV + cos(TIME * 13.45131) * dFact, 2.0);
+	
+	COLOR.rgb = mix(COLOR.rgb, (1.0 - COLOR.rgb) * 0.5, tookPowerReal);
 }

@@ -107,6 +107,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_7fxpa")
 [node name="GridMob" type="StaticBody3D" groups=["ClassicEntity"]]
 collision_layer = 4
 script = ExtResource("1_lcm6q")
+dmg = 20.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

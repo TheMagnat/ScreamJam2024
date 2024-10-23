@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsqjiefhg2hta"]
+
+[ext_resource type="Script" path="res://Scenes/SmallProp/FlyingProp.gd" id="1_k4f5q"]
+
+[node name="FlyingProp" type="Sprite3D"]
+billboard = 2
+shaded = true
+alpha_cut = 1
+alpha_scissor_threshold = 0.1
+script = ExtResource("1_k4f5q")
