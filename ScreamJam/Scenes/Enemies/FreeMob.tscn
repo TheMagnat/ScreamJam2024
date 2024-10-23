@@ -60,6 +60,7 @@ void light() {
 noise = SubResource("FastNoiseLite_4h50u")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hecun"]
+resource_local_to_scene = true
 render_priority = -10
 shader = SubResource("Shader_hmqh4")
 shader_parameter/death = 0.0
