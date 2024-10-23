@@ -85,6 +85,7 @@ func getRandomPos() -> Vector3:
 func _exit_tree() -> void:
 	GridEntityManager.entities.clear()
 	EventBus.noGridModeTriggered = false
+	GlobalZoneHandler.playerBestZone = 0
 
 # Generation
 func _ready() -> void:
