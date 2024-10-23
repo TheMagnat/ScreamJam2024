@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bmcknkhmj376d"]
+[gd_scene load_steps=21 format=3 uid="uid://bmcknkhmj376d"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeMob.gd" id="1_gca65"]
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeHandler.gd" id="2_4oayo"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://bjtjpvusvlk0q" path="res://Assets/SFX/enemies/ghost_die6.ogg" id="11_ahg1f"]
 [ext_resource type="AudioStream" uid="uid://dfty8rx3ghyml" path="res://Assets/SFX/enemies/ghost_die7.ogg" id="12_l1eqn"]
 [ext_resource type="AudioStream" uid="uid://dc2vnggqatevn" path="res://Assets/SFX/enemies/ghost_die8.ogg" id="13_oymdp"]
+[ext_resource type="AudioStream" uid="uid://bxcgn1k6j3mc" path="res://Assets/SFX/enemies/ghost_idle.ogg" id="14_5h0n5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqylk"]
 
@@ -137,6 +138,15 @@ volume_db = -5.0
 unit_size = 5.0
 max_db = -5.0
 pitch_scale = 0.79
+bus = &"RoomReverb"
+
+[node name="idle" type="AudioStreamPlayer3D" parent="Model"]
+stream = ExtResource("14_5h0n5")
+volume_db = -8.0
+unit_size = 7.0
+max_db = 0.0
+pitch_scale = 0.8
+autoplay = true
 bus = &"RoomReverb"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
