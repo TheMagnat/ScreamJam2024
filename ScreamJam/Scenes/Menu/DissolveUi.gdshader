@@ -27,20 +27,20 @@ void fragment() {
 	//{
 		//COLOR.rgb = backColor.rgb;
 	//}
-	
-	
+
+
 	vec2 factor = vec2(20.0, 13.0) * (1.0 + transition * 100.0);
 	vec2 id = floor(UV * factor) / factor;
-	
+
 	// Cool 1
 	vec3 menuBackground = texture(screen, vec2(UV.x + tan((id.y * 154.4147) + TIME) * 0.01 , UV.y + tan((id.x * 154.4147) + TIME) * 0.01 )).rgb * (1.0 - transition * 0.35);
-	
+
 	// Cool 2
 	// vec3 menuBackground = texture(screen, vec2(UV.x + cos((id.y * 154.4147) + TIME) * 0.01 , UV.y + sin((id.x * 154.4147) + TIME) * 0.01 )).rgb;
 
 	// Cool 3 - transition * 10.0 and tween duration of 0.5
 	// vec3 menuBackground = texture(screen, vec2(UV.x + cos((id.y * 154.4147) + TIME)*0.1 , UV.y + cos((id.x * 154.4147) + TIME)*0.1 )).rgb * (1.0 - transition * 0.35);
-	
+
 	vec3 normalBackground = texture(screen, UV).rgb;
 	COLOR.rgb = menuBackground;
 	COLOR.a = 1.0;

@@ -23,7 +23,7 @@ const CellTypeFilter := 0b1111
 # Map data 
 var mapData : Array[CellType]
 var mapSize: Vector2i
-@export_storage var availableSpawns : Array[Array]
+@export var availableSpawns : Array[Array]
 
 # Cache
 @onready var groundMesh := PlaneMesh.new()
@@ -113,7 +113,7 @@ func generateMap() -> void:
 	availablePos.clear()
 	availableSpawns.clear()
 	
-	availableSpawns = [[], [], [], []]
+	availableSpawns = [[], [], [], [], []]
 	
 	generateMapMesh()
 	
@@ -190,6 +190,7 @@ enum CellType {
 	SpawnPointZ1 = 7,
 	SpawnPointZ2 = 8,
 	SpawnPointZ3 = 9,
+	SpawnPointZ4 = 10,
 	AvailableFlag = 16,
 	DrawableFlag = 32
 }
@@ -279,7 +280,7 @@ func generateMapMesh():
 		var type = getType(element)
 		if element & CellType.DrawableFlag:
 			createCell(currentCol, currentRow)
-			if type >= CellType.SpawnPointZ0 && type <= CellType.SpawnPointZ3:
+			if type >= CellType.SpawnPointZ0 && type <= CellType.SpawnPointZ4:
 				availableSpawns[type - CellType.SpawnPointZ0].append(Vector3(currentCol * gridSpace, 1.0, currentRow * gridSpace))
 
 		elif type != CellType.Opening and !(drawWallCell(currentCol, currentRow, WallType.Left) || drawWallCell(currentCol, currentRow, WallType.Up)):
@@ -319,7 +320,7 @@ func loadMap(path: String) -> void:
 	# Now concat every array together
 	for row in mapDataArray:
 		for element in row:
-			if(element == CellType.Normal || element == CellType.MobSpawn || element == CellType.SpawnPointZ0 || element == CellType.SpawnPointZ1 || element == CellType.SpawnPointZ2 || element == CellType.SpawnPointZ3):
+			if(element == CellType.Normal || element == CellType.MobSpawn || element == CellType.SpawnPointZ0 || element == CellType.SpawnPointZ1 || element == CellType.SpawnPointZ2 || element == CellType.SpawnPointZ3 || element == CellType.SpawnPointZ4):
 				element ^= CellType.AvailableFlag
 				element ^= CellType.DrawableFlag
 			if(element == CellType.Hole):

@@ -17,7 +17,7 @@ texture = ExtResource("3_hpb6r")
 
 [node name="Light" type="OmniLight3D" parent="Holder" node_paths=PackedStringArray("omniLight", "torch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475332, 0)
-light_color = Color(0.360784, 0.698039, 1, 1)
+light_color = Color(0.781048, 0.279865, 0.283062, 1)
 light_energy = 1.5
 light_volumetric_fog_energy = 0.05
 light_size = 0.2

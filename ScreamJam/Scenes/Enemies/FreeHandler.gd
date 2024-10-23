@@ -14,6 +14,8 @@ var targetLastPosition: Vector3
 var timeSinceRandomDir: float = 3.0
 var randomDirection: Vector3
 
+const randomDirLength: float = 10.0
+
 func _physics_process(delta: float) -> void:
 	if parent.inAttackAnimation: return
 	
@@ -40,10 +42,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		if timeSinceRandomDir == 0.0:
 			randomDirection = Vector3(randf_range(-1, 1), 0.0, randf_range(-1, 1)).normalized()
-			
-		timeSinceRandomDir += delta
+			targetLastPosition = parent.global_position + randomDirection * randomDirLength
 		
-		targetLastPosition = parent.global_position + randomDirection * 30.0
+		timeSinceRandomDir += delta
 		
 		if timeSinceRandomDir > 5.0:
 			timeSinceRandomDir = 0.0

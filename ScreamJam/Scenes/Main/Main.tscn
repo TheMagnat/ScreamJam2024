@@ -249,6 +249,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 1.58456, 80)
 [node name="NoGridPower" parent="NavigationRegion3D/Loots" instance=ExtResource("17_7fq6s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120, 1, 150)
 
+[node name="Torch2" parent="NavigationRegion3D" instance=ExtResource("20_4q56o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 102.5)
+
+[node name="Torch3" parent="NavigationRegion3D" instance=ExtResource("20_4q56o")]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 180, 2, 92.5)
+
 [node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("3_1isk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.151, 1, 135.47)
 base_speed = 5.0
