@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://b70sfx2l07fnh"]
+[gd_scene load_steps=17 format=3 uid="uid://b70sfx2l07fnh"]
 
 [ext_resource type="Script" path="res://Scenes/Tutorial/tutorial.gd" id="1_bujhw"]
 [ext_resource type="PackedScene" uid="uid://cdn2oqit1gq4v" path="res://Scenes/Demo/Test.tscn" id="2_86hwq"]
 [ext_resource type="PackedScene" uid="uid://cj43m3khjkjyp" path="res://Scenes/Map/FullMap/TutorialMap.tscn" id="3_5nyjj"]
 [ext_resource type="AudioStream" uid="uid://b56fxo13lrmgd" path="res://Assets/SFX/tutorial/8bit_intro2.ogg" id="4_ihisv"]
 [ext_resource type="AudioStream" uid="uid://dwe1jljijcfhh" path="res://Assets/SFX/tutorial/8bit_validate.ogg" id="4_kh0yp"]
+[ext_resource type="PackedScene" uid="uid://s32ljyhnwxak" path="res://Scenes/MapStaticNode/Hole.tscn" id="4_t4smb"]
 [ext_resource type="AudioStream" uid="uid://nis7xan2np8n" path="res://Assets/SFX/tutorial/8bit_action.ogg" id="5_1kl2u"]
 [ext_resource type="AudioStream" uid="uid://dn2ljmbfi1oif" path="res://Assets/SFX/tutorial/8bit_eye.ogg" id="6_vamv3"]
 
@@ -87,6 +88,9 @@ camera_attributes = SubResource("CameraAttributesPractical_1qwlh")
 [node name="MapHolder" type="Node3D" parent="."]
 
 [node name="TutorialMap" parent="MapHolder" instance=ExtResource("3_5nyjj")]
+
+[node name="Hole" parent="MapHolder" instance=ExtResource("4_t4smb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23, 0, 20)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 10)
