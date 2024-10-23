@@ -24,5 +24,6 @@ func die():
 	dmgTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	dmgTween.tween_property(material, "shader_parameter/death", 1.0, 1.0)
 	dmgTween.parallel().tween_property($"../OmniLight3D", "light_energy", 0.0, 1.0)
+	dmgTween.parallel().tween_property($idle, "volume_db", -80.0, 1.0)
 	dmgTween.tween_callback(get_parent().queue_free)
 	$die.play()
