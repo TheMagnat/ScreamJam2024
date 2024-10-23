@@ -171,7 +171,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 80)
 
 [node name="ZoneTrigger" parent="." instance=ExtResource("15_88dqo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 85)
-zoneNumber = 2
+zoneNumber = 3
 
 [node name="TorchNormal" parent="." instance=ExtResource("17_mo1gy")]
 transform = Transform3D(0.0243101, 0, -0.999704, 0, 1, 0, 0.999704, 0, 0.0243101, 7.5, 2, 15)
