@@ -56,7 +56,7 @@ class_name Character extends CharacterBody3D
 
 @export_group("Feature Settings")
 ## Enable or disable jumping. Useful for restrictive storytelling environments.
-@export var jumping_enabled : bool = true
+const jumping_enabled : bool = false
 ## Wether the player can move in the air or not.
 @export var in_air_momentum : bool = true
 ## Smooths the feel of walking.
@@ -107,7 +107,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 var mouseInput : Vector2 = Vector2(0,0)
 
 const SANITY_MAX := 100.0
-const SANITY_RECOVER := 5.0
+const SANITY_RECOVER := 2.0
 var sanity := SANITY_MAX
 
 const HEALTH_MAX := 100.0
@@ -269,9 +269,9 @@ func _exit_tree() -> void:
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
-	if !InputMap.has_action(JUMP):
-		push_error("No control mapped for jumping. Please add an input map control. Disabling jump.")
-		jumping_enabled = false
+	#if !InputMap.has_action(JUMP):
+		#push_error("No control mapped for jumping. Please add an input map control. Disabling jump.")
+		#jumping_enabled = false
 	if !InputMap.has_action(LEFT):
 		push_error("No control mapped for move left. Please add an input map control. Disabling movement.")
 		immobile = true
@@ -355,9 +355,12 @@ func _physics_process(delta):
 				1:
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
-	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > 0.0 else (1.0 - sanity * 0.25))) * delta)
+	const SANITY_FACTOR := 0.7
+	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > SANITY_FACTOR else (1.0 + sqrt(4.0 * (SANITY_FACTOR - sanity/SANITY_MAX))))) * delta)
 	health = minf(HEALTH_MAX, health + HEALTH_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
+	
+	CAMERA.position = Vector3(0, 0, 0) + Vector3(1, 1, 1) * randf() * velocity.y * 0.002
 
 
 func handle_jumping():
