@@ -650,7 +650,7 @@ func blink(closing : bool):
 	blink_tween.set_ease(Tween.EASE_OUT)
 	blink_tween.set_trans(Tween.TRANS_SINE)
 	
-	var time := 0.25 + (1.0 - sanity / SANITY_MAX) * 5.0 if closing and hypnotized else 0.25
+	var time := 0.25 + (1.0 - sanity / SANITY_MAX) * 3.5 if closing and hypnotized else 0.25
 	blink_tween.tween_method(func(x: float): $PostProcess/ColorRect.material.set_shader_parameter("blink", x), $PostProcess/ColorRect.material.get_shader_parameter("blink"), 1.0 if closing else 0.0, time)
 	blink_tween.parallel().tween_method(func(x: float): AudioServer.get_bus_effect(0, 0).cutoff_hz = x, AudioServer.get_bus_effect(0, 0).cutoff_hz, 1000.0 if closing else 20050.0, time)
 	fast_blink_tween.tween_interval(time * 0.9)
