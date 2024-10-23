@@ -14,6 +14,8 @@ func _ready() -> void:
 	$CanvasLayer/Tutorial.hide()
 	Ambience.stop_ambience()
 	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 	var t := create_tween()
 	t.tween_callback($intro.play)
 	t.tween_method(func(x: float): $CanvasLayer/ColorRect.material.set_shader_parameter("pixelize", x), 0.0, 1.0, 2.25)
