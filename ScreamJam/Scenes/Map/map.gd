@@ -82,6 +82,10 @@ func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
 func getRandomPos() -> Vector3:
 	return availablePos[randi_range(0, availablePos.size() - 1)]
 
+func _exit_tree() -> void:
+	GridEntityManager.entities.clear()
+	EventBus.noGridModeTriggered = false
+
 # Generation
 func _ready() -> void:
 	generateMap()

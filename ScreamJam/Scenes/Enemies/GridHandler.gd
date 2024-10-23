@@ -60,7 +60,7 @@ func step() -> void:
 			return
 		
 		currentIdleCounter -= 1
-		if currentIdleCounter == 0 and stopIdle:
+		if currentIdleCounter == 0 and (stopIdle or EventBus.noGridModeTriggered):
 			currentIdleCounter = idleToMove
 			walkRandomDirection()
 

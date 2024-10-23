@@ -29,7 +29,7 @@ func onStep():
 		entity.step()
 
 func isAvailable(gridPosition: Vector2i):
-	for entity in entities: 
+	for entity in entities:
 		if entity.gridToken.goalPosition == gridPosition:
 			return false
 	

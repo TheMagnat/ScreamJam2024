@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 			goToLastPosition()
 	
 	else:
-		if not stopIdle: return
+		if not stopIdle and not EventBus.noGridModeTriggered: return
 		
 		if timeSinceRandomDir == 0.0:
 			randomDirection = Vector3(randf_range(-1, 1), 0.0, randf_range(-1, 1)).normalized()

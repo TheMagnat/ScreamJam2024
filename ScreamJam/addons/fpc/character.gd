@@ -82,9 +82,11 @@ class_name Character extends CharacterBody3D
 @export var handled_input := Vector2.ZERO
 @export var handled_sprint: bool = false
 @export var locked: bool = false # When true NOT ANY MOVE can be done
+@export var keepY: bool = false
 
 @export var environment: WorldEnvironment
-@onready var lootComponent: LootComponent = $LootComponent
+@onready var lootComponent: LootComponent = get_node("LootComponent") if has_node("LootComponent") else null
+
 
 
 # Member variables
@@ -204,8 +206,8 @@ func spawn():
 	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 0.0, 0.5)
 	
 	var newPosition = Global.map.availableSpawns[GlobalZoneHandler.playerBestZone].pick_random()
-	#if not Global.debug:
-	global_position = newPosition
+	if not Global.debug:
+		global_position = newPosition
 	if has_node("GridToken"):
 		$GridToken.setInitialPosition()
 
@@ -250,7 +252,8 @@ func _ready():
 	
 	$PostProcess/Label.modulate.a = 0.0
 	spawn()
-	global_position.y = 0.0 # Only on first spawn to have a seemless transition with the tutorial
+	if not keepY:
+		global_position.y = 0.0 # Only on first spawn to have a seemless transition with the tutorial
 	
 	if has_node("GridRestrictor"):
 		$GridRestrictor.activate()

@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://c8ujmx72xlmew"]
+[gd_scene load_steps=18 format=3 uid="uid://cao8lcrq6yql8"]
 
 [ext_resource type="Script" path="res://Scenes/Tutorial/tutorial_end.gd" id="1_i4xw5"]
 [ext_resource type="PackedScene" uid="uid://cj43m3khjkjyp" path="res://Scenes/Map/FullMap/TutorialMap.tscn" id="3_jneby"]
 [ext_resource type="PackedScene" uid="uid://s32ljyhnwxak" path="res://Scenes/MapStaticNode/Hole.tscn" id="3_udxxm"]
 [ext_resource type="AudioStream" uid="uid://b56fxo13lrmgd" path="res://Assets/SFX/tutorial/8bit_intro2.ogg" id="4_svs8x"]
-[ext_resource type="PackedScene" uid="uid://ce06wxvafthij" path="res://Scenes/Tutorial/leverEnd.tscn" id="4_xgwwi"]
+[ext_resource type="PackedScene" path="res://Scenes/Tutorial/leverEnd.tscn" id="4_xgwwi"]
 [ext_resource type="AudioStream" uid="uid://dwe1jljijcfhh" path="res://Assets/SFX/tutorial/8bit_validate.ogg" id="5_efnd7"]
 [ext_resource type="AudioStream" uid="uid://nis7xan2np8n" path="res://Assets/SFX/tutorial/8bit_action.ogg" id="6_kvrnp"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="7_4220s"]
@@ -95,40 +95,9 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23, 0,
 [node name="LeverEnd" parent="MapHolder" instance=ExtResource("4_xgwwi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.438, 2, 20)
 
-[node name="Character" parent="." node_paths=PackedStringArray("map", "environment") instance=ExtResource("7_4220s")]
-base_speed = null
-sprint_speed = null
-crouch_speed = null
-acceleration = null
-jump_velocity = null
-mouse_sensitivity = null
-invert_mouse_y = null
-immobile = null
-JUMP = null
-LEFT = null
-RIGHT = null
-FORWARD = null
-BACKWARD = null
-CROUCH = null
-SPRINT = null
-jumping_enabled = null
-in_air_momentum = null
-motion_smoothing = null
-sprint_enabled = null
-crouch_enabled = null
-crouch_mode = null
-sprint_mode = null
-dynamic_fov = null
-continuous_jumping = null
-view_bobbing = null
-jump_animation = null
-gravity_enabled = null
-lockedCamera = null
-handled = null
-handled_input = null
-handled_sprint = null
-map = NodePath("../MapHolder/TutorialMap")
-locked = null
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("7_4220s")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 13, 10)
+keepY = true
 environment = NodePath("../WorldEnvironment")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

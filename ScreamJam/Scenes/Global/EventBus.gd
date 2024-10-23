@@ -6,6 +6,7 @@ signal playerRespawned
 # Zone
 signal playerEnteredZone(zoneNumber: int)
 signal playerInNoGridMode
+var noGridModeTriggered: bool = false
 
 # Grid
 var gridStepDelay: Timer
@@ -19,3 +20,4 @@ func _ready() -> void:
 	add_child(gridStepDelay)
 	
 	playerGridStep.connect(func(): gridStepDelay.start())
+	playerInNoGridMode.connect(func(): noGridModeTriggered = true)
