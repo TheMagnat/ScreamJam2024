@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwwcmu2dhv6cc"]
+
+[ext_resource type="Script" path="res://Scenes/MapStaticNode/WallSpawner.gd" id="1_h7ale"]
+[ext_resource type="Material" uid="uid://bd0xh03ryyac0" path="res://Scenes/Map/WallAndDistHight.tres" id="2_50l8o"]
+[ext_resource type="ArrayMesh" uid="uid://d468yewea2vv" path="res://Assets/SimpleCube.obj" id="2_stql4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q68kp"]
+size = Vector3(5, 5, 5)
+
+[node name="WallSpawner" type="Node3D"]
+script = ExtResource("1_h7ale")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_q68kp")
+
+[node name="Mesh" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 2.5, 0)
+material_override = ExtResource("2_50l8o")
+mesh = ExtResource("2_stql4")
+skeleton = NodePath("../..")

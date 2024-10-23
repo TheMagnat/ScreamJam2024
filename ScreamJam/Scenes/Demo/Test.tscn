@@ -1,7 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://cdn2oqit1gq4v"]
 
 [ext_resource type="PackedScene" uid="uid://ccdirfdhffypp" path="res://Scenes/Map/FullMap/TestMap.tscn" id="1_sqrn0"]
-[ext_resource type="Shader" path="res://Scenes/Demo/Test.gdshader" id="2_4hhr2"]
+[ext_resource type="Shader" path="res://Scenes/Demo/NoGridPowerShader.gdshader" id="2_4hhr2"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_wdy7h"]
 [ext_resource type="Script" path="res://Scenes/Demo/CameraRotationRestrictor.gd" id="4_g5fn0"]
 [ext_resource type="Script" path="res://Scenes/Player/ActionComponent.gd" id="4_sf7w2"]
@@ -22,12 +22,12 @@
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_0rtn6"]
+[sub_resource type="Sky" id="Sky_6qkqn"]
 sky_material = SubResource("ProceduralSkyMaterial_02umm")
 
 [sub_resource type="Environment" id="Environment_w1wca"]
 background_mode = 2
-sky = SubResource("Sky_0rtn6")
+sky = SubResource("Sky_6qkqn")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.08
@@ -68,6 +68,7 @@ noise = SubResource("FastNoiseLite_psfs2")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jrr3h"]
 render_priority = 0
 shader = ExtResource("2_4hhr2")
+shader_parameter/fadeOut = 0.0
 shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_n5p6o"]
@@ -173,4 +174,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 85)
 zoneNumber = 2
 
 [node name="TorchNormal" parent="." instance=ExtResource("17_mo1gy")]
-transform = Transform3D(0.0243101, 0, -0.999704, 0, 1, 0, 0.999704, 0, 0.0243101, 7.5, 2.54936, 14.4521)
+transform = Transform3D(0.0243101, 0, -0.999704, 0, 1, 0, 0.999704, 0, 0.0243101, 7.5, 2, 15)

@@ -2,6 +2,7 @@ extends Node
 
 # Zone
 signal playerEnteredZone(zoneNumber: int)
+signal playerInNoGridMode
 
 # Grid
 var gridStepDelay: Timer

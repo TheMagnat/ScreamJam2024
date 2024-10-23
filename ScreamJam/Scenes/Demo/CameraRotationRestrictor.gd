@@ -19,6 +19,9 @@ func activate():
 	rotationTween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	rotationTween.tween_property(head, "rotation", Vector3(0.0, goalRotation, 0.0), rotationTime)
 
+func deactivate():
+	character.lockedCamera = false
+
 func updateGoalRotation(newOffset: float):
 	if not character.locked:
 		goalRotation -= newOffset * PI / 2.0
@@ -51,4 +54,4 @@ func _input(event: InputEvent) -> void:
 		if lockCamera:
 			activate()
 		else:
-			character.lockedCamera = false
+			deactivate()

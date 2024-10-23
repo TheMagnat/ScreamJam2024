@@ -50,6 +50,14 @@ func isAvailable(goal2dPosition: Vector2i):
 	var cellType = getMapData(goal2dPosition.x, goal2dPosition.y)
 	return cellType & CellType.AvailableFlag
 
+func setMapData(worldPosition: Vector3, newValue: int = 0) -> void:
+	var x: int = round(worldPosition.x / gridSpace)
+	var y: int = round(worldPosition.z / gridSpace)
+	
+	if x < 0 or y < 0 or x >= mapSize.x or y >= mapSize.y:
+		return
+	
+	mapData[x + y * mapSize.x] = newValue
 
 func getNeighbors(centerCel: Vector2i) -> Array[Vector2i]:
 	var neighbors: Array[Vector2i]

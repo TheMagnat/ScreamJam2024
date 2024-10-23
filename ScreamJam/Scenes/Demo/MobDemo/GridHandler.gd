@@ -28,9 +28,18 @@ var lastTargetGoalWorldPosition: Vector3
 # Grid positions
 @onready var gridToken: GridToken = $"../GridToken"
 
+# To reset on player death
+var initialPosition: Vector3
+var stopIdle: bool = false
 func _ready() -> void:
 	gridToken.map = map
+	initialPosition = parent.global_position
+	reset()
+	
+func reset():
+	parent.global_position = initialPosition
 	gridToken.setInitialPosition()
+	stopIdle = false
 
 func step() -> void:
 	currentStepCounter -= 1
@@ -47,16 +56,13 @@ func step() -> void:
 			
 			if lastTargetGoalPosition == gridToken.goalPosition:
 				lastTargetPositionIsOk = false
-				print("Reached last target known position")
-			
 			return
 		
 		currentIdleCounter -= 1
-		if currentIdleCounter == 0:
+		if currentIdleCounter == 0 and stopIdle:
 			currentIdleCounter = idleToMove
 			walkRandomDirection()
-		else:
-			print("Idle")
+
 
 func walkRandomDirection() -> void:
 	var neighbors: Array[Vector2i] = map.getNeighbors(gridToken.goalPosition)
@@ -67,7 +73,6 @@ func walkRandomDirection() -> void:
 			trueNeighbors.push_back( neighbor )
 	
 	if trueNeighbors.is_empty():
-		print("No Neighbor possible, rest")
 		return
 	
 	gridToken.goalPosition = trueNeighbors[ randi_range(0, trueNeighbors.size() - 1) ]
@@ -86,6 +91,7 @@ func updateTargetKnownPosition() -> void:
 		lastTargetGoalPosition = targetGridToken.goalPosition
 	
 	lastTargetPositionIsOk = true
+	stopIdle = true
 
 func walkToLastTarget():
 	

@@ -50,6 +50,8 @@ func activate():
 	timeToStep.stop()
 
 func deactivate():
+	cameraRotationRestrictor.deactivate()
+	
 	character.immobile = false
 	character.handled = false
 	

@@ -16,8 +16,10 @@ func tryLoot() -> bool:
 	if nearestLoot:
 		if nearestLoot is Weapon:
 			take(nearestLoot, false)
+			EventBus.playerEnteredZone.emit(1)
 		else:
 			take(nearestLoot, true)
+			EventBus.playerEnteredZone.emit(2)
 		
 		return true
 	

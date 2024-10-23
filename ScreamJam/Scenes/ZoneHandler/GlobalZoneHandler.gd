@@ -18,7 +18,7 @@ func playerEnteredZone(zoneId: int):
 		playerBestZone = zoneId
 		playerBestZoneChanged.emit(playerBestZone)
 	
-	if zoneId >= 2 and not alreadyBlown:
+	if zoneId >= 3 and not alreadyBlown:
 		blowPlayer.play()
 		blow.emit()
 		alreadyBlown = true

@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://r1wyue15c8ri"]
+
+[ext_resource type="Script" path="res://Scenes/PlayerTools/TorchNormal.gd" id="1_aoq44"]
+[ext_resource type="Texture2D" uid="uid://wm871jxw3i2r" path="res://Assets/Torch/SOCLE.png" id="2_3dk0n"]
+[ext_resource type="Script" path="res://Scenes/PlayerTools/ForceFront.gd" id="3_8jgyt"]
+[ext_resource type="PackedScene" uid="uid://yw4r5ypd28vr" path="res://Scenes/PlayerTools/TorchSprite.tscn" id="4_853gn"]
+[ext_resource type="Texture2D" uid="uid://whj1un85hstj" path="res://Assets/Torch/torche2.png" id="5_bnyrd"]
+[ext_resource type="Script" path="res://Scenes/PlayerTools/LightSource.gd" id="6_ah0e5"]
+
+[node name="InverseTorch" type="Node3D"]
+script = ExtResource("1_aoq44")
+
+[node name="Socle" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0.120949)
+pixel_size = 0.001
+shaded = true
+alpha_cut = 1
+alpha_scissor_threshold = 0.2
+texture = ExtResource("2_3dk0n")
+
+[node name="Holder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.278682)
+script = ExtResource("3_8jgyt")
+
+[node name="TorchSprite" parent="Holder" instance=ExtResource("4_853gn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0.035)
+texture = ExtResource("5_bnyrd")
+
+[node name="Light" type="OmniLight3D" parent="Holder" node_paths=PackedStringArray("omniLight", "torch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475332, 0.0486663)
+light_color = Color(0.360784, 0.698039, 1, 1)
+light_energy = 1.5
+light_volumetric_fog_energy = 0.05
+light_size = 0.2
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = 0.05
+shadow_blur = 2.0
+omni_range = 15.0
+script = ExtResource("6_ah0e5")
+omniLight = NodePath(".")
+torch = NodePath("../TorchSprite")
+crazyColor = Color(0.141176, 0.168627, 1, 1)
+canBeBlown = false

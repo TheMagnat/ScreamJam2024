@@ -227,7 +227,8 @@ func spawn():
 	blink(true)
 	shouldOpen = true
 	
-	$GridRestrictor.activate()
+	if not $GridToken.isFree:
+		$GridRestrictor.activate()
 	
 	dead = false
 

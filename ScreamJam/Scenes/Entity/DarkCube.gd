@@ -19,4 +19,4 @@ func _physics_process(delta: float) -> void:
 		if playerBody.lootComponent.leftHandTool is LightSource and playerBody.lootComponent.leftHandTool.isOn:
 			return
 		
-		playerBody.damageSanity(sanityDmgPerSec * delta, 1.0, 4.0)
+		playerBody.damageSanity(sanityDmgPerSec * delta, 1.0, 1.0)
