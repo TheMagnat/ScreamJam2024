@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ds0pt2ht5o66c"]
+[gd_scene load_steps=9 format=3 uid="uid://ds0pt2ht5o66c"]
 
 [ext_resource type="Script" path="res://Scenes/PlayerTools/noGridPower.gd" id="1_0lush"]
 [ext_resource type="Shader" path="res://Scenes/Demo/NoGridPowerShader.gdshader" id="1_nw1e6"]
+[ext_resource type="AudioStream" uid="uid://coqye82apobul" path="res://Assets/SFX/events/glitch_pickup.ogg" id="3_70odk"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_23xta"]
 frequency = 0.011
@@ -39,5 +40,11 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_qt6u4")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_70odk")
+volume_db = -5.0
+pitch_scale = 0.8
+stream_paused = true
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
