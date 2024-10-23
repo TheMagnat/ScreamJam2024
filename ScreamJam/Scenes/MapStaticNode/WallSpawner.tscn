@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwwcmu2dhv6cc"]
+[gd_scene load_steps=6 format=3 uid="uid://bwwcmu2dhv6cc"]
 
 [ext_resource type="Script" path="res://Scenes/MapStaticNode/WallSpawner.gd" id="1_h7ale"]
 [ext_resource type="Material" uid="uid://bd0xh03ryyac0" path="res://Scenes/Map/WallAndDistHight.tres" id="2_50l8o"]
 [ext_resource type="ArrayMesh" uid="uid://d468yewea2vv" path="res://Assets/SimpleCube.obj" id="2_stql4"]
+[ext_resource type="AudioStream" uid="uid://c7qggjywm6eo6" path="res://Assets/SFX/events/wall_moving.ogg" id="4_l5v4a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q68kp"]
 size = Vector3(5, 5, 5)
@@ -25,3 +26,10 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 2.5, 0)
 material_override = ExtResource("2_50l8o")
 mesh = ExtResource("2_stql4")
 skeleton = NodePath("../..")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+stream = ExtResource("4_l5v4a")
+volume_db = -10.0
+bus = &"RoomReverb"
+attenuation_filter_db = -5.0

@@ -3,6 +3,9 @@ extends Node3D
 
 @export var zoneToTrigger: int
 
+# Cache
+@onready var audioStramPlayer: AudioStreamPlayer3D = $AudioStreamPlayer3D
+
 func _ready() -> void:
 	GlobalZoneHandler.playerBestZoneChanged.connect(onZoneChanged)
 	
@@ -17,10 +20,12 @@ func triggerWall() -> void:
 	onMove = true
 	initialPosition = position
 	
+	audioStramPlayer.play()
+	
 	$StaticBody3D.position.y = 0.0
 	var tween: Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-	tween.tween_property(mesh, "position:y", 0.0, 2.0)
-	tween.parallel().tween_property(self, "moveMu", 0.0, 2.0)
+	tween.tween_property(mesh, "position:y", 0.0, 3.0)
+	tween.parallel().tween_property(self, "moveMu", 0.0, 3.0)
 	tween.tween_property(self, "onMove", false, 0.0)
 	tween.tween_property(self, "position", initialPosition, 0.0)
 	
