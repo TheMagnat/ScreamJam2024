@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://b70sfx2l07fnh"]
 
 [ext_resource type="Script" path="res://Scenes/Tutorial/tutorial.gd" id="1_bujhw"]
-[ext_resource type="PackedScene" uid="uid://cdn2oqit1gq4v" path="res://Scenes/Demo/Test.tscn" id="2_86hwq"]
+[ext_resource type="PackedScene" uid="uid://crlsuhpbcnmek" path="res://Scenes/Main/Main.tscn" id="2_02vt2"]
 [ext_resource type="PackedScene" uid="uid://cj43m3khjkjyp" path="res://Scenes/Map/FullMap/TutorialMap.tscn" id="3_5nyjj"]
 [ext_resource type="AudioStream" uid="uid://b56fxo13lrmgd" path="res://Assets/SFX/tutorial/8bit_intro2.ogg" id="4_ihisv"]
 [ext_resource type="AudioStream" uid="uid://dwe1jljijcfhh" path="res://Assets/SFX/tutorial/8bit_validate.ogg" id="4_kh0yp"]
@@ -79,7 +79,7 @@ shader_parameter/blink = null
 
 [node name="Tutorial" type="Node3D"]
 script = ExtResource("1_bujhw")
-nextScene = ExtResource("2_86hwq")
+nextScene = ExtResource("2_02vt2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6rmev")
