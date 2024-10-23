@@ -31,8 +31,9 @@ func _ready() -> void:
 	$MapHolder/LeverEnd.finished.connect(finish)
 
 func finish():
+	$ambience.stop()
 	$CanvasLayer/Polygon2D.show()
-	Transition.start(get_tree().change_scene_to_file.bind("res://Scenes/Menu/end_credits.tscn"), 0.5, Transition.Type.Alpha, Transition.Type.Alpha)
+	Transition.start(get_tree().change_scene_to_file.bind("res://Scenes/Menu/end_credits.tscn"), 1.0, Transition.Type.Alpha, Transition.Type.Alpha)
 
 func _exit_tree():
 	print("Exitting tutorial")
