@@ -123,13 +123,10 @@ func _physics_process(_delta: float) -> void:
 		
 		
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Idle"):
-		if EventBus.gridStepDelay.is_stopped():
-			EventBus.playerGridStep.emit()
-	
-	if event.is_action_pressed("debug2"):
-		gridToken.isFree = not gridToken.isFree
-		if not gridToken.isFree:
-			activate()
-		else:
-			deactivate()
+	if Global.debug:
+		if event.is_action_pressed("debug2"):
+			gridToken.isFree = not gridToken.isFree
+			if not gridToken.isFree:
+				activate()
+			else:
+				deactivate()

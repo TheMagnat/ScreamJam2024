@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2srkc3dvadmh"]
+
+[ext_resource type="Texture2D" uid="uid://fiuqjacplrff" path="res://Assets/SmallProps/web.png" id="1_7227f"]
+
+[node name="SmallWeb" type="Sprite3D"]
+pixel_size = 0.0025
+shaded = true
+alpha_cut = 1
+alpha_scissor_threshold = 0.1
+texture = ExtResource("1_7227f")

@@ -17,8 +17,7 @@ const probabilityCurbeSteepness: float = 0.1
 var eventInProgress: bool = false
 
 # Possible events
-var events: Array[Callable] = [spawnFarEntity, spawnFarSound, spawnCrawlingBug, closeEye]
-var eventsLowProba: Array[Callable] = [spawnEye]
+var events: Array[Callable] = [spawnFarEntity, spawnFarSound, spawnCrawlingBug]
 
 func _physics_process(delta: float) -> void:
 	if not Global.inGame or eventInProgress: return
@@ -40,10 +39,13 @@ func _physics_process(delta: float) -> void:
 
 func fireEvent():
 	#var randValue: float = randf()
-	if randf() < 0.96:
+	if randf() < 0.94:
 		events.pick_random().call()
 	else:
-		eventsLowProba.pick_random().call()
+		if randf() < 0.25:
+			spawnEye()
+		else:
+			closeEye()
 
 
 ## Animations ##

@@ -20,6 +20,7 @@ func activate():
 	rotationTween.tween_property(head, "rotation", Vector3(0.0, goalRotation, 0.0), rotationTime)
 
 func deactivate():
+	lockCamera = false
 	character.lockedCamera = false
 
 func updateGoalRotation(newOffset: float):
@@ -38,20 +39,9 @@ func updateHeadRotation():
 	rotationTween.tween_method(func(current: float): head.rotation.y = lerp_angle(originalRotation, goalRotation, current), 0.0, 1.0, rotationTime)
 	
 func _input(event: InputEvent) -> void:
-	
-	if event.is_action_pressed("RotateLeft"):
-		updateGoalRotation(-1)
-		
-	if event.is_action_pressed("RotateRight"):
-		updateGoalRotation(1)
-	
-	if event.is_action_pressed("debug1"):
-		lockCamera = not lockCamera
-		
-		# Can't unlock camera if grid is locked
-		if not gridRestrictor.gridToken.isFree: lockCamera = true
-		
-		if lockCamera:
-			activate()
-		else:
-			deactivate()
+	if lockCamera:
+		if event.is_action_pressed("RotateLeft"):
+			updateGoalRotation(-1)
+			
+		if event.is_action_pressed("RotateRight"):
+			updateGoalRotation(1)

@@ -1,5 +1,6 @@
-[gd_scene load_steps=34 format=3 uid="uid://cdn2oqit1gq4v"]
+[gd_scene load_steps=41 format=3 uid="uid://cdn2oqit1gq4v"]
 
+[ext_resource type="PackedScene" uid="uid://b2i4b260m40sw" path="res://GlobalEnvironment.tscn" id="1_rpjso"]
 [ext_resource type="PackedScene" uid="uid://ccdirfdhffypp" path="res://Scenes/Map/FullMap/TestMap.tscn" id="1_sqrn0"]
 [ext_resource type="Shader" path="res://Scenes/Demo/NoGridPowerShader.gdshader" id="2_4hhr2"]
 [ext_resource type="PackedScene" uid="uid://btdr51lyhxi7b" path="res://Scenes/Enemies/NoGridSpawner.tscn" id="2_jab5l"]
@@ -11,6 +12,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="5_olldc"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="6_h0pw4"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/AttackComponent.gd" id="6_t6siv"]
+[ext_resource type="Shader" path="res://Scenes/Demo/Particle.gdshader" id="7_3nujw"]
 [ext_resource type="Script" path="res://Scenes/Enemies/GridEntityManager.gd" id="7_dmy4d"]
 [ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="7_wwkf4"]
 [ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="9_373d5"]
@@ -22,38 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://d1ra53galag05" path="res://Scenes/PlayerTools/DaggerDrop.tscn" id="18_hs7ga"]
 [ext_resource type="PackedScene" uid="uid://r1wyue15c8ri" path="res://Scenes/PlayerTools/InverseTorch.tscn" id="19_vqq8g"]
 [ext_resource type="PackedScene" uid="uid://ds0pt2ht5o66c" path="res://Scenes/PlayerTools/NoGridPower.tscn" id="20_22p0l"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_02umm"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_6qkqn"]
-sky_material = SubResource("ProceduralSkyMaterial_02umm")
-
-[sub_resource type="Environment" id="Environment_w1wca"]
-background_mode = 2
-sky = SubResource("Sky_6qkqn")
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.08
-tonemap_mode = 2
-tonemap_exposure = 2.0
-ssao_enabled = true
-ssil_enabled = true
-glow_enabled = true
-glow_intensity = 2.0
-fog_depth_begin = 3.5
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.305
-volumetric_fog_length = 32.0
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gqt30"]
-dof_blur_far_enabled = true
-dof_blur_far_distance = 6.0
-dof_blur_near_enabled = true
-dof_blur_near_distance = 0.01
-dof_blur_near_transition = -1.0
-dof_blur_amount = 0.2
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_gxk6b"]
 vertices = PackedVector3Array(8.25, 0.5, 3.5, 12, 0.5, 3.75, 12.25, 0.5, 2, 8.25, 0.5, -1.75, 16.5, 0.5, 2, 16.75, 0.5, -1.75, 18.25, 0.5, 2.25, 18.25, 0.5, 4, 22, 0.5, 4, 22.25, 0.5, 2, 26.5, 0.5, 2, 26.75, 0.5, -1.75, 28.25, 0.5, 2.25, 28.25, 0.5, 4, 32, 0.5, 4, 32.25, 0.5, 2, 37, 0.5, 2, 37, 0.5, -1.75, 13, 5.5, 3, 13, 5.5, 7.25, 17.25, 5.5, 7.25, 17.25, 5.5, 3, 23, 5.5, 3, 23, 5.5, 7.25, 27.25, 5.5, 7.25, 27.25, 5.5, 3, 33, 5.5, 3, 33, 5.5, 7.25, 37, 5.5, 7, 37, 5.5, 3, 12.5, 0.5, 12, 12.75, 0.5, 8.25, 12, 0.5, 8, 8.25, 0.5, 12, 22.5, 0.5, 12, 22.75, 0.5, 8.25, 22, 0.5, 8, 18.25, 0.5, 7.75, 17.25, 0.5, 8.25, 17.75, 0.5, 12, 28.25, 0.5, 7.75, 27.25, 0.5, 8.25, 27.5, 0.5, 12, 32, 0.5, 12, 17, 0.5, 12.25, 13.25, 0.5, 12.25, 13.25, 0.5, 14, 17, 0.5, 14, 27, 0.5, 12.25, 23.25, 0.5, 12.25, 23.25, 0.5, 14, 27, 0.5, 14, 43.25, 0.5, 18.5, 52, 0.5, 18.75, 52.25, 0.5, 17, 57, 0.5, 17, 57, 0.5, 8.25, 43.25, 0.5, 8.25, 8, 5.5, 17, 12.25, 5.5, 17.25, 12.25, 5.5, 13, 8, 5.5, 13, 18, 5.5, 13, 18, 5.5, 17.25, 22.25, 5.5, 17.25, 22.25, 5.5, 13, 28, 5.5, 13, 28, 5.5, 17.25, 32, 5.5, 17, 32, 5.5, 13, 17.5, 0.5, 32, 17.75, 0.5, 28.25, 17, 0.5, 28, 13.25, 0.5, 32, 23.25, 0.5, 26.25, 27, 0.5, 26.5, 53, 5.5, 18, 53, 5.5, 22.25, 57, 5.5, 22, 57, 5.5, 18, 43.25, 0.5, 28.5, 47, 0.5, 28.75, 47.25, 0.5, 27, 52, 0.5, 27, 18, 5.5, 22.75, 18, 5.5, 27.25, 22.25, 5.5, 27.25, 22.25, 5.5, 22.75, 23.25, 0.5, 27.75, 18.25, 0.5, 32.25, 22.25, 0.5, 32, 22.75, 0.5, 28.25, 18.25, 0.5, 34, 22, 0.5, 34, 27, 0.5, 32, 8, 5.5, 28, 8, 5.5, 32.25, 12.25, 5.5, 32.25, 12.25, 5.5, 27.75, 48, 5.5, 28, 48, 5.5, 32.25, 52, 5.5, 32.25, 52, 5.5, 28, 47.5, 0.5, 37, 47.75, 0.5, 33.25, 47, 0.5, 33, 43.25, 0.5, 37, 13, 5.5, 33, 13, 5.5, 37.25, 17.25, 5.5, 37.25, 17.25, 5.5, 33, 23, 5.5, 33, 23, 5.5, 37.25, 27, 5.5, 37, 27, 5.5, 33, 12, 0.5, 46.5, 12, 0.5, 33.25, 8.25, 0.5, 33.25, 8.25, 0.5, 46.75, 48.25, 0.5, 37.25, 52, 0.5, 33.25, 48.25, 0.5, 46.25, 52, 0.5, 46.5, 18.25, 0.5, 46, 22, 0.5, 46.25, 42.75, 5.5, 46.75, 42.75, 5.5, 47.25, 47.25, 5.5, 47.25, 47.25, 5.5, 38, 43, 5.5, 38, 13, 5.5, 42.75, 13, 5.5, 47.25, 17.25, 5.5, 47.25, 17.25, 5.5, 42.75, 23, 5.5, 47.25, 27.25, 5.5, 47.25, 27, 5.5, 43, 23, 5.5, 42.75, 18.25, 0.5, 47.75, 22, 0.5, 48, 17.75, 0.5, 48.25, 18, 0.5, 52, 22, 0.5, 52.25, 16, 0.5, 48.25, 16.25, 0.5, 52, 24, 0.5, 52, 24, 0.5, 48.25, 18.25, 0.5, 54, 22, 0.5, 54, 48.25, 0.5, 47.75, 47.75, 0.5, 48.25, 46.25, 0.5, 48.25, 46.5, 0.5, 52, 52, 0.5, 52, 8.25, 0.5, 52.25, 12, 0.5, 52.75, 12.25, 0.5, 52, 12.25, 0.5, 48.25, 3, 5.5, 48, 3, 5.5, 52.25, 7.25, 5.5, 52.25, 7.25, 5.5, 47.75, 8, 0.5, 57, 8.25, 0.5, 58.75, 12, 0.5, 58.5, 7.75, 0.5, 53.25, 3.25, 0.5, 53.25, 3.25, 0.5, 57, 13, 5.5, 53, 13, 5.5, 57.25, 17.25, 5.5, 57.25, 17.25, 5.5, 53, 23, 5.5, 53, 23, 5.5, 57.25, 27, 5.5, 57, 27.25, 5.5, 53.25, 18.25, 0.5, 86, 22, 0.5, 86.25, 3, 5.5, 58, 3, 5.5, 62.25, 7.25, 5.5, 62.25, 7.25, 5.5, 58, 8, 0.5, 67, 8.25, 0.5, 68.75, 12, 0.5, 68.5, 8.25, 0.5, 62.75, 7.75, 0.5, 63.25, 3.25, 0.5, 63.25, 3.25, 0.5, 67, 3, 5.5, 68, 3, 5.5, 72.25, 7.25, 5.5, 72.25, 7.25, 5.5, 68, 8, 0.5, 77, 8.25, 0.5, 78.75, 12, 0.5, 78.5, 8.25, 0.5, 72.75, 7.75, 0.5, 73.25, 3.25, 0.5, 73.25, 3.25, 0.5, 77, 3, 5.5, 78, 3, 5.5, 82.25, 7.25, 5.5, 82.25, 7.25, 5.5, 78, 8.25, 0.5, 82.75, 12, 0.5, 87, 7.75, 0.5, 83.25, 3.25, 0.5, 83.25, 3.25, 0.5, 87, 13, 5.5, 82.75, 13, 5.5, 87.25, 17.25, 5.5, 87.25, 17.25, 5.5, 82.75, 23, 5.5, 87.25, 27.25, 5.5, 87.25, 27, 5.5, 83, 23, 5.5, 82.75, 18.25, 0.5, 87.75, 22, 0.5, 88, 17.75, 0.5, 88.25, 13.25, 0.5, 88.25, 13.25, 0.5, 92, 23.5, 0.5, 92, 23.75, 0.5, 88.25, 8, 5.5, 92, 12.25, 5.5, 92, 12.25, 5.5, 88, 7.75, 5.5, 88, 32, 0.5, 92, 32, 0.5, 88.25)
@@ -78,6 +48,53 @@ shader_parameter/noise = SubResource("NoiseTexture2D_pawuw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_n5p6o"]
 
+[sub_resource type="Curve" id="Curve_xtpgb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.246377, 1), 0.0, 0.0, 0, 0, Vector2(0.753623, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_o1gtx"]
+curve = SubResource("Curve_xtpgb")
+
+[sub_resource type="Curve" id="Curve_8jdrh"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.253623, 1), 0.0, 0.0, 0, 0, Vector2(0.746377, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_7cohy"]
+curve = SubResource("Curve_8jdrh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_182ps"]
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, -0.4, 0)
+scale_min = 0.05
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_7cohy")
+color = Color(0, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_o1gtx")
+turbulence_enabled = true
+turbulence_noise_scale = 3.0
+turbulence_noise_speed_random = 0.1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pi6uv"]
+frequency = 0.001
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gy8mo"]
+seamless = true
+seamless_blend_skirt = 0.285
+noise = SubResource("FastNoiseLite_pi6uv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pq5s5"]
+render_priority = 0
+shader = ExtResource("7_3nujw")
+shader_parameter/noise = SubResource("NoiseTexture2D_gy8mo")
+
+[sub_resource type="SphereMesh" id="SphereMesh_palft"]
+material = SubResource("ShaderMaterial_pq5s5")
+radius = 0.125
+height = 0.25
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3m20t"]
 shader = ExtResource("10_3ib1l")
 shader_parameter/deform = 0.004
@@ -87,9 +104,7 @@ font_size = 24
 
 [node name="Node3D" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_w1wca")
-camera_attributes = SubResource("CameraAttributesPractical_gqt30")
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_rpjso")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_gxk6b")
@@ -111,6 +126,14 @@ base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
 environment = NodePath("../WorldEnvironment")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27452, 0)
+amount = 128
+lifetime = 4.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_182ps")
+draw_pass_1 = SubResource("SphereMesh_palft")
 
 [node name="ActionComponent" type="Node3D" parent="Character" node_paths=PackedStringArray("lootComponent", "attackComponent")]
 script = ExtResource("4_sf7w2")
@@ -210,3 +233,6 @@ transform = Transform3D(-1, 0, -7.45058e-08, 0, 1, 0, 7.45058e-08, 0, -1, 5.7975
 
 [node name="NoGridPower" parent="." instance=ExtResource("20_22p0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 75)
+
+[node name="NoGridPower2" parent="." instance=ExtResource("20_22p0l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.98891, 1.92571, 9.62819)

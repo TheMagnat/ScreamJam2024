@@ -13,7 +13,7 @@ const RESOLUTIONS = {
 	"800x600" : Vector2i(800,600),
 	"640x480" : Vector2i(640,480),
 }
-@onready var MOUSE_SENSITIVTY = 1.0
+@onready var MOUSE_SENSITIVTY = 0.4
 
 @onready var resolutionOptions = $Panel/MarginContainer/GridContainer/ResolutionOptions
 
@@ -21,6 +21,10 @@ const RESOLUTIONS = {
 
 @onready var hotkeyButtonScene = preload("res://Scenes/Menu/ActionKeyButton.tscn")
 @onready var controlsContainer = $Panel/MarginContainer/GridContainer/Container/ScrollContainer/ControlsContainer
+
+# Sensivity controls
+@onready var sensitivityLabel: Label = $Panel/MarginContainer/GridContainer/SensitivityLabel
+@onready var sensitivtySlider: HSlider = $Panel/MarginContainer/GridContainer/SensitivtySlider
 
 var inputDictionnary = {
 	"Up": "Forward",
@@ -43,6 +47,8 @@ var buttonRemapping
 const VOLUME_LIMIT = -40
 
 func _ready():
+	EventBus.playerInNoGridMode.connect(showSensivity)
+	
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	
 	_add_resolutions()
@@ -50,6 +56,10 @@ func _ready():
 	
 	enable(true)
 	hide()
+
+func showSensivity():
+	sensitivityLabel.show()
+	sensitivtySlider.show()
 
 func enable(enabled: bool):
 	set_process_input(enabled)

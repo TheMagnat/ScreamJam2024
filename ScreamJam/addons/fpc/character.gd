@@ -684,15 +684,15 @@ func _input(event: InputEvent):
 		
 		blink(false)
 	
-	if event.is_action_pressed("debugSuicide"):
-		suicide()
+	#if event.is_action_pressed("debugSuicide"):
+		#suicide()
 	
-	if event.is_action_pressed("ui_end"): #debug
-		damageSanity(10.0)
-		print(sanity)
-	if event.is_action_pressed("ui_home"):
-		damageHealth(10.0)
-		print(health)
+	#if event.is_action_pressed("ui_end"): #debug
+		#damageSanity(10.0)
+		#print(sanity)
+	#if event.is_action_pressed("ui_home"):
+		#damageHealth(10.0)
+		#print(health)
 
 
 func _unhandled_input(event : InputEvent):

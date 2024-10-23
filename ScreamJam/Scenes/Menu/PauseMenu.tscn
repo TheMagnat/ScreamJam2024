@@ -86,18 +86,20 @@ layout_mode = 2
 button_pressed = true
 
 [node name="SensitivityLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
+visible = false
 layout_mode = 2
 text = "Mouse Sensitivity"
 label_settings = SubResource("LabelSettings_2ywvt")
 
 [node name="SensitivtySlider" type="HSlider" parent="Panel/MarginContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 0.01
 max_value = 2.0
 step = 0.0
-value = 1.0
+value = 0.4
 ticks_on_borders = true
 
 [node name="ControlsLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]

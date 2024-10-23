@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://ch4lwct46rvd3"]
+[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://b88m1ow716e83"]
 
 [ext_resource type="Shader" path="res://Scenes/Map/GroundShader.gdshader" id="1_16lxo"]
 [ext_resource type="Texture2D" uid="uid://dg8x6o77f2aol" path="res://Assets/Ground/Ground/Substance_graph_ambientocclusion.png" id="1_w282f"]
