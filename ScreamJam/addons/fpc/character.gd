@@ -205,12 +205,12 @@ func spawn():
 	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 0.0, 0.5)
 	
 	var newPosition = map.availableSpawns[GlobalZoneHandler.playerBestZone].pick_random()
-	
 	if not Global.debug:
 		global_position = newPosition
 	
-	
-	$GridToken.setInitialPosition()
+	global_position = newPosition
+	if has_node("GridToken"):
+		$GridToken.setInitialPosition()
 
 	sanity = SANITY_MAX
 	health = HEALTH_MAX
@@ -227,7 +227,7 @@ func spawn():
 	blink(true)
 	shouldOpen = true
 	
-	if not $GridToken.isFree:
+	if has_node("GridRestrictor") and not $GridToken.isFree:
 		$GridRestrictor.activate()
 	
 	dead = false
@@ -255,7 +255,8 @@ func _ready():
 	spawn()
 	global_position.y = 0.0 # Only on first spawn to have a seemless transition with the tutorial
 	
-	$GridRestrictor.activate()
+	if has_node("GridRestrictor"):
+		$GridRestrictor.activate()
 
 func _exit_tree() -> void:
 	Global.inGame = false
