@@ -23,7 +23,7 @@ var stopIdle: bool = false
 func _ready() -> void:
 	initialPosition = parent.global_position
 	EventBus.playerRespawned.connect(reset)
-	
+
 func reset():
 	parent.stopAttackAnimation()
 	parent.global_position = initialPosition
@@ -31,8 +31,9 @@ func reset():
 	validLastPosition = false
 	target = null
 
+var attackTimer : SceneTreeTimer
 func _physics_process(delta: float) -> void:
-	if parent.inAttackAnimation or dead: return
+	if parent.inAttackAnimation or dead or (attackTimer and attackTimer.time_left > 0.0): return
 	
 	var reachedTargetPosition: bool = false
 	
@@ -50,6 +51,7 @@ func _physics_process(delta: float) -> void:
 			
 			if target:
 				parent.attack(target, parent.global_position)
+				attackTimer = get_tree().create_timer(1.25)
 		
 		# We need to reach target position
 		else:
