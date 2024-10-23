@@ -56,7 +56,7 @@ class_name Character extends CharacterBody3D
 
 @export_group("Feature Settings")
 ## Enable or disable jumping. Useful for restrictive storytelling environments.
-@export var jumping_enabled : bool = true
+const jumping_enabled : bool = false
 ## Wether the player can move in the air or not.
 @export var in_air_momentum : bool = true
 ## Smooths the feel of walking.
@@ -269,9 +269,9 @@ func _exit_tree() -> void:
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
-	if !InputMap.has_action(JUMP):
-		push_error("No control mapped for jumping. Please add an input map control. Disabling jump.")
-		jumping_enabled = false
+	#if !InputMap.has_action(JUMP):
+		#push_error("No control mapped for jumping. Please add an input map control. Disabling jump.")
+		#jumping_enabled = false
 	if !InputMap.has_action(LEFT):
 		push_error("No control mapped for move left. Please add an input map control. Disabling movement.")
 		immobile = true
