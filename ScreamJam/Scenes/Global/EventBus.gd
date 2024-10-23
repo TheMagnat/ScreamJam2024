@@ -1,5 +1,8 @@
 extends Node
 
+# Death Events
+signal playerRespawned
+
 # Zone
 signal playerEnteredZone(zoneNumber: int)
 signal playerInNoGridMode

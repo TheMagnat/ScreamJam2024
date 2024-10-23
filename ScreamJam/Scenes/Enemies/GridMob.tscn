@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://prjptwmbf5os"]
 
-[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridMob.gd" id="1_lcm6q"]
-[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridHandler.gd" id="2_nli8t"]
+[ext_resource type="Script" path="res://Scenes/Enemies/GridMob.gd" id="1_lcm6q"]
+[ext_resource type="Script" path="res://Scenes/Enemies/GridHandler.gd" id="2_nli8t"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="3_gsfjl"]
 [ext_resource type="Script" path="res://Scenes/Enemies/PlayerDetector.gd" id="4_ijdes"]
 [ext_resource type="Texture2D" uid="uid://biie4tip1d5ul" path="res://Assets/Mobs/Squeletton/squelette.png" id="5_1ibmk"]

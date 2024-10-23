@@ -43,3 +43,7 @@ func attack(attackTarget: Node3D, originalPosition: Vector3):
 	attackTween.tween_callback(attackTarget.damageSanity.bind(sanityDmg))
 	attackTween.tween_property(self, "global_position", originalPosition, 0.25)
 	attackTween.tween_property(self, "inAttackAnimation", false, 0.0)
+
+func stopAttackAnimation():
+	if attackTween: attackTween.kill()
+	inAttackAnimation = false

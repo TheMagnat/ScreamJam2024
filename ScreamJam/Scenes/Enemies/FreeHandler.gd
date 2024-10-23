@@ -6,6 +6,7 @@ extends Node
 var target: Node3D
 var validLastPosition: bool = false
 var targetLastPosition: Vector3
+var dead: bool = false
 
 # Cache
 @onready var navigationAgent: NavigationAgent3D = $"../NavigationAgent3D"
@@ -16,8 +17,22 @@ var randomDirection: Vector3
 
 const randomDirLength: float = 10.0
 
+# To reset on player death
+var initialPosition: Vector3
+var stopIdle: bool = false
+func _ready() -> void:
+	initialPosition = parent.global_position
+	EventBus.playerRespawned.connect(reset)
+	
+func reset():
+	parent.stopAttackAnimation()
+	parent.global_position = initialPosition
+	stopIdle = false
+	validLastPosition = false
+	target = null
+
 func _physics_process(delta: float) -> void:
-	if parent.inAttackAnimation: return
+	if parent.inAttackAnimation or dead: return
 	
 	var reachedTargetPosition: bool = false
 	
@@ -25,6 +40,7 @@ func _physics_process(delta: float) -> void:
 	if target:
 		targetLastPosition = target.global_position
 		validLastPosition = true
+		stopIdle = true
 	
 	if validLastPosition:
 		# We already reached target position
@@ -40,6 +56,8 @@ func _physics_process(delta: float) -> void:
 			goToLastPosition()
 	
 	else:
+		if not stopIdle: return
+		
 		if timeSinceRandomDir == 0.0:
 			randomDirection = Vector3(randf_range(-1, 1), 0.0, randf_range(-1, 1)).normalized()
 			targetLastPosition = parent.global_position + randomDirection * randomDirLength
@@ -52,10 +70,7 @@ func _physics_process(delta: float) -> void:
 			pass # Idle
 		else:
 			goToLastPosition()
-	
-	
-		
-	
+
 func goToLastPosition() -> void:
 	navigationAgent.target_position = targetLastPosition
 	
@@ -64,6 +79,6 @@ func goToLastPosition() -> void:
 	
 	var direction: Vector3 = parent.global_position.direction_to( goalPosition )
 	parent.velocity = direction * parent.SPEED
-	parent.velocity.y -= 9 # GRAVITY
+	#parent.velocity.y -= 9 # GRAVITY
 	
 	parent.move_and_slide()

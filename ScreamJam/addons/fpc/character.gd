@@ -661,7 +661,10 @@ func _input(event: InputEvent):
 	if event.is_action_pressed("Blink"):
 		blink(true)
 	elif event.is_action_released("Blink"):
-		if dead: spawn()
+		if dead:
+			spawn()
+			EventBus.playerRespawned.emit()
+		
 		blink(false)
 	
 	if event.is_action_pressed("debugSuicide"):

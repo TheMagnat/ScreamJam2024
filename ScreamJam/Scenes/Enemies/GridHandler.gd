@@ -32,10 +32,15 @@ func _ready() -> void:
 	initialPosition = parent.global_position
 	reset()
 	
+	EventBus.playerRespawned.connect(reset)
+	
 func reset():
+	parent.stopAttackAnimation()
 	parent.global_position = initialPosition
 	gridToken.setInitialPosition()
 	stopIdle = false
+	lastTargetPositionIsOk = false
+	target = null
 
 func step() -> void:
 	currentStepCounter -= 1

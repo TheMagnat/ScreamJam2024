@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scenes/Demo/GridRestrictor.gd" id="5_olldc"]
 [ext_resource type="Script" path="res://Scenes/Grid/GridToken.gd" id="6_h0pw4"]
 [ext_resource type="Script" path="res://Scenes/Demo/MobDemo/AttackComponent.gd" id="6_t6siv"]
-[ext_resource type="Script" path="res://Scenes/Demo/MobDemo/GridEntityManager.gd" id="7_dmy4d"]
+[ext_resource type="Script" path="res://Scenes/Enemies/GridEntityManager.gd" id="7_dmy4d"]
 [ext_resource type="PackedScene" uid="uid://1i6amyg428g6" path="res://Scenes/Enemies/InterferenceGhost.tscn" id="7_wwkf4"]
 [ext_resource type="PackedScene" uid="uid://b5yqh34euaadp" path="res://Scenes/Enemies/Model/Eye.tscn" id="9_373d5"]
 [ext_resource type="Shader" path="res://Scenes/Menu/PauseText.gdshader" id="10_3ib1l"]

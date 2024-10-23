@@ -1,28 +1,81 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmcknkhmj376d"]
+[gd_scene load_steps=11 format=3 uid="uid://bmcknkhmj376d"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeMob.gd" id="1_gca65"]
 [ext_resource type="Script" path="res://Scenes/Enemies/FreeHandler.gd" id="2_4oayo"]
+[ext_resource type="Texture2D" uid="uid://cqrry0h137jex" path="res://Assets/Mobs/Ghost/truc.png" id="4_aayb5"]
 [ext_resource type="Script" path="res://Scenes/Enemies/PlayerDetector.gd" id="4_c8bju"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_behdd"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_n3rnr"]
+[ext_resource type="Script" path="res://Scenes/Enemies/FreeModel.gd" id="5_1tmvr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqylk"]
 
+[sub_resource type="Shader" id="Shader_hmqh4"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform sampler2D screen: hint_screen_texture;
+uniform sampler2D noise;
+
+uniform float death: hint_range(0.0, 1.0);
+uniform float hit: hint_range(0.0, 1.0);
+uniform float dist: hint_range(0.0, 1.0);
+
+varying bool isInVoid;
+
+void fragment() {
+	float noiseValue = texture(noise, UV + TIME * 0.5).r;
+	vec2 base_uv = UV;
+	base_uv += (noiseValue * 0.1 * (0.1 + dist + (hit + death) * 5.0));
+	
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo_tex.rgb;
+	ALPHA *= albedo_tex.a * step(1.0 - noiseValue, 1.0 - death);
+	
+	isInVoid = length(albedo_tex.rgb) <= (0.01 + (clamp(death + dist - 0.25, 0.0, 1.0)));
+	//isInVoid = true;
+	if (isInVoid) {
+		//ALBEDO = vec3(1.0);
+		//ALBEDO = texture(screen, SCREEN_UV).rgb;
+		ALBEDO = mix(texture(screen, SCREEN_UV + noiseValue * 0.05).rgb, vec3(cos(VERTEX.x + TIME * 1.125) * (0.01 + 1.0 * hit), 0.0, sin(VERTEX.y + TIME * 0.875) * (0.01 + 1.0 * hit)), 0.4);
+		NORMAL.x += noiseValue * 0.5;
+		NORMAL.z += noiseValue * 0.5;
+		//ALBEDO = texture(screen, SCREEN_UV + noiseValue * 0.05).rgb;
+	}
+	
+}
+
+void light() {
+    DIFFUSE_LIGHT += clamp(dot(NORMAL, LIGHT), 0.0, 1.0) * ATTENUATION * LIGHT_COLOR;
+	if (isInVoid) {
+		DIFFUSE_LIGHT = vec3(5.0);
+	}
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4h50u"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jn1pi"]
+noise = SubResource("FastNoiseLite_4h50u")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hecun"]
+render_priority = -10
+shader = SubResource("Shader_hmqh4")
+shader_parameter/death = 0.0
+shader_parameter/hit = 0.0
+shader_parameter/dist = 0.0
+shader_parameter/texture_albedo = ExtResource("4_aayb5")
+shader_parameter/noise = SubResource("NoiseTexture2D_jn1pi")
+
 [node name="FreeMob" type="CharacterBody3D" groups=["ClassicEntity"]]
 collision_layer = 5
+collision_mask = 0
 script = ExtResource("1_gca65")
 SPEED = 4.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-material_override = SubResource("StandardMaterial3D_behdd")
-mesh = SubResource("CapsuleMesh_n3rnr")
 
 [node name="FreeHandler" type="Node" parent="." node_paths=PackedStringArray("parent")]
 script = ExtResource("2_4oayo")
@@ -35,3 +88,28 @@ nodeToUpdate = NodePath("../FreeHandler")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_rqylk")
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("5_1tmvr")
+
+[node name="MainSprite" type="Sprite3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.09499, 0)
+material_override = SubResource("ShaderMaterial_hecun")
+pixel_size = 0.0016
+shaded = true
+alpha_cut = 2
+texture = ExtResource("4_aayb5")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.09499, 0)
+cast_shadow = 3
+pixel_size = 0.0016
+shaded = true
+alpha_cut = 1
+alpha_scissor_threshold = 0.2
+texture = ExtResource("4_aayb5")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.403031)
+light_volumetric_fog_energy = 0.25
+omni_range = 2.5
