@@ -16,8 +16,8 @@ vec4 distort(vec2 CENTER, float zoom, float distort) {
 }
 
 void fragment() {
-	float tookPowerReal = sin(tookPower * PI);
-	float real_distort = (tookPowerReal * 2.0 + distortion + damage * 0.1);
+	//float tookPower = sin(tookPower * PI);
+	float real_distort = (tookPower * 2.0 + distortion + damage * 0.1);
 	float LENS_DISTORT = real_distort * 0.9;
 	float ZOOM = 1.0 - real_distort;
 
@@ -50,5 +50,5 @@ void fragment() {
 	COLOR.g *= crt(UV + cos(TIME * 0.005), 1.0);
 	COLOR.b *= crt(UV + cos(TIME * 13.45131) * dFact, 2.0);
 	
-	COLOR.rgb = mix(COLOR.rgb, (1.0 - COLOR.rgb) * 0.5, tookPowerReal);
+	COLOR.rgb = mix(COLOR.rgb, (1.0 - COLOR.rgb) * 0.5, tookPower);
 }

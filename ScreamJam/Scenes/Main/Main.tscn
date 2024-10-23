@@ -1,6 +1,7 @@
-[gd_scene load_steps=42 format=3 uid="uid://crlsuhpbcnmek"]
+[gd_scene load_steps=43 format=3 uid="uid://crlsuhpbcnmek"]
 
 [ext_resource type="PackedScene" uid="uid://dyit772y5r5xc" path="res://Scenes/Map/FullMap/MainMap.tscn" id="1_jbkiu"]
+[ext_resource type="PackedScene" uid="uid://b2i4b260m40sw" path="res://GlobalEnvironment.tscn" id="1_n1uph"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="3_1isk2"]
 [ext_resource type="Script" path="res://Scenes/Player/ActionComponent.gd" id="4_14ysw"]
 [ext_resource type="Script" path="res://Scenes/Player/LootComponent.gd" id="5_53wra"]
@@ -88,6 +89,8 @@ radius = 0.125
 height = 0.25
 
 [node name="MainScene" type="Node3D"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_n1uph")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_dqf6q")
@@ -303,11 +306,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 102.5)
 [node name="Torch3" parent="NavigationRegion3D" instance=ExtResource("20_4q56o")]
 transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 180, 2, 92.5)
 
-[node name="Character" parent="." instance=ExtResource("3_1isk2")]
+[node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_1isk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.151, 1, 143.47)
 base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
+environment = NodePath("../WorldEnvironment")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27452, 0)

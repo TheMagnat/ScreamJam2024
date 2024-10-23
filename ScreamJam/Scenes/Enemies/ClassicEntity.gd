@@ -8,10 +8,11 @@ class_name ClassicEntity extends Node3D
 @export var health: float = 30.0:
 	set(value):
 		if dead: return
-		print("Mob took damages: ", health - value)
 		health = value
+		
+		if not is_node_ready(): return
+		
 		if health <= 0:
-			print("LOL MOB DEAD")
 			dead = true
 			onDeath()
 		else:
