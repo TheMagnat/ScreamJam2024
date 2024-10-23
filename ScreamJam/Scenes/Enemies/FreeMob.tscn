@@ -28,22 +28,22 @@ void fragment() {
 	float noiseValue = texture(noise, UV + TIME * 0.5).r;
 	vec2 base_uv = UV;
 	base_uv += (noiseValue * 0.1 * (0.1 + dist + (hit + death) * 5.0));
-	
+
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo_tex.rgb;
 	ALPHA *= albedo_tex.a * step(1.0 - noiseValue, 1.0 - death);
-	
+
 	isInVoid = length(albedo_tex.rgb) <= (0.01 + (clamp(death + dist - 0.25, 0.0, 1.0)));
 	//isInVoid = true;
 	if (isInVoid) {
 		//ALBEDO = vec3(1.0);
 		//ALBEDO = texture(screen, SCREEN_UV).rgb;
-		ALBEDO = mix(texture(screen, SCREEN_UV + noiseValue * 0.05).rgb, vec3(cos(VERTEX.x + TIME * 1.125) * (0.01 + 1.0 * hit), 0.0, sin(VERTEX.y + TIME * 0.875) * (0.01 + 1.0 * hit)), 0.4);
+		ALBEDO = mix(texture(screen, SCREEN_UV + noiseValue * 0.05).rgb, vec3(cos(VERTEX.x + TIME * 1.125) * (0.01 + 0.03 * hit), 0.0, sin(VERTEX.y + TIME * 0.875) * (0.01 + 0.03 * hit)), 0.0);
 		NORMAL.x += noiseValue * 0.5;
 		NORMAL.z += noiseValue * 0.5;
 		//ALBEDO = texture(screen, SCREEN_UV + noiseValue * 0.05).rgb;
 	}
-	
+
 }
 
 void light() {
@@ -76,7 +76,6 @@ script = ExtResource("1_gca65")
 SPEED = 4.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-debug_enabled = true
 
 [node name="FreeHandler" type="Node" parent="." node_paths=PackedStringArray("parent")]
 script = ExtResource("2_4oayo")

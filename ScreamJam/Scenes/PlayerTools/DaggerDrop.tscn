@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dyyk0y6tip7kc" path="res://Assets/Weapon/dague.png" id="3_epjxk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_twbx6"]
-size = Vector3(1, 1.76666, 0.0650635)
+size = Vector3(2, 1.767, 2)
 
 [node name="Dagger" type="StaticBody3D" groups=["Tool"]]
 collision_layer = 8

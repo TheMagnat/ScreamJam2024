@@ -8,7 +8,8 @@ const CubeMesh := preload("res://Assets/SimpleCube.obj")
 const DistoredWallMaterial := preload("res://Scenes/Map/WallAndDistHight.tres")
 
 
-const GroundMaterial := preload("res://Scenes/Map/Ground.tres")
+#const GroundMaterial := preload("res://Scenes/Map/Ground.tres")
+const GroundMaterial := preload("res://Scenes/Map/GroundNewTwo.tres")
 const CeilMaterial := preload("res://Scenes/Map/Ceil.tres")
 
 const CellTypeFilter := 0b1111

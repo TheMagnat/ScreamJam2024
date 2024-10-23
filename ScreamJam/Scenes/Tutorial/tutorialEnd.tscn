@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cj43m3khjkjyp" path="res://Scenes/Map/FullMap/TutorialMap.tscn" id="3_jneby"]
 [ext_resource type="PackedScene" uid="uid://s32ljyhnwxak" path="res://Scenes/MapStaticNode/Hole.tscn" id="3_udxxm"]
 [ext_resource type="AudioStream" uid="uid://b56fxo13lrmgd" path="res://Assets/SFX/tutorial/8bit_intro2.ogg" id="4_svs8x"]
-[ext_resource type="PackedScene" path="res://Scenes/Tutorial/leverEnd.tscn" id="4_xgwwi"]
+[ext_resource type="PackedScene" uid="uid://ce06wxvafthij" path="res://Scenes/Tutorial/leverEnd.tscn" id="4_xgwwi"]
 [ext_resource type="AudioStream" uid="uid://dwe1jljijcfhh" path="res://Assets/SFX/tutorial/8bit_validate.ogg" id="5_efnd7"]
 [ext_resource type="AudioStream" uid="uid://nis7xan2np8n" path="res://Assets/SFX/tutorial/8bit_action.ogg" id="6_kvrnp"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="7_4220s"]
