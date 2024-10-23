@@ -13,6 +13,7 @@ const RESOLUTIONS = {
 	"800x600" : Vector2i(800,600),
 	"640x480" : Vector2i(640,480),
 }
+@onready var MOUSE_SENSITIVTY = 1.0
 
 @onready var resolutionOptions = $Panel/MarginContainer/GridContainer/ResolutionOptions
 
@@ -115,6 +116,10 @@ func _on_resolution_options_item_selected(index: int):
 
 func _on_full_screen_check_box_toggled(toggled_on: bool):
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN if toggled_on else DisplayServer.WINDOW_MODE_WINDOWED)
+
+func _on_sensitivty_slider_value_changed(value: float) -> void:
+	Global.player.mouse_sensitivity = value
+	MOUSE_SENSITIVTY = value
 
 func _on_input_button_pressed(button : Button, action : String):
 	if !isRemapping:

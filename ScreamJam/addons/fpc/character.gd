@@ -107,7 +107,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 var mouseInput : Vector2 = Vector2(0,0)
 
 const SANITY_MAX := 100.0
-const SANITY_RECOVER := 2.0
+const SANITY_RECOVER := 3.0
 var sanity := SANITY_MAX
 
 const HEALTH_MAX := 100.0
@@ -255,6 +255,7 @@ func _ready():
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
 	check_controls()
+	mouse_sensitivity = PauseMenu.MOUSE_SENSITIVTY
 	
 	$PostProcess/Label.modulate.a = 0.0
 	spawn()
@@ -300,6 +301,9 @@ func change_reticle(reticle): # Yup, this function is kinda strange
 	RETICLE.character = self
 	$InterfaceLayer/UserInterface.add_child(RETICLE)
 
+const SANITY_THRESHOLD := 0.4 * SANITY_MAX
+func sanity_threshold(x: float) -> float:
+	return 0.0675 * (SANITY_THRESHOLD - x/SANITY_MAX)
 
 func _physics_process(delta):
 	# Big thanks to github.com/LorenzoAncora for the concept of the improved debug values
@@ -355,8 +359,7 @@ func _physics_process(delta):
 				1:
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
-	const SANITY_FACTOR := 0.7
-	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > SANITY_FACTOR else (1.0 + sqrt(4.0 * (SANITY_FACTOR - sanity/SANITY_MAX))))) * delta)
+	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 + (0.0 if sanity > SANITY_THRESHOLD else sanity_threshold(sanity)))) * delta)
 	health = minf(HEALTH_MAX, health + HEALTH_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 	
@@ -694,8 +697,8 @@ func _input(event: InputEvent):
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		mouseInput.x += event.relative.x
-		mouseInput.y += event.relative.y
+		mouseInput.x += event.relative.x * mouse_sensitivity
+		mouseInput.y += event.relative.y * mouse_sensitivity
 	# Toggle debug menu
 	elif event is InputEventKey:
 		if event.is_released():
