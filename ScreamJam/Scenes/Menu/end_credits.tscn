@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cu032smxdlhfk"]
+[gd_scene load_steps=10 format=3 uid="uid://cu032smxdlhfk"]
 
 [ext_resource type="Script" path="res://Scenes/Menu/end_credits.gd" id="1_kkqel"]
 [ext_resource type="Shader" path="res://Scenes/Menu/PauseText.gdshader" id="1_qgjel"]
 [ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="2_2bhag"]
 [ext_resource type="Texture2D" uid="uid://078yotida8bc" path="res://Assets/square.png" id="2_wldli"]
 [ext_resource type="Script" path="res://addons/post_processing/resource/post_processing_configuration.gd" id="3_qmtee"]
+[ext_resource type="AudioStream" uid="uid://qegdb8perfae" path="res://Assets/SFX/music/EndScreen.ogg" id="6_5la81"]
 
 [sub_resource type="Resource" id="Resource_wepgm"]
 script = ExtResource("3_qmtee")
@@ -136,3 +137,7 @@ custom_minimum_size = Vector2(144, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Quit game"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_5la81")
+volume_db = -5.0
