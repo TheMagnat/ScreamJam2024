@@ -359,6 +359,8 @@ func _physics_process(delta):
 	sanity = minf(SANITY_MAX, sanity + (SANITY_RECOVER * (1.0 if sanity > SANITY_FACTOR else (1.0 + sqrt(4.0 * (SANITY_FACTOR - sanity/SANITY_MAX))))) * delta)
 	health = minf(HEALTH_MAX, health + HEALTH_RECOVER * delta)
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
+	
+	CAMERA.position = Vector3(0, 0, 0) + Vector3(1, 1, 1) * randf() * velocity.y * 0.002
 
 
 func handle_jumping():
