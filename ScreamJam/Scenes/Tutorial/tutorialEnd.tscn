@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cao8lcrq6yql8"]
+[gd_scene load_steps=19 format=3 uid="uid://cao8lcrq6yql8"]
 
 [ext_resource type="Script" path="res://Scenes/Tutorial/tutorial_end.gd" id="1_i4xw5"]
 [ext_resource type="PackedScene" uid="uid://cj43m3khjkjyp" path="res://Scenes/Map/FullMap/TutorialMap.tscn" id="3_jneby"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://nis7xan2np8n" path="res://Assets/SFX/tutorial/8bit_action.ogg" id="6_kvrnp"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="7_4220s"]
 [ext_resource type="AudioStream" uid="uid://dn2ljmbfi1oif" path="res://Assets/SFX/tutorial/8bit_eye.ogg" id="7_b006m"]
+[ext_resource type="AudioStream" uid="uid://ck8cr11kcjcxl" path="res://Assets/SFX/ambience/glitching_loop.ogg" id="10_ep4xq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_syl7h"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -141,3 +142,9 @@ stream = ExtResource("6_kvrnp")
 
 [node name="eye" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_b006m")
+
+[node name="ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ep4xq")
+volume_db = -2.0
+pitch_scale = 0.9
+autoplay = true
