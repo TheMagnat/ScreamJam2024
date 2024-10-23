@@ -85,6 +85,21 @@ label_settings = SubResource("LabelSettings_qjo5w")
 layout_mode = 2
 button_pressed = true
 
+[node name="SensitivityLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Mouse Sensitivity"
+label_settings = SubResource("LabelSettings_2ywvt")
+
+[node name="SensitivtySlider" type="HSlider" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.01
+max_value = 2.0
+step = 0.0
+value = 1.0
+ticks_on_borders = true
+
 [node name="ControlsLabel" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
 text = "Controls"
@@ -125,4 +140,5 @@ vertical_alignment = 1
 [connection signal="value_changed" from="Panel/MarginContainer/GridContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="item_selected" from="Panel/MarginContainer/GridContainer/ResolutionOptions" to="." method="_on_resolution_options_item_selected"]
 [connection signal="toggled" from="Panel/MarginContainer/GridContainer/FullScreenCheckBox" to="." method="_on_full_screen_check_box_toggled"]
+[connection signal="value_changed" from="Panel/MarginContainer/GridContainer/SensitivtySlider" to="." method="_on_sensitivty_slider_value_changed"]
 [connection signal="pressed" from="Panel/MarginContainer/GridContainer/Container/ResetButton" to="." method="_on_reset_button_pressed"]

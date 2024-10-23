@@ -255,6 +255,7 @@ func _ready():
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
 	check_controls()
+	mouse_sensitivity = PauseMenu.MOUSE_SENSITIVTY
 	
 	$PostProcess/Label.modulate.a = 0.0
 	spawn()
@@ -694,8 +695,8 @@ func _input(event: InputEvent):
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		mouseInput.x += event.relative.x
-		mouseInput.y += event.relative.y
+		mouseInput.x += event.relative.x * mouse_sensitivity
+		mouseInput.y += event.relative.y * mouse_sensitivity
 	# Toggle debug menu
 	elif event is InputEventKey:
 		if event.is_released():
