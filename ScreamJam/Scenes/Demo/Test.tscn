@@ -151,6 +151,7 @@ rotateCameraOnMove = true
 script = ExtResource("6_h0pw4")
 
 [node name="InterferenceGhost" parent="." instance=ExtResource("7_wwkf4")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -0.5, 0)
 
 [node name="GridEntityManager" type="Node" parent="."]
