@@ -17,18 +17,21 @@ var reachedGoal: bool = false
 
 # Deactivated grid variables
 var timeToStep: Timer
-@export var stepDelay: float = 1.0:
-	set(value):
-		stepDelay = value
-		if timeToStep:
-			timeToStep.wait_time = stepDelay
+var gridStepDelay: float = 3.0
+var freeStepDelay: float = 1.0
 
 func _ready() -> void:
 	timeToStep = Timer.new()
-	timeToStep.wait_time = stepDelay
+	timeToStep.wait_time = gridStepDelay
 	timeToStep.timeout.connect(onStepTimerTimeout)
 	add_child(timeToStep)
+	
+	timeToStep.start()
 
+func shouldEmitStep():
+	timeToStep.start()
+	EventBus.playerGridStep.emit()
+	
 func onStepTimerTimeout():
 	EventBus.playerGridStep.emit()
 
@@ -43,7 +46,7 @@ func activate():
 	gridToken.setInitialPosition()
 	inMovement = true
 	
-	timeToStep.stop()
+	timeToStep.wait_time = gridStepDelay
 
 func deactivate():
 	gridToken.isFree = true
@@ -53,7 +56,7 @@ func deactivate():
 	character.immobile = false
 	character.handled = false
 	
-	timeToStep.start()
+	timeToStep.wait_time = freeStepDelay
 
 func getFrontPosition() -> Vector2i:
 	return gridToken.goalPosition + Vector2i(Vector2(0, -1.0).rotated(2 * PI - cameraRotationRestrictor.goalRotation ).round())
@@ -84,7 +87,7 @@ func _physics_process(_delta: float) -> void:
 					inMovement = true
 					reachedGoal = false
 					
-					EventBus.playerGridStep.emit()
+					shouldEmitStep()
 			
 			if reachedGoal:
 				reachedGoal = false
@@ -112,15 +115,13 @@ func _physics_process(_delta: float) -> void:
 				
 			#if gridToken.goalWorldPosition.distance_to(positionNoY) < 0.1:
 				#reachedGoal = true
-				
+			
 	if Global.debug:
 		debugPanel.add_property("InMovement", inMovement, 4)
 		debugPanel.add_property("Current Position", character.position, 5)
 		debugPanel.add_property("Goal Position", gridToken.goalWorldPosition, 6)
 		debugPanel.add_property("Current Grid Pos", gridToken.goalPosition, 5)
 		debugPanel.add_property("Goal Grid Pos", (gridToken.goalWorldPosition / Global.map.gridSpace).round(), 6)
-		
-		
 		
 func _input(event: InputEvent) -> void:
 	if Global.debug:

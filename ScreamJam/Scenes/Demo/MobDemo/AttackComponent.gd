@@ -47,7 +47,7 @@ func attack():
 				print("FOUND GRID ENEMY")
 				entity.health -= 10.0 #TODO: Utiliser les dégats du tools
 		
-		EventBus.playerGridStep.emit()
+		gridRestrictor.shouldEmitStep()
 		
 		#var currentCamera: Camera3D = get_viewport().get_camera_3d()
 		#var result = RayHelper.castRay(currentCamera.global_position, currentCamera.global_position + -currentCamera.global_transform.basis.z * 5.0, 0b100)

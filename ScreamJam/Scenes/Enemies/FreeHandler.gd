@@ -80,7 +80,7 @@ func goToLastPosition() -> void:
 	goalPosition.y = 0.0
 	
 	var direction: Vector3 = parent.global_position.direction_to( goalPosition )
-	parent.velocity = direction * parent.SPEED
+	parent.velocity = direction * parent.SPEED * (2.0 if EventBus.noGridModeTriggered else 1.0)
 	#parent.velocity.y -= 9 # GRAVITY
 	
 	parent.move_and_slide()

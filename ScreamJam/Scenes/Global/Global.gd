@@ -5,6 +5,7 @@ var player: Character
 var sanity: float # [0 - 1]
 var map: Map
 var inGame: bool = false
+var inEnd: bool = false
 
 var debug := true
 

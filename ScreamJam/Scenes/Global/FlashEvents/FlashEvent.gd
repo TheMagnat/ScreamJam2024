@@ -30,7 +30,6 @@ func _physics_process(delta: float) -> void:
 	var currentProbability: float = probabilityMax - (probabilityMax - probabilityMin) * exp(-probabilityCurbeSteepness * elapsedTimeSinceLastEvent)
 	var randValue: float = randf()
 	if randValue < currentProbability:
-		#print("TRIGGERED !!! = ", currentProbability, " mu rand: ", randValue)
 		elapsedTimeSinceLastEvent = 0.0
 		fireEvent()
 		
@@ -38,14 +37,14 @@ func _physics_process(delta: float) -> void:
 		#print("Proba: ", currentProbability, " my rand: ", randValue)
 
 func fireEvent():
-	#var randValue: float = randf()
 	if randf() < 0.94:
 		events.pick_random().call()
 	else:
-		if randf() < 0.25:
-			spawnEye()
-		else:
-			closeEye()
+		if not Global.inEnd and not Global.player.dead:
+			if randf() < 0.25:
+				spawnEye()
+			else:
+				closeEye()
 
 
 ## Animations ##

@@ -106,8 +106,6 @@ height = 0.25
 navigation_mesh = SubResource("NavigationMesh_dqf6q")
 
 [node name="MainMap" parent="NavigationRegion3D" instance=ExtResource("1_jbkiu")]
-availableSpawns = Array[Array]([[Vector3(50, 1, 25), Vector3(125, 1, 35), Vector3(105, 1, 65)], [Vector3(190, 1, 85), Vector3(15, 1, 105)], [Vector3(90, 1, 75)], [Vector3(205, 1, 140), Vector3(10, 1, 185), Vector3(175, 1, 195), Vector3(125, 1, 245)], [Vector3(115, 1, 145), Vector3(125, 1, 145), Vector3(115, 1, 155), Vector3(125, 1, 155)]])
-cached = true
 
 [node name="Holes" type="Node3D" parent="NavigationRegion3D"]
 
@@ -329,7 +327,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 102.5)
 transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 180, 2, 92.5)
 
 [node name="Character" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_1isk2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.2693, 1, 49.4301)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.269, 1, 149.43)
 base_speed = 5.0
 sprint_speed = 10.0
 motion_smoothing = false
