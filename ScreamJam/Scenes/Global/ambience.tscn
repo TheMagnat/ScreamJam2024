@@ -11,7 +11,7 @@ script = ExtResource("1_cjuxp")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Peaceful"]
 stream = ExtResource("1_u1r64")
-volume_db = -2.0
+volume_db = -1.0
 
 [node name="SpookyDookie" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tkt6k")
