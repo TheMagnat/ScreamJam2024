@@ -29,15 +29,14 @@ const RESOLUTIONS = {
 var inputDictionnary = {
 	"Up": "Forward",
 	"Left": "Strafe Left",
-	"Down": "Back", 
+	"Down": "Back",
 	"Right": "Strafe Right",
 	"RotateLeft": "Rotate Left",
 	"RotateRight": "Rotate Right",
-	"Jump": "Jump",
-	"Crouch": "Crouch",
-	"Sprint": "Sprint",
-	"Pause": "Pause Menu",
 	"Blink": "Blink",
+	"Sprint": "Sprint",
+	"Crouch": "Crouch",
+	"Pause": "Pause Menu",
 }
 
 var isRemapping = false
