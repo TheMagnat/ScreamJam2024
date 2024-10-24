@@ -34,14 +34,17 @@ func onDeath():
 
 var inAttackAnimation: bool = false
 var attackTween: Tween
-func attack(attackTarget: Node3D, originalPosition: Vector3):
+func attack(attackTarget: Node3D, originalPosition: Vector3, multiplier: float = 1.0):
 	inAttackAnimation = true
+	
+	var dmgDone: float = dmg * multiplier
+	var sanityDmgDone: float = sanityDmg * multiplier
 	
 	if attackTween: attackTween.kill()
 	attackTween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	attackTween.tween_property(self, "global_position", attackTarget.global_position, 0.25)
-	attackTween.tween_callback(attackTarget.damageHealth.bind(dmg))
-	attackTween.tween_callback(attackTarget.damageSanity.bind(sanityDmg))
+	attackTween.tween_callback(attackTarget.damageHealth.bind(dmgDone))
+	attackTween.tween_callback(attackTarget.damageSanity.bind(sanityDmgDone))
 	attackTween.tween_property(self, "global_position", originalPosition, 0.25)
 	attackTween.tween_property(self, "inAttackAnimation", false, 0.0)
 

@@ -86,7 +86,7 @@ const jumping_enabled : bool = false
 
 @export var environment: WorldEnvironment
 @onready var lootComponent: LootComponent = get_node("LootComponent") if has_node("LootComponent") else null
-
+@onready var gridToken: GridToken = get_node("GridToken") if has_node("GridToken") else null
 
 
 # Member variables
@@ -206,16 +206,16 @@ func spawn():
 	death_tween.parallel().tween_property($PostProcess/RespawnInfo, "modulate:a", 0.0, 0.5)
 	
 	var newPosition = Global.map.availableSpawns[GlobalZoneHandler.playerBestZone].pick_random()
-	#if not Global.debug:
 	if keepY:
 		var oldY: float = global_position.y
 		global_position = newPosition
 		global_position.y = oldY
 	else:
+		#if not Global.debug:
 		global_position = newPosition
 	
-	if has_node("GridToken"):
-		$GridToken.setInitialPosition()
+	if gridToken:
+		gridToken.setInitialPosition()
 
 	sanity = SANITY_MAX
 	health = HEALTH_MAX
@@ -232,7 +232,7 @@ func spawn():
 	blink(true)
 	shouldOpen = true
 	
-	if has_node("GridRestrictor") and not $GridToken.isFree:
+	if has_node("GridRestrictor") and not gridToken.isFree:
 		$GridRestrictor.activate()
 	
 	dead = false

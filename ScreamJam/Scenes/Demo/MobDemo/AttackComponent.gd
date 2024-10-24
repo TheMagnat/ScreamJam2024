@@ -36,7 +36,6 @@ func attack():
 				bestBody = body
 	
 	if bestBody:
-		print("FOUND BEST BODY")
 		bestBody.health -= 10.0 #TODO: Utiliser les dégats du tools
 	
 	if not gridRestrictor.gridToken.isFree:
@@ -44,7 +43,6 @@ func attack():
 			var frontPosition: Vector2i = gridRestrictor.getFrontPosition()
 			var entity: GridEntity = GridEntityManager.getEntityAt(frontPosition)
 			if entity:
-				print("FOUND GRID ENEMY")
 				entity.health -= 10.0 #TODO: Utiliser les dégats du tools
 		
 		gridRestrictor.shouldEmitStep()

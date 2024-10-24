@@ -7,7 +7,7 @@ var map: Map
 var inGame: bool = false
 var inEnd: bool = false
 
-var debug := true
+var debug := false
 
 
 func get_action_key(action: String) -> String:

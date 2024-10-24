@@ -120,7 +120,19 @@ func walkToLastTarget():
 		if Global.map.isAvailable( newGoalPosition ):
 			# ...And if the player is on it, attack
 			if target and lastTargetGoalPosition == newGoalPosition:
-				parent.attack(target, gridToken.goalWorldPosition)
+				
+				var multiplier: float = 1.0
+				if Global.player.gridToken and not Global.player.lootComponent.rightHandTool and not Global.player.gridToken.isFree:
+					var neighbors: Array[Vector2i] = Global.map.getNeighbors(Global.player.gridToken.goalPosition)
+					var haveNeighbor: bool = false
+					for neighbor in neighbors:
+						if GridEntityManager.isAvailable( neighbor ):
+							haveNeighbor = true
+					
+					if not haveNeighbor:
+						multiplier = 10.0
+				
+				parent.attack(target, gridToken.goalWorldPosition, multiplier)
 				break
 			
 			# ...Or if their is no player and no other entity go on it
