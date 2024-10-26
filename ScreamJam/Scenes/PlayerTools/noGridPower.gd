@@ -2,8 +2,11 @@ extends Node3D
 
 @onready var material: ShaderMaterial = $MeshInstance3D.material_override
 
-
+var triggered: bool = false
 func _on_area_3d_body_entered(body: Node3D) -> void:
+	if triggered: return
+	triggered = true
+	
 	Global.player.get_node("GridRestrictor").deactivate()
 	EventBus.playerInNoGridMode.emit()
 
