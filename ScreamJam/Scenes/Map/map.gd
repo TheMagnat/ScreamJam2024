@@ -87,6 +87,7 @@ func _exit_tree() -> void:
 	GridEntityManager.entities.clear()
 	EventBus.noGridModeTriggered = false
 	GlobalZoneHandler.playerBestZone = 0
+	GlobalZoneHandler.alreadyBlown = false
 
 # Generation
 func _ready() -> void:

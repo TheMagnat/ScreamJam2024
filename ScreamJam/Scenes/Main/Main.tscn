@@ -677,6 +677,10 @@ zoneToTrigger = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 0, 170)
 zoneToTrigger = 4
 
+[node name="WallSpawner5" parent="ZoneTriggers" instance=ExtResource("23_emt7p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 195, 0, 170)
+zoneToTrigger = 4
+
 [node name="Zone3Trigger_Right" parent="ZoneTriggers" instance=ExtResource("21_42xok")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 205, 0, 135)
 zoneNumber = 3
